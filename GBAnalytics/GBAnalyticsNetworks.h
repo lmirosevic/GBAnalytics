@@ -13,6 +13,7 @@
 typedef enum {
     GBAnalyticsNetworkGoogleAnalytics = 1,
     GBAnalyticsNetworkFlurry,
+    GBAnalyticsNetworkBugSense,
 } GBAnalyticsNetwork;
 
 

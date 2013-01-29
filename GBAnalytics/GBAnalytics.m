@@ -12,6 +12,8 @@ static NSString *kGBAnalyticsCredentialsGoogleAnalyticsTrackingID = @"kGBAnalyti
 
 static NSString *kGBAnalyticsCredentialsFlurryAPIKey = @"kGBAnalyticsCredentialsFlurryAPIKey";
 
+static NSString *kGBAnalyticsCredentialsBugSenseAPIKey = @"kGBAnalyticsCredentialsBugSenseAPIKey";
+
 @interface GBAnalytics ()
 
 @property (strong, nonatomic) NSMutableDictionary       *connectedAnalyticsNetworks;
@@ -41,7 +43,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
     return self;
 }
 
-#if APPSTORE
+#if !APPSTORE//foo flip this before launch
 #pragma mark - Public API (AppStore)
 
 +(void)startSessionWithNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ... {
@@ -70,7 +72,18 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                 [Flurry startSession:credentials];
             }
             else {
-                NSAssert(NO, @"GBAnalytics Error: Didn't pass valid credentials for Google Analytics");
+                NSAssert(NO, @"GBAnalytics Error: Didn't pass valid credentials for Flurry");
+            }
+        } break;
+            
+        case GBAnalyticsNetworkBugSense: {
+            if (IsValidString(credentials)) {
+                [GBAnalytics sharedAnalytics].connectedAnalyticsNetworks[@(GBAnalyticsNetworkBugSense)] = @{kGBAnalyticsCredentialsBugSenseAPIKey: credentials};
+                
+                [BugSenseController sharedControllerWithBugSenseAPIKey:credentials];
+            }
+            else {
+                NSAssert(NO, @"GBAnalytics Error: Didn't pass valid credentials for BugSense");
             }
         } break;
             
@@ -159,7 +172,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
 
 #pragma mark - Debug Logging
 
-+(void)enableDebugLogging:(BOOL)enable {
++(void)setDebug:(BOOL)enable {
     [GBAnalytics sharedAnalytics].enableDebugLogging = enable;
 }
 
@@ -174,6 +187,10 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                 
             case GBAnalyticsNetworkFlurry:
                 networkName = @"Flurry";
+                break;
+                
+            case GBAnalyticsNetworkBugSense:
+                networkName = @"BugSense";
                 break;
                 
             default:

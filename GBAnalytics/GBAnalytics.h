@@ -19,7 +19,7 @@
 #define _t(event) ([GBAnalytics trackEvent:event])
 #define _td(event, dictionary) ([GBAnalytics trackEvent:event withDictionary:dictionary])
 
-+(void)enableDebugLogging:(BOOL)enable;
++(void)setDebug:(BOOL)enable;
 
 @end
 
@@ -31,10 +31,13 @@
  //Call this anywhere
  _t(@"Pressed buy button");
  
- Required frameworks:
+ Required system frameworks:
  * CoreData
  * SystemConfiguration
  * libz.dylib
+ 
+ Required 3rd party frameworks (make sure project framework search path is correctly set, that framework is added to project as relative, linked against in build phases):
+ * BugSense-iOS
  
  */
 
