@@ -8,6 +8,27 @@
 
 #import <Foundation/Foundation.h>
 
+#import "GBAnalyticsNetworks.h"
+
 @interface GBAnalytics : NSObject
 
++(void)startSessionWithNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ...;
+
++(void)trackEvent:(NSString *)event;
++(void)trackEvent:(NSString *)event withDictionary:(NSDictionary *)dictionary;//only supported by flurry
+#define _t(event) ([GBAnalytics trackEvent:event])
+#define _td(event, dictionary) ([GBAnalytics trackEvent:event withDictionary:dictionary])
+
++(void)enableDebugLogging:(BOOL)enable;
+
 @end
+
+/* Demo
+ 
+ blabla
+ 
+ Required frameworks:
+ * CoreData
+ * SystemConfiguration
+ 
+ */
