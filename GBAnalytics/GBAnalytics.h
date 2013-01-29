@@ -30,6 +30,7 @@
  
  //Call this anywhere
  _t(@"Pressed buy button");
+ _td(@"Bought in-app", @{@"type": @"unlimited"})
  
  Required system frameworks:
  * CoreData
@@ -38,6 +39,9 @@
  
  Required 3rd party frameworks (make sure project framework search path is correctly set, that framework is added to project as relative, linked against in build phases):
  * BugSense-iOS
+ 
+ Required libraries (add dependency, link, -ObjC linker flag, header search path in superproject):
+ * GBToolbox
  
  */
 

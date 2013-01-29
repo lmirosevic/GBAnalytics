@@ -47,6 +47,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
 #pragma mark - Public API (AppStore)
 
 +(void)startSessionWithNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ... {
+    ThresholdDouble(20, 10, 30);
     [self _debugLogSessionStartWithNetwork:network];
     
     va_list args;
