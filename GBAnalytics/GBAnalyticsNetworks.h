@@ -8,6 +8,7 @@
 
 #import "GAI.h"
 #import "Flurry.h"
+#import <BugSense-iOS/BugSenseController.h>
 
 typedef enum {
     GBAnalyticsNetworkGoogleAnalytics = 1,
@@ -19,3 +20,4 @@ typedef enum {
 //
 // Google Analytics
 // Flurry
+// Bugsense

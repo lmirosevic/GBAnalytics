@@ -25,10 +25,27 @@
 
 /* Demo
  
- blabla
+ //Call this in application:didFinishLaunching:withOptions:
+ [GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkGoogleAnalytics withCredentials:GOOGLEANALYTICSTRACKINGID];
+ 
+ //Call this anywhere
+ _t(@"Pressed buy button");
  
  Required frameworks:
  * CoreData
  * SystemConfiguration
+ * libz.dylib
+ 
+ */
+
+
+/* Notes
+
+ Bugsense project settings:
+ * Strip Linked Symbols During Copy: NO
+ * Strip Linked Product: NO
+ * Deployment Postprocessing: NO
+ * Generate debug symbols: YES
+ * Other linker flags: -ObjC
  
  */
