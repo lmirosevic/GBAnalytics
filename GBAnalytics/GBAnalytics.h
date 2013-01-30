@@ -12,6 +12,7 @@
 
 @interface GBAnalytics : NSObject
 
+//See GBAnalyticsNetworks.h for param list
 +(void)startSessionWithNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ...;
 
 +(void)trackEvent:(NSString *)event;

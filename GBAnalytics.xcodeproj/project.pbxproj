@@ -63,7 +63,6 @@
 		8A45A82A16B7C2C100414137 /* GBAnalytics-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GBAnalytics-Prefix.pch"; sourceTree = "<group>"; };
 		8A45A82B16B7C2C100414137 /* GBAnalytics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBAnalytics.h; sourceTree = "<group>"; };
 		8A45A82D16B7C2C100414137 /* GBAnalytics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GBAnalytics.m; sourceTree = "<group>"; };
-		8A7D613516B9225300D6C676 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = GBAnalytics/README.md; sourceTree = "<group>"; };
 		8AF6862B16B7E5D200FEF6A7 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Flurry.h; path = GBAnalytics/Flurry.h; sourceTree = "<group>"; };
 		8AF6862C16B7E5D200FEF6A7 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry.a; path = GBAnalytics/libFlurry.a; sourceTree = "<group>"; };
 		8AF6864E16B7F5EA00FEF6A7 /* BugSense-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "BugSense-iOS.framework"; path = "GBAnalytics/BugSense-iOS.framework"; sourceTree = "<group>"; };
@@ -119,7 +118,6 @@
 		8A45A81816B7C2C100414137 = {
 			isa = PBXGroup;
 			children = (
-				8A7D613516B9225300D6C676 /* README.md */,
 				8A2800E716B7CEE6007CEEC2 /* Libraries */,
 				8A45A83416B7C2E200414137 /* Analytics Networks */,
 				8A45A82816B7C2C100414137 /* GBAnalytics */,

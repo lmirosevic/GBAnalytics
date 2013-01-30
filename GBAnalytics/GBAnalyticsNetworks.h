@@ -17,8 +17,19 @@ typedef enum {
 } GBAnalyticsNetwork;
 
 
-// Network support:
-//
-// Google Analytics
-// Flurry
-// Bugsense
+/* Networks
+ 
+ Flurry
+   Params: FlurryAPIKey
+   Example: [GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkFlurry withCredentials:@"FlurryAPIKey"];
+ 
+ 
+ Google Analytics
+   Params: GoogleAnalyticsTrackingID
+   Example: [GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkGoogleAnalytics withCredentials:@"GoogleAnalyticsTrackingID"];
+ 
+ Bugsense
+   Params: BugsenseAPIKey
+   Example: [GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkBugSense withCredentials:@"BugsenseAPIKey"];
+ 
+ */
