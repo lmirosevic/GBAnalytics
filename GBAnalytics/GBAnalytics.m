@@ -172,7 +172,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
 
 #pragma mark - Debug Logging
 
-+(void)setDebug:(BOOL)enable {
++(void)enableDebug:(BOOL)enable {
     [GBAnalytics sharedAnalytics].enableDebugLogging = enable;
 }
 
@@ -198,7 +198,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                 break;
         }
         
-        l(@"GBAnalytics Log: connected to network: %@", networkName);
+        l(@"GBAnalytics Log: started session with analytics network: %@", networkName);
     }
 }
 
