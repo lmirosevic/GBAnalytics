@@ -61,8 +61,8 @@ System Frameworks (link them in):
 
 * BugSense-iOS
 
- Notes
- ------------
+Notes
+------------
 
 Bugsense related project settings for on-device symbolication:
 
