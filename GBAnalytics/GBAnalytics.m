@@ -14,6 +14,8 @@ static NSString *kGBAnalyticsCredentialsFlurryAPIKey = @"kGBAnalyticsCredentials
 
 static NSString *kGBAnalyticsCredentialsBugSenseAPIKey = @"kGBAnalyticsCredentialsBugSenseAPIKey";
 
+static NSString *kGBAnalyticsCredentialsCrashlyticsAPIKey = @"kGBAnalyticsCredentialsCrashlyticsAPIKey";
+
 @interface GBAnalytics ()
 
 @property (strong, nonatomic) NSMutableDictionary       *connectedAnalyticsNetworks;
@@ -84,6 +86,17 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
             }
             else {
                 NSAssert(NO, @"GBAnalytics Error: Didn't pass valid credentials for BugSense");
+            }
+        } break;
+            
+        case GBAnalyticsNetworkCrashlytics: {
+            if (IsValidString(credentials)) {
+                [GBAnalytics sharedAnalytics].connectedAnalyticsNetworks[@(GBAnalyticsNetworkCrashlytics)] = @{kGBAnalyticsCredentialsCrashlyticsAPIKey: credentials};
+                
+                [Crashlytics startWithAPIKey:credentials];
+            }
+            else {
+                NSAssert(NO, @"GBAnalytics Error: Didn't pass valid credentials for Crashlytics");
             }
         } break;
             
@@ -191,6 +204,10 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                 
             case GBAnalyticsNetworkBugSense:
                 networkName = @"BugSense";
+                break;
+                
+            case GBAnalyticsNetworkCrashlytics:
+                networkName = @"Crashlytics";
                 break;
                 
             default:

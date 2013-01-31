@@ -10,6 +10,7 @@
 		8A28009916B7CC41007CEEC2 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A28009816B7CC41007CEEC2 /* libGoogleAnalytics.a */; };
 		8A2800AC16B7CD2F007CEEC2 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A2800AB16B7CD2F007CEEC2 /* CoreData.framework */; };
 		8A2800AE16B7CD34007CEEC2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A2800AD16B7CD34007CEEC2 /* SystemConfiguration.framework */; };
+		8A326A7416BA5F770054D9B6 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A326A7316BA5F770054D9B6 /* Crashlytics.framework */; };
 		8A45A82716B7C2C100414137 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A45A82616B7C2C100414137 /* Foundation.framework */; };
 		8A45A82C16B7C2C100414137 /* GBAnalytics.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8A45A82B16B7C2C100414137 /* GBAnalytics.h */; };
 		8A45A82E16B7C2C100414137 /* GBAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A45A82D16B7C2C100414137 /* GBAnalytics.m */; };
@@ -58,6 +59,7 @@
 		8A2800AB16B7CD2F007CEEC2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		8A2800AD16B7CD34007CEEC2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8A2800DE16B7CEE3007CEEC2 /* GBToolbox.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GBToolbox.xcodeproj; path = ../GBToolbox/GBToolbox.xcodeproj; sourceTree = "<group>"; };
+		8A326A7316BA5F770054D9B6 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = GBAnalytics/Crashlytics.framework; sourceTree = "<group>"; };
 		8A45A82316B7C2C100414137 /* libGBAnalytics.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGBAnalytics.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A45A82616B7C2C100414137 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8A45A82A16B7C2C100414137 /* GBAnalytics-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GBAnalytics-Prefix.pch"; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 				8AF6864F16B7F5EA00FEF6A7 /* BugSense-iOS.framework in Frameworks */,
 				8A28009916B7CC41007CEEC2 /* libGoogleAnalytics.a in Frameworks */,
 				8AF6862D16B7E5D200FEF6A7 /* libFlurry.a in Frameworks */,
+				8A326A7416BA5F770054D9B6 /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,6 +116,14 @@
 				8A2800DE16B7CEE3007CEEC2 /* GBToolbox.xcodeproj */,
 			);
 			name = Libraries;
+			sourceTree = "<group>";
+		};
+		8A326A4116BA5D3E0054D9B6 /* Crashlytics */ = {
+			isa = PBXGroup;
+			children = (
+				8A326A7316BA5F770054D9B6 /* Crashlytics.framework */,
+			);
+			name = Crashlytics;
 			sourceTree = "<group>";
 		};
 		8A45A81816B7C2C100414137 = {
@@ -166,6 +177,7 @@
 		8A45A83416B7C2E200414137 /* Analytics Networks */ = {
 			isa = PBXGroup;
 			children = (
+				8A326A4116BA5D3E0054D9B6 /* Crashlytics */,
 				8AF6864D16B7F5E300FEF6A7 /* BugSense */,
 				8AF6863116B7E5D400FEF6A7 /* Flurry */,
 				8A28009A16B7CC44007CEEC2 /* Google Analytics */,
@@ -331,6 +343,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/GBAnalytics\"",
+					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GBAnalytics/GBAnalytics-Prefix.pch";
@@ -352,6 +365,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/GBAnalytics\"",
+					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GBAnalytics/GBAnalytics-Prefix.pch";

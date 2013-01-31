@@ -21,8 +21,11 @@ Connect to any networks you want in `application:didFinishLaunching:withOptions:
 //Connect Google Analytics
 [GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkGoogleAnalytics withCredentials:@"GoogleAnalyticsTrackingID"];
 
-//Connect Bugsense
-[GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkBugSense withCredentials:@"BugsenseAPIKey"];
+//Connect BugSense
+[GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkBugSense withCredentials:@"BugSenseAPIKey"];
+
+//Connect Crashlytics
+[GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkCrashlytics withCredentials:@"CrashlyticsAPIKey"];
 ```
 
 Track simple event (supports Flurry and Google Analytics):
@@ -43,6 +46,7 @@ Supported networks
 * Flurry
 * Google Analytics
 * Bugsense
+* Crashlytics
 
 Dependencies
 ------------
@@ -60,6 +64,7 @@ System Frameworks (link them in):
 3rd party frameworks included (make sure project framework search path is correctly set, that framework is added to project as relative link, linked against in build phases of superproject):
 
 * BugSense-iOS
+* Crashlytics
 
 Notes
 ------------
@@ -71,6 +76,15 @@ Bugsense related project settings for on-device symbolication:
 * Deployment Postprocessing: NO
 * Generate debug symbols: YES
 * Other linker flags: -ObjC
+
+Crashlytics related project settings for automatic post-build dSYM uploads:
+
+* Add "run script" build phase to target with appropriate path and API key. This script assumes you have created a macro called CRASHLYTICSAPIKEY inside your precompiled header file. You can also just put it straight in. Make sure path is correct!
+```sh
+#get Crashlytics API key from precompiled header and call the dSYM uploader with the key
+CRASHLYTICSAPIKEY=$(grep CRASHLYTICSAPIKEY "${PROJECT_DIR}/${GCC_PREFIX_HEADER}" | awk '{print $3}' | grep -oEi "[^@^\"]+")
+../../../Goonbee\ Modules/GBAnalytics/GBAnalytics/Crashlytics.framework/run $CRASHLYTICSAPIKEY
+```
 
 Copyright & License
 ------------
