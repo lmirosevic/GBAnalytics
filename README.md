@@ -80,6 +80,7 @@ Bugsense related project settings for on-device symbolication:
 Crashlytics related project settings for automatic post-build dSYM uploads:
 
 * Add "run script" build phase to target with appropriate path and API key. This script assumes you have created a macro called CRASHLYTICSAPIKEY inside your precompiled header file. You can also just put it straight in. Make sure path is correct!
+
 ```sh
 #get Crashlytics API key from precompiled header and call the dSYM uploader with the key
 CRASHLYTICSAPIKEY=$(grep CRASHLYTICSAPIKEY "${PROJECT_DIR}/${GCC_PREFIX_HEADER}" | awk '{print $3}' | grep -oEi "[^@^\"]+")
