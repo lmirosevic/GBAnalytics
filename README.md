@@ -3,6 +3,14 @@ GBAnalytics
 
 Abstracts away different analytics networks and provides a unified simple interface
 
+Supported networks
+------------
+
+* Flurry
+* Google Analytics
+* Bugsense
+* Crashlytics
+
 Usage
 ------------
 
@@ -39,14 +47,6 @@ Track event with dictionary (supports Flurry):
 ```objective-c
 _td(@"Purchased in-app", @{@"item": @"red sword"});
 ```
-
-Supported networks
-------------
-
-* Flurry
-* Google Analytics
-* Bugsense
-* Crashlytics
 
 Dependencies
 ------------
