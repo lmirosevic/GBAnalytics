@@ -49,7 +49,7 @@ Dependencies
 
 Static libraries (Add dependency, link, -ObjC linker flag, header search path in superproject):
 
-* GBToolbox
+* [GBToolbox](https://github.com/lmirosevic/GBToolbox)
 
 System Frameworks (link them in):
 
