@@ -33,6 +33,20 @@
 			remoteGlobalIDString = 8A0C4E34165FA60C00A990FB;
 			remoteInfo = GBToolboxUnitTests;
 		};
+		8ACE94AE16C125B000527E0D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8A2800DE16B7CEE3007CEEC2 /* GBToolbox.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8AD911B0162D9E2200C9D287;
+			remoteInfo = "GBToolbox-iOS";
+		};
+		8ACE94B316C125B000527E0D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8A2800DE16B7CEE3007CEEC2 /* GBToolbox.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8A0377FB16BFCD2F0096C448;
+			remoteInfo = "GBToolbox-OSX";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -106,6 +120,7 @@
 			children = (
 				8A2800E416B7CEE3007CEEC2 /* libGBToolbox.a */,
 				8A2800E616B7CEE3007CEEC2 /* GBToolboxUnitTests.octest */,
+				8ACE94B416C125B000527E0D /* GBToolbox.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -216,6 +231,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				8ACE94AF16C125B000527E0D /* PBXTargetDependency */,
 			);
 			name = GBAnalytics;
 			productName = GBAnalytics;
@@ -269,6 +285,13 @@
 			remoteRef = 8A2800E516B7CEE3007CEEC2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		8ACE94B416C125B000527E0D /* GBToolbox.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = GBToolbox.framework;
+			remoteRef = 8ACE94B316C125B000527E0D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -281,6 +304,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8ACE94AF16C125B000527E0D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "GBToolbox-iOS";
+			targetProxy = 8ACE94AE16C125B000527E0D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		8A45A82F16B7C2C100414137 /* Debug */ = {
