@@ -54,7 +54,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
             if (IsValidString(credentials)) {
                 [GBAnalytics sharedAnalytics].connectedAnalyticsNetworks[@(GBAnalyticsNetworkGoogleAnalytics)] = @{kGBAnalyticsCredentialsGoogleAnalyticsTrackingID: credentials};
                 
-                [GAI sharedInstance].trackUncaughtExceptions = NO;//foo not sure abt this
+                [GAI sharedInstance].trackUncaughtExceptions = NO;
                 [[GAI sharedInstance] trackerWithTrackingId:credentials];
             }
             else {
