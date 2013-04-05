@@ -8,18 +8,15 @@
 
 #import "GBAnalytics.h"
 
-static NSString *kGBAnalyticsCredentialsGoogleAnalyticsTrackingID = @"kGBAnalyticsCredentialsGoogleAnalyticsTrackingID";
-
-static NSString *kGBAnalyticsCredentialsFlurryAPIKey = @"kGBAnalyticsCredentialsFlurryAPIKey";
-
-static NSString *kGBAnalyticsCredentialsBugSenseAPIKey = @"kGBAnalyticsCredentialsBugSenseAPIKey";
-
-static NSString *kGBAnalyticsCredentialsCrashlyticsAPIKey = @"kGBAnalyticsCredentialsCrashlyticsAPIKey";
+static NSString * const kGBAnalyticsCredentialsGoogleAnalyticsTrackingID = @"kGBAnalyticsCredentialsGoogleAnalyticsTrackingID";
+static NSString * const kGBAnalyticsCredentialsFlurryAPIKey = @"kGBAnalyticsCredentialsFlurryAPIKey";
+static NSString * const kGBAnalyticsCredentialsBugSenseAPIKey = @"kGBAnalyticsCredentialsBugSenseAPIKey";
+static NSString * const kGBAnalyticsCredentialsCrashlyticsAPIKey = @"kGBAnalyticsCredentialsCrashlyticsAPIKey";
 
 @interface GBAnalytics ()
 
 @property (strong, nonatomic) NSMutableDictionary       *connectedAnalyticsNetworks;
-@property (assign, nonatomic) BOOL                      enableDebugLogging;
+@property (assign, nonatomic) BOOL                      isDebugLoggingEnabled;
 
 @end
 
@@ -29,27 +26,25 @@ static NSString *kGBAnalyticsCredentialsCrashlyticsAPIKey = @"kGBAnalyticsCreden
 #pragma mark - Storage
 
 _singleton(GBAnalytics, sharedAnalytics)
+#define _GBAnalytics [GBAnalytics sharedAnalytics]
 _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetworks)
 
 #pragma mark - Initialiser
 
 -(id)init {
     if (self = [super init]) {
-#if APPSTORE
-        self.enableDebugLogging = NO;
-#else
-        self.enableDebugLogging = YES;
-#endif
+        self.isDebugLoggingEnabled = NO;
     }
     
     return self;
 }
 
-#if !APPSTORE//foo flip this before launch
 #pragma mark - Public API (AppStore)
 
 +(void)startSessionWithNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ... {
-    [self _debugLogSessionStartWithNetwork:network];
+    if ([self isDebugEnabled]) {
+        [self _debugLogSessionStartWithNetwork:network];
+    }
     
     va_list args;
     va_start(args, credentials);
@@ -108,7 +103,9 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
 }
 
 +(void)trackEvent:(NSString *)event {
-    [self _debugLogEvent:event];
+    if ([self isDebugEnabled]) {
+        [self _debugLogEvent:event];
+    }
     
     for (NSNumber *number in [GBAnalytics sharedAnalytics].connectedAnalyticsNetworks) {
         GBAnalyticsNetwork network = [number intValue];
@@ -140,7 +137,9 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
 }
 
 +(void)trackEvent:(NSString *)event withDictionary:(NSDictionary *)dictionary {
-    [self _debugLogEvent:event withDictionary:dictionary];
+    if ([self isDebugEnabled]) {
+        [self _debugLogEvent:event withDictionary:dictionary];
+    }
     
     for (NSNumber *number in [GBAnalytics sharedAnalytics].connectedAnalyticsNetworks) {
         GBAnalyticsNetwork network = [number intValue];
@@ -166,31 +165,18 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
     }
 }
 
-#else
-#pragma mark - Public API (Debugging)
-
-+(void)startSessionWithNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ... {
-    [self _debugLogSessionStartWithNetwork:network];
++(void)setDebug:(BOOL)enable {
+    [GBAnalytics sharedAnalytics].isDebugLoggingEnabled = enable;
 }
 
-+(void)trackEvent:(NSString *)event {
-    [self _debugLogEvent:event];
++(BOOL)isDebugEnabled {
+    return [GBAnalytics sharedAnalytics].isDebugLoggingEnabled;
 }
-
-+(void)trackEvent:(NSString *)event withDictionary:(NSDictionary *)dictionary {
-    [self _debugLogEvent:event withDictionary:dictionary];
-}
-
-#endif
 
 #pragma mark - Debug Logging
 
-+(void)enableDebug:(BOOL)enable {
-    [GBAnalytics sharedAnalytics].enableDebugLogging = enable;
-}
-
 +(void)_debugLogSessionStartWithNetwork:(GBAnalyticsNetwork)network {
-    if ([GBAnalytics sharedAnalytics].enableDebugLogging) {
+    if ([GBAnalytics sharedAnalytics].isDebugLoggingEnabled) {
         NSString *networkName;
         
         switch (network) {
@@ -220,13 +206,13 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
 }
 
 +(void)_debugLogEvent:(NSString *)event {
-    if ([GBAnalytics sharedAnalytics].enableDebugLogging) {
+    if ([GBAnalytics sharedAnalytics].isDebugLoggingEnabled) {
         l(@"GBAnalytics Log: %@", event);
     }
 }
 
 +(void)_debugLogEvent:(NSString *)event withDictionary:(NSDictionary *)dictionary {
-    if ([GBAnalytics sharedAnalytics].enableDebugLogging) {
+    if ([GBAnalytics sharedAnalytics].isDebugLoggingEnabled) {
         l(@"GBAnalytics Log: %@, %@", event, dictionary);
     }
 }

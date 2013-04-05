@@ -20,6 +20,7 @@
 #define _t(event) ([GBAnalytics trackEvent:event])
 #define _td(event, dictionary) ([GBAnalytics trackEvent:event withDictionary:dictionary])
 
-+(void)enableDebug:(BOOL)enable;
++(void)setDebug:(BOOL)enable;
++(BOOL)isDebugEnabled;
 
 @end
