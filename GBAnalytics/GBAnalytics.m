@@ -116,7 +116,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                     [[[GAI sharedInstance] defaultTracker] sendEventWithCategory:@"GBAnalytics" withAction:event withLabel:nil withValue:nil];
                 }
                 else {
-                    l(@"GBAnalytics Error: trackEvent has not been called with a valid non-empty string");
+                    [self _debugErrorString:@"TrackEvent has not been called with a valid non-empty string"];
                 }
             } break;
                 
@@ -125,7 +125,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                     [Flurry logEvent:event];
                 }
                 else {
-                    l(@"GBAnalytics Error: trackEvent has not been called with a valid non-empty string");
+                    [self _debugErrorString:@"TrackEvent has not been called with a valid non-empty string"];
                 }
                 
             } break;
@@ -146,7 +146,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
         
         switch (network) {
             case GBAnalyticsNetworkGoogleAnalytics: {
-                l(@"GBAnalytics Warning: event not sent to Google Analytics (%@)", event);
+                [self _debugWarningString:_f(@"Event not sent to Google Analytics (%@)", event)];
             } break;
                 
             case GBAnalyticsNetworkFlurry: {
@@ -154,9 +154,8 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                     [Flurry logEvent:event withParameters:dictionary];
                 }
                 else {
-                    l(@"GBAnalytics Error: trackEvent has not been called with a valid non-empty string and valid dictionary");
+                    [self _debugErrorString:@"TrackEvent has not been called with a valid non-empty string and valid dictionary"];
                 }
-                
             } break;
                 
             default:
@@ -201,20 +200,39 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                 break;
         }
         
-        l(@"GBAnalytics Log: started session with analytics network: %@", networkName);
+        [self _debugType:@"Log" withString:_f(@"Started session with analytics network: %@", networkName)];
+    }
+}
+
++(void)_debugErrorString:(NSString *)warning {
+    if ([GBAnalytics sharedAnalytics].isDebugLoggingEnabled) {
+        [self _debugType:@"Error" withString:warning];
+    }
+}
+
++(void)_debugWarningString:(NSString *)warning {
+    if ([GBAnalytics sharedAnalytics].isDebugLoggingEnabled) {
+        [self _debugType:@"Warning" withString:warning];
     }
 }
 
 +(void)_debugLogEvent:(NSString *)event {
     if ([GBAnalytics sharedAnalytics].isDebugLoggingEnabled) {
-        l(@"GBAnalytics Log: %@", event);
+        [self _debugType:@"Log" withString:event];
     }
 }
 
 +(void)_debugLogEvent:(NSString *)event withDictionary:(NSDictionary *)dictionary {
     if ([GBAnalytics sharedAnalytics].isDebugLoggingEnabled) {
-        l(@"GBAnalytics Log: %@, %@", event, dictionary);
+        [self _debugType:@"Log" withString:event withDictionary:dictionary];
     }
+}
+
++(void)_debugType:(NSString *)type withString:(NSString *)event {
+    l(@"GBAnalytics %@: %@", type, event);
+}
++(void)_debugType:(NSString *)type withString:(NSString *)event withDictionary:(NSDictionary *)dictionary {
+    l(@"GBAnalytics %@: %@, %@", type, event, dictionary);
 }
 
 @end
