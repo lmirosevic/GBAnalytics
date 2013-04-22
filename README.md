@@ -8,7 +8,6 @@ Supported networks
 
 * Flurry
 * Google Analytics
-* Bugsense
 * Crashlytics
 
 Usage
@@ -28,9 +27,6 @@ Connect to any networks you want in `application:didFinishLaunching:withOptions:
 
 //Connect Google Analytics
 [GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkGoogleAnalytics withCredentials:@"GoogleAnalyticsTrackingID"];
-
-//Connect BugSense
-[GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkBugSense withCredentials:@"BugSenseAPIKey"];
 
 //Connect Crashlytics
 [GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkCrashlytics withCredentials:@"CrashlyticsAPIKey"];
@@ -63,19 +59,10 @@ System Frameworks (link them in):
 
 3rd party frameworks included (make sure project framework search path is correctly set, that framework is added to project as relative link, linked against in build phases of superproject):
 
-* BugSense-iOS
 * Crashlytics
 
 Notes
 ------------
-
-Bugsense related project settings for on-device symbolication:
-
-* Strip Linked Symbols During Copy: NO
-* Strip Linked Product: NO
-* Deployment Postprocessing: NO
-* Generate debug symbols: YES
-* Other linker flags: -ObjC
 
 Crashlytics related project settings for automatic post-build dSYM uploads:
 
