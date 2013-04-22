@@ -8,13 +8,11 @@
 
 #import "GAI.h"
 #import "Flurry.h"
-#import <BugSense-iOS/BugSenseController.h>
 #import <Crashlytics/Crashlytics.h>
 
 typedef enum {
     GBAnalyticsNetworkGoogleAnalytics = 1,
     GBAnalyticsNetworkFlurry,
-    GBAnalyticsNetworkBugSense,
     GBAnalyticsNetworkCrashlytics
 } GBAnalyticsNetwork;
 
@@ -30,9 +28,6 @@ typedef enum {
    Params: GoogleAnalyticsTrackingID
    Example: [GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkGoogleAnalytics withCredentials:@"GoogleAnalyticsTrackingID"];
  
- Bugsense
-   Params: BugsenseAPIKey
-   Example: [GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkBugSense withCredentials:@"BugsenseAPIKey"];
  
  Crashlytics
    Params: CrashlyticsAPIKey

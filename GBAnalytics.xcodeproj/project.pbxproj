@@ -15,7 +15,6 @@
 		8A45A82C16B7C2C100414137 /* GBAnalytics.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8A45A82B16B7C2C100414137 /* GBAnalytics.h */; };
 		8A45A82E16B7C2C100414137 /* GBAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A45A82D16B7C2C100414137 /* GBAnalytics.m */; };
 		8AF6862D16B7E5D200FEF6A7 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AF6862C16B7E5D200FEF6A7 /* libFlurry.a */; };
-		8AF6864F16B7F5EA00FEF6A7 /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AF6864E16B7F5EA00FEF6A7 /* BugSense-iOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,7 +80,6 @@
 		8A45A82D16B7C2C100414137 /* GBAnalytics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GBAnalytics.m; sourceTree = "<group>"; };
 		8AF6862B16B7E5D200FEF6A7 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Flurry.h; path = GBAnalytics/Flurry.h; sourceTree = "<group>"; };
 		8AF6862C16B7E5D200FEF6A7 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry.a; path = GBAnalytics/libFlurry.a; sourceTree = "<group>"; };
-		8AF6864E16B7F5EA00FEF6A7 /* BugSense-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "BugSense-iOS.framework"; path = "GBAnalytics/BugSense-iOS.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +90,6 @@
 				8A2800AE16B7CD34007CEEC2 /* SystemConfiguration.framework in Frameworks */,
 				8A2800AC16B7CD2F007CEEC2 /* CoreData.framework in Frameworks */,
 				8A45A82716B7C2C100414137 /* Foundation.framework in Frameworks */,
-				8AF6864F16B7F5EA00FEF6A7 /* BugSense-iOS.framework in Frameworks */,
 				8A28009916B7CC41007CEEC2 /* libGoogleAnalytics.a in Frameworks */,
 				8AF6862D16B7E5D200FEF6A7 /* libFlurry.a in Frameworks */,
 				8A326A7416BA5F770054D9B6 /* Crashlytics.framework in Frameworks */,
@@ -193,7 +190,6 @@
 			isa = PBXGroup;
 			children = (
 				8A326A4116BA5D3E0054D9B6 /* Crashlytics */,
-				8AF6864D16B7F5E300FEF6A7 /* BugSense */,
 				8AF6863116B7E5D400FEF6A7 /* Flurry */,
 				8A28009A16B7CC44007CEEC2 /* Google Analytics */,
 			);
@@ -207,14 +203,6 @@
 				8AF6862C16B7E5D200FEF6A7 /* libFlurry.a */,
 			);
 			name = Flurry;
-			sourceTree = "<group>";
-		};
-		8AF6864D16B7F5E300FEF6A7 /* BugSense */ = {
-			isa = PBXGroup;
-			children = (
-				8AF6864E16B7F5EA00FEF6A7 /* BugSense-iOS.framework */,
-			);
-			name = BugSense;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

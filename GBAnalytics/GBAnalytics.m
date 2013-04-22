@@ -72,18 +72,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                 NSAssert(NO, @"GBAnalytics Error: Didn't pass valid credentials for Flurry");
             }
         } break;
-            
-        case GBAnalyticsNetworkBugSense: {
-            if (IsValidString(credentials)) {
-                [GBAnalytics sharedAnalytics].connectedAnalyticsNetworks[@(GBAnalyticsNetworkBugSense)] = @{kGBAnalyticsCredentialsBugSenseAPIKey: credentials};
-                
-                [BugSenseController sharedControllerWithBugSenseAPIKey:credentials];
-            }
-            else {
-                NSAssert(NO, @"GBAnalytics Error: Didn't pass valid credentials for BugSense");
-            }
-        } break;
-            
+                        
         case GBAnalyticsNetworkCrashlytics: {
             if (IsValidString(credentials)) {
                 [GBAnalytics sharedAnalytics].connectedAnalyticsNetworks[@(GBAnalyticsNetworkCrashlytics)] = @{kGBAnalyticsCredentialsCrashlyticsAPIKey: credentials};
@@ -185,10 +174,6 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                 
             case GBAnalyticsNetworkFlurry:
                 networkName = @"Flurry";
-                break;
-                
-            case GBAnalyticsNetworkBugSense:
-                networkName = @"BugSense";
                 break;
                 
             case GBAnalyticsNetworkCrashlytics:
