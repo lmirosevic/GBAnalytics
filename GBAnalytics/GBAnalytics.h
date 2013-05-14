@@ -17,8 +17,8 @@
 
 +(void)trackEvent:(NSString *)event;
 +(void)trackEvent:(NSString *)event withDictionary:(NSDictionary *)dictionary;//only supported by flurry
-#define _t(event) ([GBAnalytics trackEvent:event])
-#define _td(event, dictionary) ([GBAnalytics trackEvent:event withDictionary:dictionary])
+static inline _t(event) { [GBAnalytics trackEvent:event] };
+static inline _td(event, dictionary) { [GBAnalytics trackEvent:event withDictionary:dictionary] };
 
 +(void)setDebug:(BOOL)enable;
 +(BOOL)isDebugEnabled;
