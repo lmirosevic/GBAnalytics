@@ -17,10 +17,12 @@
 
 +(void)trackEvent:(NSString *)event;
 +(void)trackEvent:(NSString *)event withDictionary:(NSDictionary *)dictionary;//only supported by flurry
-static inline void _t(NSString *event) { [GBAnalytics trackEvent:event]; }
-static inline void _td(NSString *event, NSDictionary *dictionary) { [GBAnalytics trackEvent:event withDictionary:dictionary]; }
 
 +(void)setDebug:(BOOL)enable;
 +(BOOL)isDebugEnabled;
 
 @end
+
+//Shorthands
+static inline void _t(NSString *event) { [GBAnalytics trackEvent:event]; }
+static inline void _td(NSString *event, NSDictionary *dictionary) { [GBAnalytics trackEvent:event withDictionary:dictionary]; }
