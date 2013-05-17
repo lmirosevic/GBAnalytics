@@ -13,6 +13,8 @@ static NSString * const kGBAnalyticsCredentialsFlurryAPIKey = @"kGBAnalyticsCred
 static NSString * const kGBAnalyticsCredentialsBugSenseAPIKey = @"kGBAnalyticsCredentialsBugSenseAPIKey";
 static NSString * const kGBAnalyticsCredentialsCrashlyticsAPIKey = @"kGBAnalyticsCredentialsCrashlyticsAPIKey";
 
+static NSString * const kGBAnalyticsGoogleAnalyticsActionlessEventActionString = @"Plain";
+
 @interface GBAnalytics ()
 
 @property (strong, nonatomic) NSMutableDictionary       *connectedAnalyticsNetworks;
@@ -42,9 +44,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
 #pragma mark - Public API (AppStore)
 
 +(void)startSessionWithNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ... {
-    if ([self isDebugEnabled]) {
-        [self _debugLogSessionStartWithNetwork:network];
-    }
+    if ([self isDebugEnabled]) [self _debugLogSessionStartWithNetwork:network];
     
     va_list args;
     va_start(args, credentials);
@@ -84,72 +84,71 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
             }
         } break;
             
-        default:
-            return;
+        default: {
+            NSAssert(NO, @"GBAnalytics Error: Tried to connect invalid network: %d", network);
+        } return;
     }
     
     va_end(args);
 }
 
 +(void)trackEvent:(NSString *)event {
-    if ([self isDebugEnabled]) {
-        [self _debugLogEvent:event];
-    }
+    if ([self isDebugEnabled]) [self _debugLogEvent:event];
     
-    for (NSNumber *number in [GBAnalytics sharedAnalytics].connectedAnalyticsNetworks) {
-        GBAnalyticsNetwork network = [number intValue];
-        
-        switch (network) {
-            case GBAnalyticsNetworkGoogleAnalytics: {
-                if (IsValidString(event)) {
-                    [[[GAI sharedInstance] defaultTracker] sendEventWithCategory:@"GBAnalytics" withAction:event withLabel:nil withValue:nil];
-                }
-                else {
-                    [self _debugErrorString:@"TrackEvent has not been called with a valid non-empty string"];
-                }
-            } break;
-                
-            case GBAnalyticsNetworkFlurry: {
-                if (IsValidString(event)) {
+    if (IsValidString(event)) {
+        for (NSNumber *number in [GBAnalytics sharedAnalytics].connectedAnalyticsNetworks) {
+            GBAnalyticsNetwork network = [number intValue];
+            
+            switch (network) {
+                case GBAnalyticsNetworkGoogleAnalytics: {
+                    [[[GAI sharedInstance] defaultTracker] sendEventWithCategory:event withAction:kGBAnalyticsGoogleAnalyticsActionlessEventActionString withLabel:nil withValue:nil];
+                } break;
+                    
+                case GBAnalyticsNetworkFlurry: {
                     [Flurry logEvent:event];
-                }
-                else {
-                    [self _debugErrorString:@"TrackEvent has not been called with a valid non-empty string"];
-                }
-                
-            } break;
-                
-            default:
-                break;
+                } break;
+                    
+                default:
+                    break;
+            }
         }
+    }
+    else {
+        [self _debugErrorString:@"TrackEvent has not been called with a valid non-empty string"];
     }
 }
 
 +(void)trackEvent:(NSString *)event withDictionary:(NSDictionary *)dictionary {
-    if ([self isDebugEnabled]) {
-        [self _debugLogEvent:event withDictionary:dictionary];
-    }
+    if ([self isDebugEnabled]) [self _debugLogEvent:event withDictionary:dictionary];
     
-    for (NSNumber *number in [GBAnalytics sharedAnalytics].connectedAnalyticsNetworks) {
-        GBAnalyticsNetwork network = [number intValue];
-        
-        switch (network) {
-            case GBAnalyticsNetworkGoogleAnalytics: {
-                [self _debugWarningString:_f(@"Event not sent to Google Analytics (%@)", event)];
-            } break;
-                
-            case GBAnalyticsNetworkFlurry: {
-                if (IsValidString(event) && dictionary) {
-                    [Flurry logEvent:event withParameters:dictionary];
-                }
-                else {
-                    [self _debugErrorString:@"TrackEvent has not been called with a valid non-empty string and valid dictionary"];
-                }
-            } break;
-                
-            default:
-                break;
+    if (IsValidString(event)) {
+        //if the dictionary is not a dict or empty, just forward the call to the simple trackeEvent and thereby discard the event nonsense
+        if (![dictionary isKindOfClass:[NSDictionary class]] || dictionary.count == 0) {
+            [self trackEvent:event];
         }
+        
+        for (NSNumber *number in [GBAnalytics sharedAnalytics].connectedAnalyticsNetworks) {
+            GBAnalyticsNetwork network = [number intValue];
+            
+            switch (network) {
+                case GBAnalyticsNetworkGoogleAnalytics: {
+                    //for each key/value pair in the dict, send a separate event with a corresponding action/label pair
+                    for (NSString *key in dictionary) {
+                        [[[GAI sharedInstance] defaultTracker] sendEventWithCategory:event withAction:key withLabel:dictionary[key] withValue:nil];
+                    }
+                } break;
+                    
+                case GBAnalyticsNetworkFlurry: {
+                    [Flurry logEvent:event withParameters:dictionary];
+                } break;
+                    
+                default:
+                    break;
+            }
+        }
+    }
+    else {
+        [self _debugErrorString:@"TrackEvent has not been called with a valid non-empty string"];
     }
 }
 
@@ -185,7 +184,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                 break;
         }
         
-        [self _debugType:@"Log" withString:_f(@"Started session with analytics network: %@", networkName)];
+        [self _debugLogEvent:_f(@"Started session with analytics network: %@", networkName)];
     }
 }
 
