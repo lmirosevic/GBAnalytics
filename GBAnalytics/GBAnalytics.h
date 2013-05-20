@@ -16,7 +16,7 @@
 +(void)startSessionWithNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ...;
 
 +(void)trackEvent:(NSString *)event;
-+(void)trackEvent:(NSString *)event withDictionary:(NSDictionary *)dictionary;//only supported by flurry
++(void)trackEvent:(NSString *)event withDictionary:(NSDictionary *)dictionary;
 
 +(void)setDebug:(BOOL)enable;
 +(BOOL)isDebugEnabled;
