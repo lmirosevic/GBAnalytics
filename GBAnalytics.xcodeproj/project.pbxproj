@@ -116,7 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				8A2800E416B7CEE3007CEEC2 /* libGBToolbox.a */,
-				8A2800E616B7CEE3007CEEC2 /* GBToolboxUnitTests.octest */,
+				8A2800E616B7CEE3007CEEC2 /* GBToolboxUnitTests-iOS.octest */,
 				8ACE94B416C125B000527E0D /* GBToolbox.framework */,
 			);
 			name = Products;
@@ -232,7 +232,7 @@
 		8A45A81A16B7C2C100414137 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Goonbee;
 			};
 			buildConfigurationList = 8A45A81D16B7C2C100414137 /* Build configuration list for PBXProject "GBAnalytics" */;
@@ -266,10 +266,10 @@
 			remoteRef = 8A2800E316B7CEE3007CEEC2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8A2800E616B7CEE3007CEEC2 /* GBToolboxUnitTests.octest */ = {
+		8A2800E616B7CEE3007CEEC2 /* GBToolboxUnitTests-iOS.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = GBToolboxUnitTests.octest;
+			path = "GBToolboxUnitTests-iOS.octest";
 			remoteRef = 8A2800E516B7CEE3007CEEC2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -326,6 +326,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "../**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 			};
