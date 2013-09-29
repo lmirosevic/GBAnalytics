@@ -7,7 +7,10 @@
 //
 
 #import "GAI.h"
+#import "GAIDictionaryBuilder.h"
+
 #import "Flurry.h"
+
 #import <Crashlytics/Crashlytics.h>
 
 typedef enum {

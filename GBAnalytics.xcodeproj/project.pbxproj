@@ -13,8 +13,8 @@
 		8A45A82716B7C2C100414137 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A45A82616B7C2C100414137 /* Foundation.framework */; };
 		8A45A82C16B7C2C100414137 /* GBAnalytics.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8A45A82B16B7C2C100414137 /* GBAnalytics.h */; };
 		8A45A82E16B7C2C100414137 /* GBAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A45A82D16B7C2C100414137 /* GBAnalytics.m */; };
-		8AB91A9717296428003C4C24 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AB91A9617296428003C4C24 /* libFlurry.a */; };
-		8AB91A9E172964FF003C4C24 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AB91A9D172964FF003C4C24 /* libGoogleAnalytics.a */; };
+		8ADDB97B17F86C8E000D1CC7 /* libFlurry_4.2.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ADDB97A17F86C8E000D1CC7 /* libFlurry_4.2.3.a */; };
+		8ADDB98317F86C9B000D1CC7 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ADDB98217F86C9B000D1CC7 /* libGoogleAnalyticsServices.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,14 +72,15 @@
 		8A45A82A16B7C2C100414137 /* GBAnalytics-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GBAnalytics-Prefix.pch"; sourceTree = "<group>"; };
 		8A45A82B16B7C2C100414137 /* GBAnalytics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBAnalytics.h; sourceTree = "<group>"; };
 		8A45A82D16B7C2C100414137 /* GBAnalytics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GBAnalytics.m; sourceTree = "<group>"; };
-		8AB91A9517296428003C4C24 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Flurry.h; path = GBAnalytics/Flurry.h; sourceTree = "<group>"; };
-		8AB91A9617296428003C4C24 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry.a; path = GBAnalytics/libFlurry.a; sourceTree = "<group>"; };
-		8AB91A98172964FF003C4C24 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = GBAnalytics/GAI.h; sourceTree = "<group>"; };
-		8AB91A99172964FF003C4C24 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = GBAnalytics/GAITrackedViewController.h; sourceTree = "<group>"; };
-		8AB91A9A172964FF003C4C24 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = GBAnalytics/GAITracker.h; sourceTree = "<group>"; };
-		8AB91A9B172964FF003C4C24 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransaction.h; path = GBAnalytics/GAITransaction.h; sourceTree = "<group>"; };
-		8AB91A9C172964FF003C4C24 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransactionItem.h; path = GBAnalytics/GAITransactionItem.h; sourceTree = "<group>"; };
-		8AB91A9D172964FF003C4C24 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalytics.a; path = GBAnalytics/libGoogleAnalytics.a; sourceTree = "<group>"; };
+		8ADDB97917F86C8E000D1CC7 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Flurry.h; path = GBAnalytics/Flurry.h; sourceTree = "<group>"; };
+		8ADDB97A17F86C8E000D1CC7 /* libFlurry_4.2.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_4.2.3.a; path = GBAnalytics/libFlurry_4.2.3.a; sourceTree = "<group>"; };
+		8ADDB97C17F86C9B000D1CC7 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = GBAnalytics/GAI.h; sourceTree = "<group>"; };
+		8ADDB97D17F86C9B000D1CC7 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIDictionaryBuilder.h; path = GBAnalytics/GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		8ADDB97E17F86C9B000D1CC7 /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIFields.h; path = GBAnalytics/GAIFields.h; sourceTree = "<group>"; };
+		8ADDB97F17F86C9B000D1CC7 /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAILogger.h; path = GBAnalytics/GAILogger.h; sourceTree = "<group>"; };
+		8ADDB98017F86C9B000D1CC7 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = GBAnalytics/GAITrackedViewController.h; sourceTree = "<group>"; };
+		8ADDB98117F86C9B000D1CC7 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = GBAnalytics/GAITracker.h; sourceTree = "<group>"; };
+		8ADDB98217F86C9B000D1CC7 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = GBAnalytics/libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,12 +88,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8ADDB97B17F86C8E000D1CC7 /* libFlurry_4.2.3.a in Frameworks */,
+				8ADDB98317F86C9B000D1CC7 /* libGoogleAnalyticsServices.a in Frameworks */,
 				8A2800AE16B7CD34007CEEC2 /* SystemConfiguration.framework in Frameworks */,
 				8A2800AC16B7CD2F007CEEC2 /* CoreData.framework in Frameworks */,
 				8A45A82716B7C2C100414137 /* Foundation.framework in Frameworks */,
 				8A326A7416BA5F770054D9B6 /* Crashlytics.framework in Frameworks */,
-				8AB91A9717296428003C4C24 /* libFlurry.a in Frameworks */,
-				8AB91A9E172964FF003C4C24 /* libGoogleAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,12 +103,13 @@
 		8A28009A16B7CC44007CEEC2 /* Google Analytics */ = {
 			isa = PBXGroup;
 			children = (
-				8AB91A98172964FF003C4C24 /* GAI.h */,
-				8AB91A99172964FF003C4C24 /* GAITrackedViewController.h */,
-				8AB91A9A172964FF003C4C24 /* GAITracker.h */,
-				8AB91A9B172964FF003C4C24 /* GAITransaction.h */,
-				8AB91A9C172964FF003C4C24 /* GAITransactionItem.h */,
-				8AB91A9D172964FF003C4C24 /* libGoogleAnalytics.a */,
+				8ADDB97C17F86C9B000D1CC7 /* GAI.h */,
+				8ADDB97D17F86C9B000D1CC7 /* GAIDictionaryBuilder.h */,
+				8ADDB97E17F86C9B000D1CC7 /* GAIFields.h */,
+				8ADDB97F17F86C9B000D1CC7 /* GAILogger.h */,
+				8ADDB98017F86C9B000D1CC7 /* GAITrackedViewController.h */,
+				8ADDB98117F86C9B000D1CC7 /* GAITracker.h */,
+				8ADDB98217F86C9B000D1CC7 /* libGoogleAnalyticsServices.a */,
 			);
 			name = "Google Analytics";
 			sourceTree = "<group>";
@@ -199,8 +201,8 @@
 		8AF6863116B7E5D400FEF6A7 /* Flurry */ = {
 			isa = PBXGroup;
 			children = (
-				8AB91A9517296428003C4C24 /* Flurry.h */,
-				8AB91A9617296428003C4C24 /* libFlurry.a */,
+				8ADDB97917F86C8E000D1CC7 /* Flurry.h */,
+				8ADDB97A17F86C8E000D1CC7 /* libFlurry_4.2.3.a */,
 			);
 			name = Flurry;
 			sourceTree = "<group>";
@@ -368,8 +370,10 @@
 				GCC_PREFIX_HEADER = "GBAnalytics/GBAnalytics-Prefix.pch";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/GBAnalytics\"",
+					"$(SRCROOT)",
+					"\\\"$(SRCROOT)/GBAnalytics\\\"",
+					"/Users/lm/Dropbox/Projects/Goonbee\\ Modules/GBAnalytics",
+					"/Users/lm/Dropbox/Projects/Goonbee\\ Modules/GBAnalytics/GBAnalytics",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -390,8 +394,10 @@
 				GCC_PREFIX_HEADER = "GBAnalytics/GBAnalytics-Prefix.pch";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/GBAnalytics\"",
+					"$(SRCROOT)",
+					"\\\"$(SRCROOT)/GBAnalytics\\\"",
+					"/Users/lm/Dropbox/Projects/Goonbee\\ Modules/GBAnalytics",
+					"/Users/lm/Dropbox/Projects/Goonbee\\ Modules/GBAnalytics/GBAnalytics",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

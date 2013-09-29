@@ -57,6 +57,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                 if (IsValidString(credentials)) {
                     [GBAnalytics sharedAnalytics].connectedAnalyticsNetworks[@(GBAnalyticsNetworkGoogleAnalytics)] = @{kGBAnalyticsCredentialsGoogleAnalyticsTrackingID: credentials};
                     
+                    [GAI sharedInstance].dispatchInterval = 5;
                     [GAI sharedInstance].trackUncaughtExceptions = NO;
                     [[GAI sharedInstance] trackerWithTrackingId:credentials];
                 }
@@ -107,7 +108,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                 
                 switch (network) {
                     case GBAnalyticsNetworkGoogleAnalytics: {
-                        [[[GAI sharedInstance] defaultTracker] sendEventWithCategory:event withAction:kGBAnalyticsGoogleAnalyticsActionlessEventActionString withLabel:nil withValue:nil];
+                        [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:event action:kGBAnalyticsGoogleAnalyticsActionlessEventActionString label:nil value:nil] build]];
                     } break;
                         
                     case GBAnalyticsNetworkFlurry: {
@@ -143,7 +144,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                     case GBAnalyticsNetworkGoogleAnalytics: {
                         //for each key/value pair in the dict, send a separate event with a corresponding action/label pair
                         for (NSString *key in dictionary) {
-                            [[[GAI sharedInstance] defaultTracker] sendEventWithCategory:event withAction:key withLabel:dictionary[key] withValue:nil];
+                            [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:event action:key label:dictionary[key] value:nil] build]];
                         }
                     } break;
                         
