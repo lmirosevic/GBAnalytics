@@ -10,10 +10,15 @@
 
 #import <GBToolbox/GBToolbox.h>
 
+#import "GBAnalytics_OpenUDID.h"
+
+#import <AdSupport/AdSupport.h>
+
 static NSString * const kGBAnalyticsCredentialsGoogleAnalyticsTrackingID = @"kGBAnalyticsCredentialsGoogleAnalyticsTrackingID";
 static NSString * const kGBAnalyticsCredentialsFlurryAPIKey = @"kGBAnalyticsCredentialsFlurryAPIKey";
-static NSString * const kGBAnalyticsCredentialsBugSenseAPIKey = @"kGBAnalyticsCredentialsBugSenseAPIKey";
 static NSString * const kGBAnalyticsCredentialsCrashlyticsAPIKey = @"kGBAnalyticsCredentialsCrashlyticsAPIKey";
+static NSString * const kGBAnalyticsCredentialsTapstreamAccountName = @"kGBAnalyticsCredentialsTapstreamAccountName";
+static NSString * const kGBAnalyticsCredentialsTapstreamSDKSecret = @"kGBAnalyticsCredentialsTapstreamSDKSecret";
 
 static NSString * const kGBAnalyticsGoogleAnalyticsActionlessEventActionString = @"Plain";
 
@@ -90,6 +95,24 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                 }
             } break;
                 
+            case GBAnalyticsNetworkTapstream: {
+                NSString *AccountName = credentials;
+                NSString *SDKSecret = va_arg(args, NSString *);
+                
+                if (IsValidString(AccountName) && IsValidString(SDKSecret)) {
+                    [GBAnalytics sharedAnalytics].connectedAnalyticsNetworks[@(GBAnalyticsNetworkTapstream)] = @{kGBAnalyticsCredentialsTapstreamAccountName: AccountName, kGBAnalyticsCredentialsTapstreamSDKSecret: SDKSecret};
+                    
+                    [TSLogging setLogger:nil];
+                    TSConfig *config = [TSConfig configWithDefaults];
+                    config.openUdid = [OpenUDID value];
+                    if (IsClassAvailable(ASIdentifierManager)) config.idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+                    [TSTapstream createWithAccountName:AccountName developerSecret:SDKSecret config:config];
+                }
+                else {
+                    NSAssert(NO, @"GBAnalytics Error: Didn't pass valid credentials for Tapstream");
+                }
+            } break;
+                
             default: {
                 NSAssert(NO, @"GBAnalytics Error: Tried to connect invalid network: %d", network);
             } return;
@@ -115,6 +138,10 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                         
                     case GBAnalyticsNetworkFlurry: {
                         [Flurry logEvent:event];
+                    } break;
+                        
+                    case GBAnalyticsNetworkTapstream: {
+                        [[TSTapstream instance] fireEvent:[TSEvent eventWithName:event oneTimeOnly:NO]];
                     } break;
                         
                     default:
@@ -154,6 +181,43 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                         [Flurry logEvent:event withParameters:dictionary];
                     } break;
                         
+                    case GBAnalyticsNetworkTapstream: {
+                        TSEvent *e = [TSEvent eventWithName:event oneTimeOnly:NO];
+
+                        BOOL shouldSend = NO;
+                        for (NSString *key in dictionary) {
+                            id value = dictionary[key];
+                            
+                            if ([value isKindOfClass:NSString.class]) {
+                                [e addValue:value forKey:key];
+                                shouldSend = YES;
+                            }
+                            else if ([value isKindOfClass:NSNumber.class]) {
+                                if (strcmp([value objCType], @encode(BOOL)) == 0) {
+                                    [e addBooleanValue:[value boolValue] forKey:key];
+                                    shouldSend = YES;
+                                }
+                                else if ((strcmp([value objCType], @encode(int)) == 0) ||
+                                         (strcmp([value objCType], @encode(long)) == 0)) {
+                                    [e addIntegerValue:[value intValue] forKey:key];
+                                    shouldSend = YES;
+                                }
+                                else if ((strcmp([value objCType], @encode(unsigned int)) == 0) ||
+                                         (strcmp([value objCType], @encode(unsigned long)) == 0)) {
+                                    [e addUnsignedIntegerValue:[value unsignedIntValue] forKey:key];
+                                    shouldSend = YES;
+                                }
+                                else if ((strcmp([value objCType], @encode(float)) == 0) ||
+                                         (strcmp([value objCType], @encode(double)) == 0)) {
+                                    [e addDoubleValue:[value doubleValue] forKey:key];
+                                    shouldSend = YES;
+                                }
+                            }
+                        }
+                        
+                        if (shouldSend) [[TSTapstream instance] fireEvent:e];
+                    } break;
+                        
                     default:
                         break;
                 }
@@ -180,21 +244,25 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
         NSString *networkName;
         
         switch (network) {
-            case GBAnalyticsNetworkGoogleAnalytics:
+            case GBAnalyticsNetworkGoogleAnalytics: {
                 networkName = @"Google Analytics";
-                break;
+            } break;
                 
-            case GBAnalyticsNetworkFlurry:
+            case GBAnalyticsNetworkFlurry: {
                 networkName = @"Flurry";
-                break;
+            } break;
                 
-            case GBAnalyticsNetworkCrashlytics:
+            case GBAnalyticsNetworkCrashlytics: {
                 networkName = @"Crashlytics";
-                break;
+            } break;
                 
-            default:
+            case GBAnalyticsNetworkTapstream: {
+                networkName = @"Tapstream";
+            } break;
+                
+            default: {
                 networkName = @"Unkown Network";
-                break;
+            } break;
         }
         
         [self _debugLogEvent:_f(@"Started session with analytics network: %@", networkName)];

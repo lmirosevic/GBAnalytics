@@ -12,6 +12,17 @@
 		8A45A82716B7C2C100414137 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A45A82616B7C2C100414137 /* Foundation.framework */; };
 		8A45A82C16B7C2C100414137 /* GBAnalytics.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8A45A82B16B7C2C100414137 /* GBAnalytics.h */; };
 		8A45A82E16B7C2C100414137 /* GBAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A45A82D16B7C2C100414137 /* GBAnalytics.m */; };
+		8A6B0F2318277315009C2ABF /* GBAnalytics_OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6B0F2218277315009C2ABF /* GBAnalytics_OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8A6B0F3C1827732E009C2ABF /* TSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6B0F261827732E009C2ABF /* TSConfig.m */; };
+		8A6B0F3D1827732E009C2ABF /* TSCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6B0F281827732E009C2ABF /* TSCore.m */; };
+		8A6B0F3E1827732E009C2ABF /* TSCoreListenerImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6B0F2B1827732E009C2ABF /* TSCoreListenerImpl.m */; };
+		8A6B0F3F1827732E009C2ABF /* TSEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6B0F2E1827732E009C2ABF /* TSEvent.m */; };
+		8A6B0F401827732E009C2ABF /* TSHit.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6B0F311827732E009C2ABF /* TSHit.m */; };
+		8A6B0F411827732E009C2ABF /* TSLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6B0F331827732E009C2ABF /* TSLogging.m */; };
+		8A6B0F421827732E009C2ABF /* TSPlatformImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6B0F371827732E009C2ABF /* TSPlatformImpl.m */; };
+		8A6B0F431827732E009C2ABF /* TSResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6B0F391827732E009C2ABF /* TSResponse.m */; };
+		8A6B0F441827732E009C2ABF /* TSTapstream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6B0F3B1827732E009C2ABF /* TSTapstream.m */; };
+		8A6B0F4618277489009C2ABF /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A6B0F4518277489009C2ABF /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8AD1F952180E741700E1029C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD1F951180E741700E1029C /* Crashlytics.framework */; };
 		8ADDB97B17F86C8E000D1CC7 /* libFlurry_4.2.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ADDB97A17F86C8E000D1CC7 /* libFlurry_4.2.3.a */; };
 		8ADDB98317F86C9B000D1CC7 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ADDB98217F86C9B000D1CC7 /* libGoogleAnalyticsServices.a */; };
@@ -71,6 +82,33 @@
 		8A45A82A16B7C2C100414137 /* GBAnalytics-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GBAnalytics-Prefix.pch"; sourceTree = "<group>"; };
 		8A45A82B16B7C2C100414137 /* GBAnalytics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBAnalytics.h; sourceTree = "<group>"; };
 		8A45A82D16B7C2C100414137 /* GBAnalytics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GBAnalytics.m; sourceTree = "<group>"; };
+		8A6B0F2118277315009C2ABF /* GBAnalytics_OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GBAnalytics_OpenUDID.h; path = GBAnalytics/GBAnalytics_OpenUDID.h; sourceTree = "<group>"; };
+		8A6B0F2218277315009C2ABF /* GBAnalytics_OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GBAnalytics_OpenUDID.m; path = GBAnalytics/GBAnalytics_OpenUDID.m; sourceTree = "<group>"; };
+		8A6B0F241827732E009C2ABF /* TSApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSApi.h; path = GBAnalytics/TSApi.h; sourceTree = "<group>"; };
+		8A6B0F251827732E009C2ABF /* TSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSConfig.h; path = GBAnalytics/TSConfig.h; sourceTree = "<group>"; };
+		8A6B0F261827732E009C2ABF /* TSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSConfig.m; path = GBAnalytics/TSConfig.m; sourceTree = "<group>"; };
+		8A6B0F271827732E009C2ABF /* TSCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSCore.h; path = GBAnalytics/TSCore.h; sourceTree = "<group>"; };
+		8A6B0F281827732E009C2ABF /* TSCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSCore.m; path = GBAnalytics/TSCore.m; sourceTree = "<group>"; };
+		8A6B0F291827732E009C2ABF /* TSCoreListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSCoreListener.h; path = GBAnalytics/TSCoreListener.h; sourceTree = "<group>"; };
+		8A6B0F2A1827732E009C2ABF /* TSCoreListenerImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSCoreListenerImpl.h; path = GBAnalytics/TSCoreListenerImpl.h; sourceTree = "<group>"; };
+		8A6B0F2B1827732E009C2ABF /* TSCoreListenerImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSCoreListenerImpl.m; path = GBAnalytics/TSCoreListenerImpl.m; sourceTree = "<group>"; };
+		8A6B0F2C1827732E009C2ABF /* TSDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSDelegate.h; path = GBAnalytics/TSDelegate.h; sourceTree = "<group>"; };
+		8A6B0F2D1827732E009C2ABF /* TSEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSEvent.h; path = GBAnalytics/TSEvent.h; sourceTree = "<group>"; };
+		8A6B0F2E1827732E009C2ABF /* TSEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSEvent.m; path = GBAnalytics/TSEvent.m; sourceTree = "<group>"; };
+		8A6B0F2F1827732E009C2ABF /* TSHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSHelpers.h; path = GBAnalytics/TSHelpers.h; sourceTree = "<group>"; };
+		8A6B0F301827732E009C2ABF /* TSHit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSHit.h; path = GBAnalytics/TSHit.h; sourceTree = "<group>"; };
+		8A6B0F311827732E009C2ABF /* TSHit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSHit.m; path = GBAnalytics/TSHit.m; sourceTree = "<group>"; };
+		8A6B0F321827732E009C2ABF /* TSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSLogging.h; path = GBAnalytics/TSLogging.h; sourceTree = "<group>"; };
+		8A6B0F331827732E009C2ABF /* TSLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSLogging.m; path = GBAnalytics/TSLogging.m; sourceTree = "<group>"; };
+		8A6B0F341827732E009C2ABF /* TSLogLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSLogLevel.h; path = GBAnalytics/TSLogLevel.h; sourceTree = "<group>"; };
+		8A6B0F351827732E009C2ABF /* TSPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSPlatform.h; path = GBAnalytics/TSPlatform.h; sourceTree = "<group>"; };
+		8A6B0F361827732E009C2ABF /* TSPlatformImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSPlatformImpl.h; path = GBAnalytics/TSPlatformImpl.h; sourceTree = "<group>"; };
+		8A6B0F371827732E009C2ABF /* TSPlatformImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSPlatformImpl.m; path = GBAnalytics/TSPlatformImpl.m; sourceTree = "<group>"; };
+		8A6B0F381827732E009C2ABF /* TSResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSResponse.h; path = GBAnalytics/TSResponse.h; sourceTree = "<group>"; };
+		8A6B0F391827732E009C2ABF /* TSResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSResponse.m; path = GBAnalytics/TSResponse.m; sourceTree = "<group>"; };
+		8A6B0F3A1827732E009C2ABF /* TSTapstream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSTapstream.h; path = GBAnalytics/TSTapstream.h; sourceTree = "<group>"; };
+		8A6B0F3B1827732E009C2ABF /* TSTapstream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSTapstream.m; path = GBAnalytics/TSTapstream.m; sourceTree = "<group>"; };
+		8A6B0F4518277489009C2ABF /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		8AD1F951180E741700E1029C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = GBAnalytics/Crashlytics.framework; sourceTree = "<group>"; };
 		8ADDB97917F86C8E000D1CC7 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Flurry.h; path = GBAnalytics/Flurry.h; sourceTree = "<group>"; };
 		8ADDB97A17F86C8E000D1CC7 /* libFlurry_4.2.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_4.2.3.a; path = GBAnalytics/libFlurry_4.2.3.a; sourceTree = "<group>"; };
@@ -88,6 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A6B0F4618277489009C2ABF /* AdSupport.framework in Frameworks */,
 				8ADDB97B17F86C8E000D1CC7 /* libFlurry_4.2.3.a in Frameworks */,
 				8ADDB98317F86C9B000D1CC7 /* libGoogleAnalyticsServices.a in Frameworks */,
 				8A2800AE16B7CD34007CEEC2 /* SystemConfiguration.framework in Frameworks */,
@@ -127,6 +166,7 @@
 		8A2800E716B7CEE6007CEEC2 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				8A6B0F1D1827727D009C2ABF /* OpenUDID */,
 				8A2800DE16B7CEE3007CEEC2 /* GBToolbox.xcodeproj */,
 			);
 			name = Libraries;
@@ -162,6 +202,7 @@
 		8A45A82516B7C2C100414137 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8A6B0F4518277489009C2ABF /* AdSupport.framework */,
 				8A2800AD16B7CD34007CEEC2 /* SystemConfiguration.framework */,
 				8A2800AB16B7CD2F007CEEC2 /* CoreData.framework */,
 				8A45A82616B7C2C100414137 /* Foundation.framework */,
@@ -194,8 +235,49 @@
 				8A326A4116BA5D3E0054D9B6 /* Crashlytics */,
 				8AF6863116B7E5D400FEF6A7 /* Flurry */,
 				8A28009A16B7CC44007CEEC2 /* Google Analytics */,
+				8A6B0EE01827693F009C2ABF /* Tapstream */,
 			);
 			name = "Analytics Networks";
+			sourceTree = "<group>";
+		};
+		8A6B0EE01827693F009C2ABF /* Tapstream */ = {
+			isa = PBXGroup;
+			children = (
+				8A6B0F241827732E009C2ABF /* TSApi.h */,
+				8A6B0F251827732E009C2ABF /* TSConfig.h */,
+				8A6B0F261827732E009C2ABF /* TSConfig.m */,
+				8A6B0F271827732E009C2ABF /* TSCore.h */,
+				8A6B0F281827732E009C2ABF /* TSCore.m */,
+				8A6B0F291827732E009C2ABF /* TSCoreListener.h */,
+				8A6B0F2A1827732E009C2ABF /* TSCoreListenerImpl.h */,
+				8A6B0F2B1827732E009C2ABF /* TSCoreListenerImpl.m */,
+				8A6B0F2C1827732E009C2ABF /* TSDelegate.h */,
+				8A6B0F2D1827732E009C2ABF /* TSEvent.h */,
+				8A6B0F2E1827732E009C2ABF /* TSEvent.m */,
+				8A6B0F2F1827732E009C2ABF /* TSHelpers.h */,
+				8A6B0F301827732E009C2ABF /* TSHit.h */,
+				8A6B0F311827732E009C2ABF /* TSHit.m */,
+				8A6B0F321827732E009C2ABF /* TSLogging.h */,
+				8A6B0F331827732E009C2ABF /* TSLogging.m */,
+				8A6B0F341827732E009C2ABF /* TSLogLevel.h */,
+				8A6B0F351827732E009C2ABF /* TSPlatform.h */,
+				8A6B0F361827732E009C2ABF /* TSPlatformImpl.h */,
+				8A6B0F371827732E009C2ABF /* TSPlatformImpl.m */,
+				8A6B0F381827732E009C2ABF /* TSResponse.h */,
+				8A6B0F391827732E009C2ABF /* TSResponse.m */,
+				8A6B0F3A1827732E009C2ABF /* TSTapstream.h */,
+				8A6B0F3B1827732E009C2ABF /* TSTapstream.m */,
+			);
+			name = Tapstream;
+			sourceTree = "<group>";
+		};
+		8A6B0F1D1827727D009C2ABF /* OpenUDID */ = {
+			isa = PBXGroup;
+			children = (
+				8A6B0F2118277315009C2ABF /* GBAnalytics_OpenUDID.h */,
+				8A6B0F2218277315009C2ABF /* GBAnalytics_OpenUDID.m */,
+			);
+			name = OpenUDID;
 			sourceTree = "<group>";
 		};
 		8AF6863116B7E5D400FEF6A7 /* Flurry */ = {
@@ -289,7 +371,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A6B0F3C1827732E009C2ABF /* TSConfig.m in Sources */,
+				8A6B0F3F1827732E009C2ABF /* TSEvent.m in Sources */,
+				8A6B0F3E1827732E009C2ABF /* TSCoreListenerImpl.m in Sources */,
+				8A6B0F441827732E009C2ABF /* TSTapstream.m in Sources */,
 				8A45A82E16B7C2C100414137 /* GBAnalytics.m in Sources */,
+				8A6B0F411827732E009C2ABF /* TSLogging.m in Sources */,
+				8A6B0F401827732E009C2ABF /* TSHit.m in Sources */,
+				8A6B0F421827732E009C2ABF /* TSPlatformImpl.m in Sources */,
+				8A6B0F431827732E009C2ABF /* TSResponse.m in Sources */,
+				8A6B0F2318277315009C2ABF /* GBAnalytics_OpenUDID.m in Sources */,
+				8A6B0F3D1827732E009C2ABF /* TSCore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
