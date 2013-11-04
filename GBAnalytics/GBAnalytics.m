@@ -53,12 +53,11 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
 +(void)startSessionWithNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ... {
     if ([self isDebugEnabled]) [self _debugLogSessionStartWithNetwork:network];
     
-    
     //don't send data if debugging
     #if !DEBUG
         va_list args;
         va_start(args, credentials);
-        
+
         switch (network) {
             case GBAnalyticsNetworkGoogleAnalytics: {
                 if (IsValidString(credentials)) {
@@ -69,7 +68,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                     [[GAI sharedInstance] trackerWithTrackingId:credentials];
                 }
                 else {
-                    NSAssert(NO, @"GBAnalytics Error: Didn't pass valid credentials for Google Analytics");
+                    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBAnalytics Error: Didn't pass valid credentials for Google Analytics" userInfo:nil];
                 }
             } break;
                 
@@ -80,10 +79,10 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                     [Flurry startSession:credentials];
                 }
                 else {
-                    NSAssert(NO, @"GBAnalytics Error: Didn't pass valid credentials for Flurry");
+                    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBAnalytics Error: Didn't pass valid credentials for Flurry" userInfo:nil];
                 }
             } break;
-                            
+                
             case GBAnalyticsNetworkCrashlytics: {
                 if (IsValidString(credentials)) {
                     [GBAnalytics sharedAnalytics].connectedAnalyticsNetworks[@(GBAnalyticsNetworkCrashlytics)] = @{kGBAnalyticsCredentialsCrashlyticsAPIKey: credentials};
@@ -91,7 +90,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                     [Crashlytics startWithAPIKey:credentials];
                 }
                 else {
-                    NSAssert(NO, @"GBAnalytics Error: Didn't pass valid credentials for Crashlytics");
+                    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBAnalytics Error: Didn't pass valid credentials for Crashlytics" userInfo:nil];
                 }
             } break;
                 
@@ -109,12 +108,12 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                     [TSTapstream createWithAccountName:AccountName developerSecret:SDKSecret config:config];
                 }
                 else {
-                    NSAssert(NO, @"GBAnalytics Error: Didn't pass valid credentials for Tapstream");
+                    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBAnalytics Error: Didn't pass valid credentials for Tapstream" userInfo:nil];
                 }
             } break;
                 
             default: {
-                NSAssert(NO, @"GBAnalytics Error: Tried to connect invalid network: %d", network);
+                @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBAnalytics Error: Tried to connect invalid network: %d", network userInfo:nil];
             } return;
         }
         
@@ -183,7 +182,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                         
                     case GBAnalyticsNetworkTapstream: {
                         TSEvent *e = [TSEvent eventWithName:event oneTimeOnly:NO];
-
+                        
                         BOOL shouldSend = NO;
                         for (NSString *key in dictionary) {
                             id value = dictionary[key];
