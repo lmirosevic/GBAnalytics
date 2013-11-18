@@ -113,7 +113,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
             } break;
                 
             default: {
-                @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBAnalytics Error: Tried to connect invalid network: %d", network userInfo:nil];
+                @throw [NSException exceptionWithName:NSInvalidArgumentException reason:_f(@"GBAnalytics Error: Tried to connect invalid network: %d", network) userInfo:nil];
             } return;
         }
         
