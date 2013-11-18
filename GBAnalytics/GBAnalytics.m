@@ -183,11 +183,38 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                     case GBAnalyticsNetworkTapstream: {
                         TSEvent *e = [TSEvent eventWithName:event oneTimeOnly:NO];
                         
+                        BOOL shouldSend = NO;
                         for (NSString *key in dictionary) {
-                            [e addValue:dictionary[key] forKey:key];
+                            id value = dictionary[key];
+                            
+                            if ([value isKindOfClass:NSString.class]) {
+                                [e addValue:value forKey:key];
+                                shouldSend = YES;
+                            }
+                            else if ([value isKindOfClass:NSNumber.class]) {
+                                if (strcmp([value objCType], @encode(BOOL)) == 0) {
+                                    [e addBooleanValue:[value boolValue] forKey:key];
+                                    shouldSend = YES;
+                                }
+                                else if ((strcmp([value objCType], @encode(int)) == 0) ||
+                                         (strcmp([value objCType], @encode(long)) == 0)) {
+                                    [e addIntegerValue:[value intValue] forKey:key];
+                                    shouldSend = YES;
+                                }
+                                else if ((strcmp([value objCType], @encode(unsigned int)) == 0) ||
+                                         (strcmp([value objCType], @encode(unsigned long)) == 0)) {
+                                    [e addUnsignedIntegerValue:[value unsignedIntValue] forKey:key];
+                                    shouldSend = YES;
+                                }
+                                else if ((strcmp([value objCType], @encode(float)) == 0) ||
+                                         (strcmp([value objCType], @encode(double)) == 0)) {
+                                    [e addDoubleValue:[value doubleValue] forKey:key];
+                                    shouldSend = YES;
+                                }
+                            }
                         }
                         
-                        if (dictionary.count > 0) [[TSTapstream instance] fireEvent:e];
+                        if (shouldSend) [[TSTapstream instance] fireEvent:e];
                     } break;
                         
                     default:
