@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
   s.name         = "GBAnalytics"
-  s.version      = "1.1.2"
+  s.version      = "1.1.3"
   s.summary      = "Abstracts away different analytics networks and provides a unified simple interface."
   s.homepage     = "https://github.com/lmirosevic/GBAnalytics"
   s.license      = 'Apache License, Version 2.0'
   s.author       = { "Luka Mirosevic" => "luka@goonbee.com" }
   s.platform     = :ios, '5.0'
-  s.source       = { :git => "https://github.com/lmirosevic/GBAnalytics.git", :tag => "1.1.2" }
+  s.source       = { :git => "https://github.com/lmirosevic/GBAnalytics.git", :tag => "1.1.3" }
   s.source_files  = 'GBAnalytics/GBAnalytics.{h,m}', 'GBAnalytics/GBAnalyticsNetworks.h'
   s.public_header_files = 'GBAnalytics/GBAnalytics.h', 'GBAnalytics/GBAnalyticsNetworks.h', 'GBAnalytics/GAI.h'
   s.requires_arc = true
