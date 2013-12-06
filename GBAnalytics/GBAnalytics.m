@@ -11,7 +11,6 @@
 #import <GBToolbox/GBToolbox.h>
 
 #import "GBAnalytics_OpenUDID.h"
-
 #import <AdSupport/AdSupport.h>
 
 static NSString * const kGBAnalyticsCredentialsGoogleAnalyticsTrackingID = @"kGBAnalyticsCredentialsGoogleAnalyticsTrackingID";
@@ -35,7 +34,6 @@ static NSString * const kGBAnalyticsGoogleAnalyticsActionlessEventActionString =
 #pragma mark - Storage
 
 _singleton(GBAnalytics, sharedAnalytics)
-#define _GBAnalytics [GBAnalytics sharedAnalytics]
 _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetworks)
 
 #pragma mark - Initialiser
@@ -55,6 +53,10 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
     
     //don't send data if debugging
     #if !DEBUG
+        void(^invalidCredentialsErrorHandler)(void) = ^{
+            @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:@"GBAnalytics Error: Didn't pass valid credentials for %@", [self _networkNameForNetwork:network]] userInfo:nil];
+        };
+    
         va_list args;
         va_start(args, credentials);
 
@@ -67,9 +69,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                     [GAI sharedInstance].trackUncaughtExceptions = NO;
                     [[GAI sharedInstance] trackerWithTrackingId:credentials];
                 }
-                else {
-                    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBAnalytics Error: Didn't pass valid credentials for Google Analytics" userInfo:nil];
-                }
+                else invalidCredentialsErrorHandler();
             } break;
                 
             case GBAnalyticsNetworkFlurry: {
@@ -78,9 +78,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                     
                     [Flurry startSession:credentials];
                 }
-                else {
-                    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBAnalytics Error: Didn't pass valid credentials for Flurry" userInfo:nil];
-                }
+                else invalidCredentialsErrorHandler();
             } break;
                 
             case GBAnalyticsNetworkCrashlytics: {
@@ -89,9 +87,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                     
                     [Crashlytics startWithAPIKey:credentials];
                 }
-                else {
-                    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBAnalytics Error: Didn't pass valid credentials for Crashlytics" userInfo:nil];
-                }
+                else invalidCredentialsErrorHandler();
             } break;
                 
             case GBAnalyticsNetworkTapstream: {
@@ -107,14 +103,12 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                     if (IsClassAvailable(ASIdentifierManager)) config.idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
                     [TSTapstream createWithAccountName:AccountName developerSecret:SDKSecret config:config];
                 }
-                else {
-                    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBAnalytics Error: Didn't pass valid credentials for Tapstream" userInfo:nil];
-                }
+                else invalidCredentialsErrorHandler();
             } break;
                 
             default: {
-                @throw [NSException exceptionWithName:NSInvalidArgumentException reason:_f(@"GBAnalytics Error: Tried to connect invalid network: %d", network) userInfo:nil];
-            } return;
+                @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:@"GBAnalytics Error: Tried to connect to invalid network: %@", [self _networkNameForNetwork:network]] userInfo:nil];
+            } break;
         }
         
         va_end(args);
@@ -223,7 +217,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
             }
         }
         else {
-            [self _debugErrorString:@"TrackEvent has not been called with a valid non-empty string"];
+            [self _debugErrorString:@"GBAnalytics: trackEvent: has not been called with a valid non-empty string"];
         }
     #endif
 }
@@ -240,31 +234,7 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
 
 +(void)_debugLogSessionStartWithNetwork:(GBAnalyticsNetwork)network {
     if ([GBAnalytics sharedAnalytics].isDebugLoggingEnabled) {
-        NSString *networkName;
-        
-        switch (network) {
-            case GBAnalyticsNetworkGoogleAnalytics: {
-                networkName = @"Google Analytics";
-            } break;
-                
-            case GBAnalyticsNetworkFlurry: {
-                networkName = @"Flurry";
-            } break;
-                
-            case GBAnalyticsNetworkCrashlytics: {
-                networkName = @"Crashlytics";
-            } break;
-                
-            case GBAnalyticsNetworkTapstream: {
-                networkName = @"Tapstream";
-            } break;
-                
-            default: {
-                networkName = @"Unkown Network";
-            } break;
-        }
-        
-        [self _debugLogEvent:_f(@"Started session with analytics network: %@", networkName)];
+        [self _debugLogEvent:[NSString stringWithFormat:@"GBAnalytics: Started session with analytics network: %@", [self _networkNameForNetwork:network]]];
     }
 }
 
@@ -293,10 +263,40 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
 }
 
 +(void)_debugType:(NSString *)type withString:(NSString *)event {
-    l(@"GBAnalytics %@: %@", type, event);
+    NSLog(@"GBAnalytics %@: %@", type, event);
 }
 +(void)_debugType:(NSString *)type withString:(NSString *)event withDictionary:(NSDictionary *)dictionary {
-    l(@"GBAnalytics %@: %@, %@", type, event, dictionary);
+    NSLog(@"GBAnalytics %@: %@, %@", type, event, dictionary);
+}
+
+#pragma mark - Util
+
++(NSString *)_networkNameForNetwork:(GBAnalyticsNetwork)network {
+    switch (network) {
+        case GBAnalyticsNetworkGoogleAnalytics: {
+            return @"Google Analytics";
+        } break;
+            
+        case GBAnalyticsNetworkFlurry: {
+            return @"Flurry";
+        } break;
+            
+        case GBAnalyticsNetworkCrashlytics: {
+            return @"Crashlytics";
+        } break;
+            
+        case GBAnalyticsNetworkTapstream: {
+            return @"Tapstream";
+        } break;
+            
+        case GBAnalyticsNetworkFacebook: {
+            return @"Facebook";
+        } break;
+            
+        default: {
+            return @"Unkown Network";
+        } break;
+    }
 }
 
 @end
