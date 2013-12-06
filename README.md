@@ -9,6 +9,7 @@ Supported networks
 * Flurry
 * Google Analytics
 * Crashlytics
+* Tapstream
 
 Usage
 ------------
