@@ -24,5 +24,9 @@
 @end
 
 //Shorthands
-static inline void _t(NSString *event) { [GBAnalytics trackEvent:event]; }
-static inline void _td(NSString *event, NSDictionary *dictionary) { [GBAnalytics trackEvent:event withDictionary:dictionary]; }
+static inline void TrackEvent(NSString *event) { [GBAnalytics trackEvent:event]; }
+static inline void TrackEventWithDictionary(NSString *event, NSDictionary *dictionary) { [GBAnalytics trackEvent:event withDictionary:dictionary]; }
+
+//Super Shorthands
+static inline void _t(NSString *event) { TrackEvent(event); }
+static inline void _td(NSString *event, NSDictionary *dictionary) { TrackEventWithDictionary(event, dictionary); }
