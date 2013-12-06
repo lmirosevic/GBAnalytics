@@ -15,13 +15,17 @@
 
 #import "TSTapstream.h"
 
+#import <FacebookSDK/FacebookSDK.h>
+
 typedef enum {
     GBAnalyticsNetworkGoogleAnalytics = 1,
     GBAnalyticsNetworkFlurry,
     GBAnalyticsNetworkCrashlytics,
     GBAnalyticsNetworkTapstream,
+    GBAnalyticsNetworkFacebook,
 } GBAnalyticsNetwork;
 
+#define kGBAnalyticsFacebookAppIDFromPlist nil
 
 /* Networks
  
@@ -43,4 +47,8 @@ typedef enum {
     Params: TapstreamAccountName, TapstreamSDKSecret
     Example: [GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkTapstream withCredentials:@"TapstreamAccountName", @"TapstreamSDKSecret"];
  
+ Facebook
+    Params: FacebookAppID (or leave nil to get it from the FacebookAppID key in the Info.plist)
+    Example: [GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkFacebook withCredentials:@"FacebookAppID"];
+  
  */

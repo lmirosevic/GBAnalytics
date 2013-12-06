@@ -18,6 +18,7 @@ static NSString * const kGBAnalyticsCredentialsFlurryAPIKey = @"kGBAnalyticsCred
 static NSString * const kGBAnalyticsCredentialsCrashlyticsAPIKey = @"kGBAnalyticsCredentialsCrashlyticsAPIKey";
 static NSString * const kGBAnalyticsCredentialsTapstreamAccountName = @"kGBAnalyticsCredentialsTapstreamAccountName";
 static NSString * const kGBAnalyticsCredentialsTapstreamSDKSecret = @"kGBAnalyticsCredentialsTapstreamSDKSecret";
+static NSString * const kGBAnalyticsCredentialsFacebookAppID = @"kGBAnalyticsCredentialsFacebookAppID";
 
 static NSString * const kGBAnalyticsGoogleAnalyticsActionlessEventActionString = @"Plain";
 
@@ -106,6 +107,17 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                 else invalidCredentialsErrorHandler();
             } break;
                 
+            case GBAnalyticsNetworkFacebook: {
+                NSString *FBAppID = credentials ?: [[NSBundle mainBundle] objectForInfoDictionaryKey:@"FacebookAppID"];
+                
+                if (IsValidString(FBAppID)) {
+                    [GBAnalytics sharedAnalytics].connectedAnalyticsNetworks[@(GBAnalyticsNetworkFacebook)] = @{kGBAnalyticsCredentialsFacebookAppID: FBAppID};
+                    
+                    [FBSettings setDefaultAppID:FBAppID];
+                }
+                else invalidCredentialsErrorHandler();
+            } break;
+                
             default: {
                 @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:@"GBAnalytics Error: Tried to connect to invalid network: %@", [self _networkNameForNetwork:network]] userInfo:nil];
             } break;
@@ -136,6 +148,10 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                     case GBAnalyticsNetworkTapstream: {
                         [[TSTapstream instance] fireEvent:[TSEvent eventWithName:event oneTimeOnly:NO]];
                     } break;
+                        
+                    case GBAnalyticsNetworkFacebook: {
+                        [FBAppEvents logEvent:event];
+                    }
                         
                     default:
                         break;
@@ -210,6 +226,11 @@ _lazy(NSMutableDictionary, connectedAnalyticsNetworks, _connectedAnalyticsNetwor
                         
                         if (shouldSend) [[TSTapstream instance] fireEvent:e];
                     } break;
+                        
+                        
+                    case GBAnalyticsNetworkFacebook: {
+                        [FBAppEvents logEvent:event parameters:dictionary];
+                    }
                         
                     default:
                         break;

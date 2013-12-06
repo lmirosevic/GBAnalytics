@@ -10,6 +10,7 @@ Supported networks
 * Google Analytics
 * Crashlytics
 * Tapstream
+* Facebook
 
 Usage
 ------------
