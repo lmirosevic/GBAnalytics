@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.author       = { "Luka Mirosevic" => "luka@goonbee.com" }
   s.platform     = :ios, '5.0'
   s.source       = { :git => "https://github.com/lmirosevic/GBAnalytics.git", :tag => s.version.to_s }
-  s.source_files  = 'GBAnalytics/GBAnalytics.{h,m}'
+  s.source_files  = 'GBAnalytics/GBAnalytics.{h,m}', 'GBAnalytics/GBAnalyticsNetworks.h'
   s.public_header_files = 'GBAnalytics/GBAnalytics.h', 'GBAnalytics/GBAnalyticsNetworks.h'
   s.requires_arc = true
 
