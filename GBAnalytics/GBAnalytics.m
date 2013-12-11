@@ -180,6 +180,7 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
                     
                     [Mixpanel sharedInstanceWithToken:credentials];
                     [Mixpanel sharedInstance].flushInterval = 20;
+                    [Mixpanel sharedInstance].showNetworkActivityIndicator = NO;
                 }
                 else invalidCredentialsErrorHandler();
             } break;
