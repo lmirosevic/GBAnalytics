@@ -6,16 +6,18 @@
 //  Copyright (c) 2013 Goonbee. All rights reserved.
 //
 
-#import "Flurry.h"
+#import <GoogleAnalytics-iOS-SDK/GAI.h>
+#import <GoogleAnalytics-iOS-SDK/GAIDictionaryBuilder.h>
 
-#import "GAI.h"
-#import "GAIDictionaryBuilder.h"
+#import <FlurrySDK/Flurry.h>
 
 #import <Crashlytics/Crashlytics.h>
 
-#import "TSTapstream.h"
+#import <Tapstream/TSTapstream.h>
 
 #import <FacebookSDK/FacebookSDK.h>
+
+#import <Mixpanel/Mixpanel.h>
 
 typedef enum {
     GBAnalyticsNetworkGoogleAnalytics = 1,
@@ -23,6 +25,7 @@ typedef enum {
     GBAnalyticsNetworkCrashlytics,
     GBAnalyticsNetworkTapstream,
     GBAnalyticsNetworkFacebook,
+    GBAnalyticsNetworkMixpanel,
 } GBAnalyticsNetwork;
 
 #define kGBAnalyticsFacebookAppIDFromPlist nil
@@ -31,12 +34,12 @@ typedef enum {
  
  Flurry
    Params: FlurryAPIKey
-   Example: [GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkFlurry withCredentials:@"FlurryAPIKey"];
+   Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkFlurry withCredentials:@"FlurryAPIKey"];
  
  
  Google Analytics
    Params: GoogleAnalyticsTrackingID
-   Example: [GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkGoogleAnalytics withCredentials:@"GoogleAnalyticsTrackingID"];
+   Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkGoogleAnalytics withCredentials:@"GoogleAnalyticsTrackingID"];
  
  
  Crashlytics
@@ -45,10 +48,14 @@ typedef enum {
  
  Tapsteam
     Params: TapstreamAccountName, TapstreamSDKSecret
-    Example: [GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkTapstream withCredentials:@"TapstreamAccountName", @"TapstreamSDKSecret"];
+    Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkTapstream withCredentials:@"TapstreamAccountName", @"TapstreamSDKSecret"];
  
  Facebook
     Params: FacebookAppID (or leave nil to get it from the FacebookAppID key in the Info.plist)
-    Example: [GBAnalytics startSessionWithNetwork:GBAnalyticsNetworkFacebook withCredentials:@"FacebookAppID"];
+    Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkFacebook withCredentials:@"FacebookAppID"];
+ 
+ Mixpanel
+    Params: MixpanelToken
+    Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkMixpanel withCredentials:@"MixpanelToken"];
   
  */
