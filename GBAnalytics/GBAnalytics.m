@@ -179,6 +179,7 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
                     self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkMixpanel)] = @{kGBAnalyticsCredentialsMixpanelToken: credentials};
                     
                     [Mixpanel sharedInstanceWithToken:credentials];
+                    [Mixpanel sharedInstance].flushInterval = 20;
                 }
                 else invalidCredentialsErrorHandler();
             } break;
