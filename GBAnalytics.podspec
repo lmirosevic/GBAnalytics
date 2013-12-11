@@ -20,9 +20,9 @@ Pod::Spec.new do |s|
   s.frameworks = 'SystemConfiguration', 'CoreData'
   s.weak_frameworks = 'AdSupport'
 
-  s.dependency 'Tapstream', '~> 2.3'
-  s.dependency 'GoogleAnalytics-iOS-SDK', '~> 3.0'
   s.dependency 'FlurrySDK', '~> 4.2'
+  s.dependency 'GoogleAnalytics-iOS-SDK', '~> 3.0'
+  s.dependency 'Tapstream', '~> 2.3'
   s.dependency 'Facebook-iOS-SDK', '~> 3.10'
   s.dependency 'Mixpanel', '< 2.1.0'#to ensure iOS5 support
 
