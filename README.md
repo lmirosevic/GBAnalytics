@@ -98,7 +98,7 @@ Requirements
 ------------
 
 * Built using ARC
-* Supports iOS 5 and above
+* Supports iOS 6 and above
 * Does not use Apple's UDID.
 
 Notes
