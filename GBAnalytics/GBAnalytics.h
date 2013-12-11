@@ -49,8 +49,8 @@ extern NSString * const kGBAnalyticsDefaultEventRouter;
 
 //Shorthands
 static inline void TrackEvent(NSString *event) { [GBAnalytics trackEvent:event]; }
-static inline void TrackEventWithDictionary(NSString *event, NSDictionary *parameters) { [GBAnalytics trackEvent:event withParameters:parameters]; }
+static inline void TrackEventWithParameters(NSString *event, NSDictionary *parameters) { [GBAnalytics trackEvent:event withParameters:parameters]; }
 
 //Super Shorthands
 static inline void _t(NSString *event) { TrackEvent(event); }
-static inline void _tp(NSString *event, NSDictionary *parameters) { TrackEventWithDictionary(event, parameters); }
+static inline void _tp(NSString *event, NSDictionary *parameters) { TrackEventWithParameters(event, parameters); }

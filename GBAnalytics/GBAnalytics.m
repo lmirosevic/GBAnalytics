@@ -284,6 +284,17 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
     }
 }
 
++(NSString *)_formatEventNameForFacebook:(NSString *)eventName {
+    NSMutableString *formattedName = [eventName mutableCopy];
+    
+    [formattedName replaceOccurrencesOfString:@"(" withString:@"_" options:NSCaseInsensitiveSearch range:NSMakeRange(0, formattedName.length)];
+    [formattedName replaceOccurrencesOfString:@")" withString:@"_" options:NSCaseInsensitiveSearch range:NSMakeRange(0, formattedName.length)];
+    [formattedName replaceOccurrencesOfString:@":" withString:@"-" options:NSCaseInsensitiveSearch range:NSMakeRange(0, formattedName.length)];
+    if (formattedName.length > 40) [formattedName deleteCharactersInRange:NSMakeRange(40, formattedName.length - 40)];
+    
+    return [formattedName copy];
+}
+
 @end
 
 @implementation GBAnalyticsEventRouter
@@ -300,24 +311,6 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
 
 #pragma mark - API
 
-
-//- (void)yourMethod:(id) firstObject, ...
-//{
-//    id eachObject;
-//    va_list argumentList;
-//    if (firstObject)
-//    {
-//        // do something with firstObject. Remember, it is not part of the variable argument list
-//        [self addObject: firstObject];
-//        va_start(argumentList, firstObject);          // scan for arguments after firstObject.
-//        while (eachObject = va_arg(argumentList, id)) // get rest of the objects until nil is found
-//        {
-//            // do something with each object
-//        }
-//        va_end(argumentList);
-//    }
-//}
-
 -(void)routeToNetworks:(GBAnalyticsNetwork)network, ... NS_REQUIRES_NIL_TERMINATION {
     va_list args;
     GBAnalyticsNetwork aNetwork;
@@ -327,7 +320,6 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
     va_start(args, network);
     while ((aNetwork = va_arg(args, GBAnalyticsNetwork))) {
         [networks addObject:@(aNetwork)];
-        NSLog(@"net: %d", aNetwork);//foo kill
     }
     va_end(args);
 
@@ -367,7 +359,7 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
                     } break;
                         
                     case GBAnalyticsNetworkFacebook: {
-                        [FBAppEvents logEvent:event];
+                        [FBAppEvents logEvent:[GBAnalyticsManager _formatEventNameForFacebook:event]];
                     }
                         
                     case GBAnalyticsNetworkMixpanel: {
@@ -456,7 +448,7 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
                     } break;
                         
                     case GBAnalyticsNetworkFacebook: {
-                        [FBAppEvents logEvent:event parameters:parameters];
+                        [FBAppEvents logEvent:[GBAnalyticsManager _formatEventNameForFacebook:event] parameters:parameters];
                     }
                         
                     case GBAnalyticsNetworkMixpanel: {
