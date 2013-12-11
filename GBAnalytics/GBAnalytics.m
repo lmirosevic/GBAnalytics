@@ -15,6 +15,12 @@
 
 NSString * const kGBAnalyticsDefaultEventRoute =                                        @"kGBAnalyticsDefaultEventRoute";
 
+#if !DEBUG
+static BOOL const ProductionBuild = YES;
+#else
+static BOOL const ProductionBuild = NO;
+#endif
+
 //Google Analytics
 static NSString * const kGBAnalyticsCredentialsGoogleAnalyticsTrackingID =              @"kGBAnalyticsCredentialsGoogleAnalyticsTrackingID";
 static NSString * const kGBAnalyticsGoogleAnalyticsActionlessEventActionString =        @"Plain";
@@ -103,7 +109,7 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
     [self.class _debugSessionStartWithNetwork:network force:NO];
     
     //don't send data if debugging
-//    #if !DEBUG
+    if (ProductionBuild) {
         void(^invalidCredentialsErrorHandler)(void) = ^{
             @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:@"GBAnalytics Error: Didn't pass valid credentials for %@", [self.class _networkNameForNetwork:network]] userInfo:nil];
         };
@@ -183,7 +189,7 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
         }
         
         va_end(args);
-//    #endif
+    }
 }
 
 -(GBAnalyticsEventRouter *)objectForKeyedSubscript:(NSString *)route {
@@ -323,7 +329,7 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
     if (!(self.eventRoutes.count > 0)) [GBAnalyticsManager _debugWarningString:[NSString stringWithFormat:@"There are no networks associated with the route %@, the following event was not sent: %@", self.route, event] force:YES];
     
     //don't send data if building in debug configuration
-//    #if !DEBUG
+    if (ProductionBuild) {
         if (IsValidString(event)) {
             for (NSNumber *number in [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks) {
                 GBAnalyticsNetwork network = [number intValue];
@@ -363,7 +369,7 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
         else {
             [GBAnalyticsManager _debugErrorString:@"trackEvent: has not been called with a valid non-empty string" force:YES];
         }
-//    #endif
+    }
 }
 
 -(void)trackEvent:(NSString *)event withParameters:(NSDictionary *)parameters {
@@ -373,7 +379,7 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
     if (!(self.eventRoutes.count > 0)) [GBAnalyticsManager _debugWarningString:[NSString stringWithFormat:@"There are no networks associated with the route %@, the following event was not sent: %@", self.route, event] force:YES];
     
     //don't send data if building in debug configuration
-//    #if !DEBUG
+    if (ProductionBuild) {
         if (IsValidString(event)) {
             //if the dictionary is not a dict or empty, just forward the call to the simple trackEvent: and thereby discard the event nonsense
             if (![parameters isKindOfClass:[NSDictionary class]] || parameters.count == 0) {
@@ -455,7 +461,7 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
         else {
             [GBAnalyticsManager _debugErrorString:@"trackEvent:withParameters: has not been called with a valid non-empty string" force:YES];
         }
-//    #endif
+    }
 }
 
 @end
