@@ -10,7 +10,7 @@
 
 #import "GBAnalyticsNetworks.h"
 
-extern NSString * const kGBAnalyticsDefaultEventRouter;
+extern NSString * const kGBAnalyticsDefaultEventRoute;
 
 #define GBAnalytics [GBAnalyticsManager sharedManager]
 
