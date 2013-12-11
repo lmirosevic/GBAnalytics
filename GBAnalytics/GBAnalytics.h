@@ -10,23 +10,49 @@
 
 #import "GBAnalyticsNetworks.h"
 
-@interface GBAnalytics : NSObject
+extern NSString * const kGBAnalyticsDefaultEventRoute;
+
+#define GBAnalytics [GBAnalyticsManager sharedManager]
+
+@class GBAnalyticsEventRouter;
+
+@interface GBAnalyticsManager : NSObject
+
+@property (assign, nonatomic, setter = setDebug:, getter = isDebugEnabled) BOOL isDebugEnabled;
+
++(GBAnalyticsManager *)sharedManager;
 
 //See GBAnalyticsNetworks.h for param list
-+(void)startSessionWithNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ...;
+-(void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ...;
 
-+(void)trackEvent:(NSString *)event;
-+(void)trackEvent:(NSString *)event withDictionary:(NSDictionary *)dictionary;
+//Allows using the square bracket syntax for choosing the event router
+-(GBAnalyticsEventRouter *)objectForKeyedSubscript:(NSString *)route;
 
-+(void)setDebug:(BOOL)enable;
-+(BOOL)isDebugEnabled;
+@end
+
+@interface GBAnalyticsManager (DefaultAliases)
+
+//These alias the default event router
+-(void)routeToNetworks:(GBAnalyticsNetwork)network, ... NS_REQUIRES_NIL_TERMINATION;
+-(void)trackEvent:(NSString *)event;
+-(void)trackEvent:(NSString *)event withParameters:(NSDictionary *)parameters;
+
+@end
+
+@interface GBAnalyticsEventRouter : NSObject
+
+@property (copy, nonatomic, readonly) NSString *route;
+
+-(void)routeToNetworks:(GBAnalyticsNetwork)network, ... NS_REQUIRES_NIL_TERMINATION;
+-(void)trackEvent:(NSString *)event;
+-(void)trackEvent:(NSString *)event withParameters:(NSDictionary *)parameters;
 
 @end
 
 //Shorthands
 static inline void TrackEvent(NSString *event) { [GBAnalytics trackEvent:event]; }
-static inline void TrackEventWithDictionary(NSString *event, NSDictionary *dictionary) { [GBAnalytics trackEvent:event withDictionary:dictionary]; }
+static inline void TrackEventWithParameters(NSString *event, NSDictionary *parameters) { [GBAnalytics trackEvent:event withParameters:parameters]; }
 
 //Super Shorthands
 static inline void _t(NSString *event) { TrackEvent(event); }
-static inline void _td(NSString *event, NSDictionary *dictionary) { TrackEventWithDictionary(event, dictionary); }
+static inline void _tp(NSString *event, NSDictionary *parameters) { TrackEventWithParameters(event, parameters); }
