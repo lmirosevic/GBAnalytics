@@ -194,26 +194,16 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
     return self.eventRouters[route];
 }
 
+//These alias the default event router
 -(id)forwardingTargetForSelector:(SEL)selector {
-    if (selector == @selector(routeToNetworks:)) {
+    if (selector == @selector(routeToNetworks:) ||
+        selector == @selector(trackEvent:) ||
+        selector == @selector(trackEvent:withParameters:)) {
         return self[kGBAnalyticsDefaultEventRouter];
     }
     else {
         return nil;
     }
-}
-
-////These alias the default event router
-//-(void)routeToNetworks:
-////    [self[kGBAnalyticsDefaultEventRouter] routeToNetworks:networks];
-//}
-
--(void)trackEvent:(NSString *)event {
-    [self[kGBAnalyticsDefaultEventRouter] trackEvent:event];
-}
-
--(void)trackEvent:(NSString *)event withParameters:(NSDictionary *)parameters {
-    [self[kGBAnalyticsDefaultEventRouter] trackEvent:event withParameters:parameters];
 }
 
 #pragma mark - Debug Util
@@ -339,7 +329,10 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
                 GBAnalyticsNetwork network = [number intValue];
                 
                 //if it's not routing to this network, then skip it
-                if (![self.eventRoutes containsObject:@(network)]) continue;
+                if (![self.eventRoutes containsObject:@(network)]) {
+//                    NSLog(@"skip: %@", [GBAnalyticsManager _networkNameForNetwork:network]);
+                    continue;
+                }
                 
                 switch (network) {
                     case GBAnalyticsNetworkGoogleAnalytics: {
@@ -363,6 +356,7 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
                     }
                         
                     case GBAnalyticsNetworkMixpanel: {
+                        NSLog(@"send mixpanel");
                         [[Mixpanel sharedInstance] track:event];
                     }
                 }
@@ -383,16 +377,27 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
     //don't send data if building in debug configuration
 //    #if !DEBUG
         if (IsValidString(event)) {
-            //if the dictionary is not a dict or empty, just forward the call to the simple trackeEvent and thereby discard the event nonsense
+            //if the dictionary is not a dict or empty, just forward the call to the simple trackEvent: and thereby discard the event nonsense
             if (![parameters isKindOfClass:[NSDictionary class]] || parameters.count == 0) {
                 [self trackEvent:event];
+                return;
             }
             
             for (NSNumber *number in [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks) {
                 GBAnalyticsNetwork network = [number intValue];
                 
+                if (network == GBAnalyticsNetworkMixpanel) {
+                    NSLog(@"mix");
+                }
+                
                 //if it's not routing to this network, then skip it
-                if (![self.eventRoutes containsObject:@(network)]) continue;
+                if (![self.eventRoutes containsObject:@(network)]) {
+//                    NSLog(@"skip: %@", [GBAnalyticsManager _networkNameForNetwork:network]);
+                    continue;
+                }
+                
+                NSLog(@"send: %@", [GBAnalyticsManager _networkNameForNetwork:network]);
+                
                 
                 switch (network) {
                     case GBAnalyticsNetworkGoogleAnalytics: {
@@ -452,6 +457,7 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
                     }
                         
                     case GBAnalyticsNetworkMixpanel: {
+                        NSLog(@"send mixpanel param");
                         [[Mixpanel sharedInstance] track:event properties:parameters];
                     }
                 }

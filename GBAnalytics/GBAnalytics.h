@@ -22,13 +22,15 @@ extern NSString * const kGBAnalyticsDefaultEventRouter;
 
 +(GBAnalyticsManager *)sharedManager;
 
--(void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ...;//See GBAnalyticsNetworks.h for param list
-
--(void)setDebug:(BOOL)enable;
--(BOOL)isDebugEnabled;
+//See GBAnalyticsNetworks.h for param list
+-(void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ...;
 
 //Allows using the square bracket syntax for choosing the event router
 -(GBAnalyticsEventRouter *)objectForKeyedSubscript:(NSString *)route;
+
+@end
+
+@interface GBAnalyticsManager (DefaultAliases)
 
 //These alias the default event router
 -(void)routeToNetworks:(GBAnalyticsNetwork)network, ... NS_REQUIRES_NIL_TERMINATION;
