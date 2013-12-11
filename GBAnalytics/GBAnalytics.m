@@ -158,6 +158,12 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
                     TSConfig *config = [TSConfig configWithDefaults];
                     config.openUdid = [OpenUDID value];
                     if ([ASIdentifierManager class]) config.idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+                    config.conversionListener = ^(NSData *jsonInfo) {
+                        //parse the data into JSON
+                        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:jsonInfo options:0 error:nil];
+                        //send off an notification
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kGBAnalyticsTapstreamConversionEventNotification object:self userInfo:data];
+                    };
                     [TSTapstream createWithAccountName:AccountName developerSecret:SDKSecret config:config];
                 }
                 else invalidCredentialsErrorHandler();

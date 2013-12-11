@@ -30,6 +30,8 @@ typedef enum {
 
 #define kGBAnalyticsFacebookAppIDFromPlist nil
 
+#define kGBAnalyticsTapstreamConversionEventNotification @"kGBAnalyticsTapstreamConversionEventNotification"
+
 /* Networks
  
  Flurry
