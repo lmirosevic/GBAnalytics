@@ -26,6 +26,7 @@
 		8AD1F952180E741700E1029C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD1F951180E741700E1029C /* Crashlytics.framework */; };
 		8ADDB97B17F86C8E000D1CC7 /* libFlurry_4.2.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ADDB97A17F86C8E000D1CC7 /* libFlurry_4.2.3.a */; };
 		8ADDB98317F86C9B000D1CC7 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ADDB98217F86C9B000D1CC7 /* libGoogleAnalyticsServices.a */; };
+		8AE67D521859E63F00D34500 /* GBAnalyticsSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AE67D511859E63F00D34500 /* GBAnalyticsSettings.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +120,8 @@
 		8ADDB98017F86C9B000D1CC7 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = GBAnalytics/GAITrackedViewController.h; sourceTree = "<group>"; };
 		8ADDB98117F86C9B000D1CC7 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = GBAnalytics/GAITracker.h; sourceTree = "<group>"; };
 		8ADDB98217F86C9B000D1CC7 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = GBAnalytics/libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		8AE67D501859E63F00D34500 /* GBAnalyticsSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBAnalyticsSettings.h; sourceTree = "<group>"; };
+		8AE67D511859E63F00D34500 /* GBAnalyticsSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBAnalyticsSettings.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +218,8 @@
 			children = (
 				8A45A82B16B7C2C100414137 /* GBAnalytics.h */,
 				8A45A82D16B7C2C100414137 /* GBAnalytics.m */,
+				8AE67D501859E63F00D34500 /* GBAnalyticsSettings.h */,
+				8AE67D511859E63F00D34500 /* GBAnalyticsSettings.m */,
 				8A28009216B7CC10007CEEC2 /* GBAnalyticsNetworks.h */,
 				8A45A82916B7C2C100414137 /* Supporting Files */,
 			);
@@ -377,6 +382,7 @@
 				8A6B0F441827732E009C2ABF /* TSTapstream.m in Sources */,
 				8A45A82E16B7C2C100414137 /* GBAnalytics.m in Sources */,
 				8A6B0F411827732E009C2ABF /* TSLogging.m in Sources */,
+				8AE67D521859E63F00D34500 /* GBAnalyticsSettings.m in Sources */,
 				8A6B0F401827732E009C2ABF /* TSHit.m in Sources */,
 				8A6B0F421827732E009C2ABF /* TSPlatformImpl.m in Sources */,
 				8A6B0F431827732E009C2ABF /* TSResponse.m in Sources */,

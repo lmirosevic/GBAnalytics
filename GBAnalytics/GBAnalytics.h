@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "GBAnalyticsNetworks.h"
+#import "GBAnalyticsSettings.h"
 
 extern NSString * const kGBAnalyticsDefaultEventRoute;
 
@@ -22,6 +23,8 @@ BOOL _GBAnalyticsEnabled();
 
 @property (assign, nonatomic, setter = setDebug:, getter = isDebugEnabled) BOOL     isDebugEnabled;
 @property (assign, nonatomic) BOOL                                                  force;
+
+@property (strong, nonatomic, readonly) GBAnalyticsSettings                         *settings;
 
 +(GBAnalyticsManager *)sharedManager;
 

@@ -99,7 +99,8 @@ BOOL _GBAnalyticsEnabled() {
 -(id)init {
     if (self = [super init]) {
         self.isDebugEnabled = NO;
-        
+
+        _settings = [GBAnalyticsSettings new];
         _eventRouters = [NSMutableDictionary new];
     }
     
@@ -125,8 +126,9 @@ BOOL _GBAnalyticsEnabled() {
                 if (IsValidString(credentials)) {
                     self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkGoogleAnalytics)] = @{kGBAnalyticsCredentialsGoogleAnalyticsTrackingID: credentials};
                     
-                    [GAI sharedInstance].dispatchInterval = 5;
-                    [GAI sharedInstance].trackUncaughtExceptions = NO;
+                    [GAI sharedInstance].dispatchInterval = self.settings.GoogleAnalytics.dispatchInterval;
+                    [GAI sharedInstance].trackUncaughtExceptions = self.settings.GoogleAnalytics.shouldTrackUncaughtExceptions;
+                    
                     [[GAI sharedInstance] trackerWithTrackingId:credentials];
                 }
                 else invalidCredentialsErrorHandler();
@@ -157,16 +159,11 @@ BOOL _GBAnalyticsEnabled() {
                 if (IsValidString(AccountName) && IsValidString(SDKSecret)) {
                     self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkTapstream)] = @{kGBAnalyticsCredentialsTapstreamAccountName: AccountName, kGBAnalyticsCredentialsTapstreamSDKSecret: SDKSecret};
                     
-                    [TSLogging setLogger:nil];
+                    [TSLogging setLogger:self.settings.Tapstream.logger];
                     TSConfig *config = [TSConfig configWithDefaults];
                     config.openUdid = [OpenUDID value];
                     if ([ASIdentifierManager class]) config.idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-                    config.conversionListener = ^(NSData *jsonInfo) {
-                        //parse the data into JSON
-                        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:jsonInfo options:0 error:nil];
-                        //send off an notification
-                        [[NSNotificationCenter defaultCenter] postNotificationName:kGBAnalyticsTapstreamConversionEventNotification object:self userInfo:data];
-                    };
+                    config.conversionListener = self.settings.Tapstream.conversionListener;
                     [TSTapstream createWithAccountName:AccountName developerSecret:SDKSecret config:config];
                 }
                 else invalidCredentialsErrorHandler();
@@ -188,8 +185,8 @@ BOOL _GBAnalyticsEnabled() {
                     self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkMixpanel)] = @{kGBAnalyticsCredentialsMixpanelToken: credentials};
                     
                     [Mixpanel sharedInstanceWithToken:credentials];
-                    [Mixpanel sharedInstance].flushInterval = 20;
-                    [Mixpanel sharedInstance].showNetworkActivityIndicator = NO;
+                    [Mixpanel sharedInstance].flushInterval = self.settings.Mixpanel.flushInterval;
+                    [Mixpanel sharedInstance].showNetworkActivityIndicator = self.settings.Mixpanel.shouldShowNetworkActivityIndicator;
                 }
                 else invalidCredentialsErrorHandler();
             } break;
