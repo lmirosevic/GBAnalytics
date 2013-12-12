@@ -16,9 +16,9 @@
 NSString * const kGBAnalyticsDefaultEventRoute =                                        @"kGBAnalyticsDefaultEventRoute";
 
 #if !DEBUG
-static BOOL const ProductionBuild = YES;
+BOOL const kProductionBuild = YES;
 #else
-static BOOL const ProductionBuild = NO;
+BOOL const kProductionBuild = NO;
 #endif
 
 //Google Analytics
@@ -41,6 +41,9 @@ static NSString * const kGBAnalyticsCredentialsFacebookAppID =                  
 //Mixpanel
 static NSString * const kGBAnalyticsCredentialsMixpanelToken =                          @"kGBAnalyticsCredentialsMixpanelToken";
 
+BOOL _GBAnalyticsEnabled() {
+    return GBAnalytics.force || kProductionBuild;
+}
 
 @interface GBAnalyticsManager ()
 
@@ -109,7 +112,7 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
     [self.class _debugSessionStartWithNetwork:network force:NO];
     
     //don't send data if debugging
-    if (ProductionBuild) {
+    if (GBAnalyticsEnabled) {
         void(^invalidCredentialsErrorHandler)(void) = ^{
             @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:@"GBAnalytics Error: Didn't pass valid credentials for %@", [self.class _networkNameForNetwork:network]] userInfo:nil];
         };
@@ -316,16 +319,25 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
 #pragma mark - API
 
 -(void)routeToNetworks:(GBAnalyticsNetwork)network, ... NS_REQUIRES_NIL_TERMINATION {
+    //convert args into array
     va_list args;
     GBAnalyticsNetwork aNetwork;
     NSMutableArray *networks = [NSMutableArray new];
-
     [networks addObject:@(network)];
     va_start(args, network);
     while ((aNetwork = va_arg(args, GBAnalyticsNetwork))) {
         [networks addObject:@(aNetwork)];
     }
     va_end(args);
+    
+    if (GBAnalyticsEnabled) {
+        //for any network that isn't enabled yet, show a warning
+        for (NSNumber *networkNumber in networks) {
+            if (![GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[networkNumber]) {
+                [GBAnalyticsManager _debugWarningString:[NSString stringWithFormat:@"You are adding the network \"%@\" to the route \"%@\" which is not connected yet. Your events will NOT be sent until you connect the network using `[GBAnalytics connectNetwork:withCredentials:]`. Connect networks before settings up routes to silence this warning.", [GBAnalyticsManager _networkNameForNetwork:[networkNumber intValue]], self.route] force:YES];
+            }
+        }
+    }
 
     self.eventRoutes = networks;
 }
@@ -337,7 +349,7 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
     if (!(self.eventRoutes.count > 0)) [GBAnalyticsManager _debugWarningString:[NSString stringWithFormat:@"There are no networks associated with the route %@, the following event was not sent: %@", self.route, event] force:YES];
     
     //don't send data if building in debug configuration
-    if (ProductionBuild) {
+    if (GBAnalyticsEnabled) {
         if (IsValidString(event)) {
             for (NSNumber *number in [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks) {
                 GBAnalyticsNetwork network = [number intValue];
@@ -358,8 +370,8 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
                         
                     case GBAnalyticsNetworkCrashlytics: {
                         //noop, doesn't support event
-                    }
-                        
+                    } break;
+
                     case GBAnalyticsNetworkTapstream: {
                         [[TSTapstream instance] fireEvent:[TSEvent eventWithName:event oneTimeOnly:NO]];
                     } break;
@@ -387,7 +399,7 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
     if (!(self.eventRoutes.count > 0)) [GBAnalyticsManager _debugWarningString:[NSString stringWithFormat:@"There are no networks associated with the route %@, the following event was not sent: %@", self.route, event] force:YES];
     
     //don't send data if building in debug configuration
-    if (ProductionBuild) {
+    if (GBAnalyticsEnabled) {
         if (IsValidString(event)) {
             //if the dictionary is not a dict or empty, just forward the call to the simple trackEvent: and thereby discard the event nonsense
             if (![parameters isKindOfClass:[NSDictionary class]] || parameters.count == 0) {
@@ -417,7 +429,7 @@ static NSString * const kGBAnalyticsCredentialsMixpanelToken =                  
                         
                     case GBAnalyticsNetworkCrashlytics: {
                         //noop, doesn't support event
-                    }
+                    } break;
                         
                     case GBAnalyticsNetworkTapstream: {
                         TSEvent *e = [TSEvent eventWithName:event oneTimeOnly:NO];

@@ -12,13 +12,16 @@
 
 extern NSString * const kGBAnalyticsDefaultEventRoute;
 
-#define GBAnalytics [GBAnalyticsManager sharedManager]
+#define GBAnalytics ([GBAnalyticsManager sharedManager])
+#define GBAnalyticsEnabled _GBAnalyticsEnabled()
+BOOL _GBAnalyticsEnabled();
 
 @class GBAnalyticsEventRouter;
 
 @interface GBAnalyticsManager : NSObject
 
-@property (assign, nonatomic, setter = setDebug:, getter = isDebugEnabled) BOOL isDebugEnabled;
+@property (assign, nonatomic, setter = setDebug:, getter = isDebugEnabled) BOOL     isDebugEnabled;
+@property (assign, nonatomic) BOOL                                                  force;
 
 +(GBAnalyticsManager *)sharedManager;
 
