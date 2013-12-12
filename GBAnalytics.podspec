@@ -22,7 +22,10 @@ Pod::Spec.new do |s|
 
   s.dependency 'FlurrySDK', '~> 4.2'
   s.dependency 'GoogleAnalytics-iOS-SDK', '~> 3.0'
-  s.dependency 'Tapstream', '~> 2.5'
+  
+  # s.dependency 'Tapstream', '2.6'#restore once they sort out ARC bugs
+  s.dependency 'Tapstream'#temp
+
   s.dependency 'Facebook-iOS-SDK', '~> 3.10'
   s.dependency 'Mixpanel', '~> 2.2' #this has an iOS6+ dependency
 
