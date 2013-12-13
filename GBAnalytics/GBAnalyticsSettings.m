@@ -72,14 +72,12 @@ static BOOL const kDefaultGoogleAnalyticsShouldTrackUncaughtExceptions = NO;
 #pragma mark - Tapstream
 
 static TapstreamLogger const kDefaultTapstreamLogger = nil;
-static TapstreamConversionListener const kDefaultTapstreamConversionListener = nil;
 
 @implementation GBAnalyticsTapstreamSettings
 
 -(id)init {
     if (self = [super init]) {
         self.logger = kDefaultTapstreamLogger;
-        self.conversionListener = kDefaultTapstreamConversionListener;
     }
     
     return self;

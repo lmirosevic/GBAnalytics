@@ -163,7 +163,6 @@ BOOL _GBAnalyticsEnabled() {
                     TSConfig *config = [TSConfig configWithDefaults];
                     config.openUdid = [OpenUDID value];
                     if ([ASIdentifierManager class]) config.idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-                    config.conversionListener = self.settings.Tapstream.conversionListener;
                     [TSTapstream createWithAccountName:AccountName developerSecret:SDKSecret config:config];
                 }
                 else invalidCredentialsErrorHandler();
@@ -366,7 +365,7 @@ BOOL _GBAnalyticsEnabled() {
                     } break;
                         
                     case GBAnalyticsNetworkCrashlytics: {
-                        //noop, doesn't support event
+                        //noop, doesn't support events
                     } break;
 
                     case GBAnalyticsNetworkTapstream: {
@@ -425,44 +424,16 @@ BOOL _GBAnalyticsEnabled() {
                     } break;
                         
                     case GBAnalyticsNetworkCrashlytics: {
-                        //noop, doesn't support event
+                        //noop, doesn't support events
                     } break;
                         
                     case GBAnalyticsNetworkTapstream: {
                         TSEvent *e = [TSEvent eventWithName:event oneTimeOnly:NO];
-                        
-                        BOOL shouldSend = NO;
                         for (NSString *key in parameters) {
-                            id value = parameters[key];
-                            
-                            if ([value isKindOfClass:NSString.class]) {
-                                [e addValue:value forKey:key];
-                                shouldSend = YES;
-                            }
-                            else if ([value isKindOfClass:NSNumber.class]) {
-                                if (strcmp([value objCType], @encode(BOOL)) == 0) {
-                                    [e addBooleanValue:[value boolValue] forKey:key];
-                                    shouldSend = YES;
-                                }
-                                else if ((strcmp([value objCType], @encode(int)) == 0) ||
-                                         (strcmp([value objCType], @encode(long)) == 0)) {
-                                    [e addIntegerValue:[value intValue] forKey:key];
-                                    shouldSend = YES;
-                                }
-                                else if ((strcmp([value objCType], @encode(unsigned int)) == 0) ||
-                                         (strcmp([value objCType], @encode(unsigned long)) == 0)) {
-                                    [e addUnsignedIntegerValue:[value unsignedIntValue] forKey:key];
-                                    shouldSend = YES;
-                                }
-                                else if ((strcmp([value objCType], @encode(float)) == 0) ||
-                                         (strcmp([value objCType], @encode(double)) == 0)) {
-                                    [e addDoubleValue:[value doubleValue] forKey:key];
-                                    shouldSend = YES;
-                                }
-                            }
+                            [e addValue:parameters[key] forKey:key];
                         }
                         
-                        if (shouldSend) [[TSTapstream instance] fireEvent:e];
+                        [[TSTapstream instance] fireEvent:e];
                     } break;
                         
                     case GBAnalyticsNetworkFacebook: {

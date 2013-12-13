@@ -55,12 +55,10 @@
 #pragma mark - Tapstream
 
 typedef void(^TapstreamLogger)(int, NSString *);
-typedef void(^TapstreamConversionListener)(NSData *jsonInfo);
 
 @interface GBAnalyticsTapstreamSettings : NSObject
 
 @property (copy, nonatomic) TapstreamLogger                 logger;                                 //default: nil
-@property (copy, nonatomic) TapstreamConversionListener     conversionListener;                     //default: nil
 
 @end
 
