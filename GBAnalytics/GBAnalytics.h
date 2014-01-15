@@ -22,7 +22,7 @@ BOOL _GBAnalyticsEnabled();
 @interface GBAnalyticsManager : NSObject
 
 @property (assign, nonatomic, setter = setDebug:, getter = isDebugEnabled) BOOL     isDebugEnabled;
-@property (assign, nonatomic) BOOL                                                  force;
+@property (assign, nonatomic) BOOL                                                  force;//defaults to NO, used to enable analytics when in debug mode. Make sure to call this before any other calls.
 
 @property (strong, nonatomic, readonly) GBAnalyticsSettings                         *settings;
 
