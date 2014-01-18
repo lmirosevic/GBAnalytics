@@ -13,7 +13,7 @@
 
 #import <Crashlytics/Crashlytics.h>
 
-#import <Tapstream-Goonbee/TSTapstream.h>
+#import <Tapstream/TSTapstream.h>
 
 #import <FacebookSDK/FacebookSDK.h>
 
