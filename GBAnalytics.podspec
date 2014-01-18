@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "GBAnalytics"
-  s.version      = "2.3.2"
+  s.version      = "2.3.3"
   s.summary      = "Abstracts away different analytics networks and provides a unified simple interface."
   s.homepage     = "https://github.com/lmirosevic/GBAnalytics"
   s.license      = 'Apache License, Version 2.0'
@@ -24,6 +24,6 @@ Pod::Spec.new do |s|
   s.dependency 'GoogleAnalytics-iOS-SDK', '~> 3.0'
   s.dependency 'Tapstream-Goonbee', '~> 3.0.0'
   s.dependency 'Facebook-iOS-SDK', '~> 3.10'
-  s.dependency 'Mixpanel', '~> 2.2' #this has an iOS6+ dependency
+  s.dependency 'Mixpanel', '~> 2.1'
 
 end
