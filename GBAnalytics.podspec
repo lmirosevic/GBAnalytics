@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "GBAnalytics"
-  s.version      = "2.4.2"
+  s.version      = "2.5.0"
   s.summary      = "Abstracts away different analytics networks and provides a unified simple interface."
   s.homepage     = "https://github.com/lmirosevic/GBAnalytics"
   s.license      = 'Apache License, Version 2.0'
@@ -18,12 +18,11 @@ Pod::Spec.new do |s|
 
   s.vendored_frameworks = 'GBAnalytics/Crashlytics.framework'
   s.frameworks = 'SystemConfiguration', 'CoreData'
-  s.weak_frameworks = 'AdSupport'
 
-  s.dependency 'FlurrySDK', '~> 4.2'
+  s.dependency 'FlurrySDK', '~> 4.3'
   s.dependency 'GoogleAnalytics-iOS-SDK', '~> 3.0'
   s.dependency 'Tapstream', '~> 2.6'
   s.dependency 'Facebook-iOS-SDK', '~> 3.10'
-  s.dependency 'Mixpanel', '~> 2.1'
+  s.dependency 'Mixpanel', '~> 2.3'
 
 end

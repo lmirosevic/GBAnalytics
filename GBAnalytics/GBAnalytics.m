@@ -162,7 +162,6 @@ BOOL _GBAnalyticsEnabled() {
                     [TSLogging setLogger:self.settings.Tapstream.logger];
                     TSConfig *config = [TSConfig configWithDefaults];
                     config.openUdid = [OpenUDID value];
-                    if ([ASIdentifierManager class]) config.idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
                     [TSTapstream createWithAccountName:AccountName developerSecret:SDKSecret config:config];
                 }
                 else invalidCredentialsErrorHandler();
