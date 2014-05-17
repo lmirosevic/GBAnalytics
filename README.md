@@ -1,5 +1,4 @@
-GBAnalytics
-============
+# GBAnalytics ![Version](https://img.shields.io/cocoapods/v/GBAnalytics.svg?style=flat)&nbsp;![License](https://img.shields.io/badge/license-Apache_2-green.svg?style=flat)
 
 Abstracts away different analytics networks and provides a unified simple interface.
 
