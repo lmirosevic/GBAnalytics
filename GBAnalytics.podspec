@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'GBAnalytics'
-  s.version      = '2.5.4'
+  s.version      = '2.5.5'
   s.summary      = 'Abstracts away different analytics networks and provides a unified simple interface.'
   s.homepage     = 'https://github.com/lmirosevic/GBAnalytics'
   s.license      = 'Apache License, Version 2.0'
@@ -17,6 +17,9 @@ Pod::Spec.new do |s|
   end
 
   s.vendored_frameworks = 'GBAnalytics/Crashlytics.framework'
+  s.preserve_paths = 'GBAnalytics/Crashlytics.framework'
+  s.xcconfig = { 'OTHER_LDFLAGS' => '-framework Crashlytics' }
+
   s.frameworks = 'SystemConfiguration', 'CoreData'
 
   s.dependency 'FlurrySDK', '~> 4.3'
