@@ -11,7 +11,7 @@
 
 #import <FlurrySDK/Flurry.h>
 
-#import <Crashlytics/Crashlytics.h>
+#import <CrashlyticsFramework/Crashlytics.h>
 
 #import <Tapstream/TSTapstream.h>
 
