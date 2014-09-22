@@ -82,6 +82,21 @@ Don't forget to import header, probably a good idea to put this in the precompil
 #import <GBAnaytics/GBAnalytics.h>
 ```
 
+Server-side Symbolication
+------------
+
+For Crashlytics to be able to symbolicate your crash reports, your app needs to send the dSYM file up to the Crashlytics servers. To do this automatically in post-build:
+
+* Add "run script" build phase to target with appropriate path and API key. This script assumes you have created a macro called CRASHLYTICSAPIKEY inside your precompiled header file. You can also just put the API key straight into the script. Make sure path is correct!
+
+```sh
+#Crashlytics dSYM upload
+
+#get Crashlytics API key from precompiled header and call the dSYM uploader with the key
+CRASHLYTICSAPIKEY=$(grep CRASHLYTICSAPIKEY "${PROJECT_DIR}/${GCC_PREFIX_HEADER}" | awk '{print $3}' | grep -oEi "[^@^\"]+")
+"${SRCROOT}/Pods/CrashlyticsFramework/Crashlytics.framework/run" $CRASHLYTICSAPIKEY
+```
+
 Install
 ------------
 
@@ -93,29 +108,14 @@ And run this in your project folder:
 
 `pod install`
 
+Lastly, add the build script to your project (see above).
+
 Requirements
 ------------
 
 * Built using ARC
 * Supports iOS 6 and above
 * Does not use Apple's UDID.
-
-Notes
-------------
-
-For Crashlytics to be able to symbolicate your crash reports, your app needs to send the dSYM file up to the Crashlytics servers. To do this automatically in post-build:
-
-* Add "run script" build phase to target with appropriate path and API key. This script assumes you have created a macro called CRASHLYTICSAPIKEY inside your precompiled header file. You can also just put the API key straight into the script. Make sure path is correct!
-
-```sh
-#Crashlytics dSYM upload
-
-if [ "${CONFIGURATION}" != "Debug" ]; then
-#get Crashlytics API key from precompiled header and call the dSYM uploader with the key
-CRASHLYTICSAPIKEY=$(grep CRASHLYTICSAPIKEY "${PROJECT_DIR}/${GCC_PREFIX_HEADER}" | awk '{print $3}' | grep -oEi "[^@^\"]+")
-Pods/GBAnalytics/GBAnalytics/Crashlytics.framework/run $CRASHLYTICSAPIKEY
-fi
-```
 
 Copyright & License
 ------------
