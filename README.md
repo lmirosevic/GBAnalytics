@@ -82,19 +82,20 @@ Don't forget to import header, probably a good idea to put this in the precompil
 #import <GBAnaytics/GBAnalytics.h>
 ```
 
-Server-side Symbolication
+Crashlytics Server-side Symbolication
 ------------
 
 For Crashlytics to be able to symbolicate your crash reports, your app needs to send the dSYM file up to the Crashlytics servers. To do this automatically in post-build:
 
-* Add "run script" build phase to target with appropriate path and API key. This script assumes you have created a macro called CRASHLYTICSAPIKEY inside your precompiled header file. You can also just put the API key straight into the script. Make sure path is correct!
+* Add a "Run Script" build phase to the target. This script assumes you have defined CRASHLYTICSAPIKEY and CRASHLYTICSBUILDSECRET inside your precompiled header file ("Prefix Header" build setting for target). You can also just put the keys directly into the script.
 
 ```sh
-#Crashlytics dSYM upload
+# Crashlytics dSYM upload
 
-#get Crashlytics API key from precompiled header and call the dSYM uploader with the key
+# get Crashlytics API Key and Build Secret from precompiled header and call the dSYM uploader with the key
 CRASHLYTICSAPIKEY=$(grep CRASHLYTICSAPIKEY "${PROJECT_DIR}/${GCC_PREFIX_HEADER}" | awk '{print $3}' | grep -oEi "[^@^\"]+")
-"${SRCROOT}/Pods/CrashlyticsFramework/Crashlytics.framework/run" $CRASHLYTICSAPIKEY
+CRASHLYTICSBUILDSECRET=$(grep CRASHLYTICSAPIKEY "${PROJECT_DIR}/${GCC_PREFIX_HEADER}" | awk '{print $3}' | grep -oEi "[^@^\"]+")
+"${SRCROOT}/Pods/CrashlyticsFramework/Crashlytics.framework/run" $CRASHLYTICSAPIKEY $CRASHLYTICSBUILDSECRET
 ```
 
 Install
@@ -120,12 +121,10 @@ Requirements
 Copyright & License
 ------------
 
-Copyright 2013 Luka Mirosevic
+Copyright 2014 Goonbee
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with the License. You may obtain a copy of the License in the LICENSE file, or at:
 
 http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/lmirosevic/gbanalytics/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
