@@ -11,11 +11,6 @@ Pod::Spec.new do |s|
   s.public_header_files = 'GBAnalytics/GBAnalytics.h', 'GBAnalytics/GBAnalyticsSettings.h', 'GBAnalytics/GBAnalyticsNetworks.h'
   s.requires_arc = true
 
-  s.subspec 'OpenUDID' do |sp|
-    sp.source_files = 'GBAnalytics/GBAnalytics_OpenUDID.{h,m}'
-    sp.requires_arc = false
-  end
-
   s.frameworks = 'SystemConfiguration', 'CoreData'
 
   s.dependency 'CrashlyticsFramework', '~> 2.2'

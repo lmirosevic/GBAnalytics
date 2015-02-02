@@ -8,7 +8,6 @@
 
 #import "GBAnalytics.h"
 
-#import "GBAnalytics_OpenUDID.h"
 #import <AdSupport/AdSupport.h>
 
 #define IsValidString(string) (([string isKindOfClass:NSString.class] && ((NSString *)string).length > 0) ? YES : NO)
@@ -161,7 +160,6 @@ BOOL _GBAnalyticsEnabled() {
                     
                     [TSLogging setLogger:self.settings.Tapstream.logger];
                     TSConfig *config = [TSConfig configWithDefaults];
-                    config.openUdid = [OpenUDID value];
                     [TSTapstream createWithAccountName:AccountName developerSecret:SDKSecret config:config];
                 }
                 else invalidCredentialsErrorHandler();

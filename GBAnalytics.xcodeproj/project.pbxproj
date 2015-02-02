@@ -12,7 +12,6 @@
 		8A45A82716B7C2C100414137 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A45A82616B7C2C100414137 /* Foundation.framework */; };
 		8A45A82C16B7C2C100414137 /* GBAnalytics.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8A45A82B16B7C2C100414137 /* GBAnalytics.h */; };
 		8A45A82E16B7C2C100414137 /* GBAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A45A82D16B7C2C100414137 /* GBAnalytics.m */; };
-		8A6B0F2318277315009C2ABF /* GBAnalytics_OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6B0F2218277315009C2ABF /* GBAnalytics_OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8A6B0F3C1827732E009C2ABF /* TSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6B0F261827732E009C2ABF /* TSConfig.m */; };
 		8A6B0F3D1827732E009C2ABF /* TSCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6B0F281827732E009C2ABF /* TSCore.m */; };
 		8A6B0F3E1827732E009C2ABF /* TSCoreListenerImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6B0F2B1827732E009C2ABF /* TSCoreListenerImpl.m */; };
@@ -83,8 +82,6 @@
 		8A45A82A16B7C2C100414137 /* GBAnalytics-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GBAnalytics-Prefix.pch"; sourceTree = "<group>"; };
 		8A45A82B16B7C2C100414137 /* GBAnalytics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBAnalytics.h; sourceTree = "<group>"; };
 		8A45A82D16B7C2C100414137 /* GBAnalytics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GBAnalytics.m; sourceTree = "<group>"; };
-		8A6B0F2118277315009C2ABF /* GBAnalytics_OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GBAnalytics_OpenUDID.h; path = GBAnalytics/GBAnalytics_OpenUDID.h; sourceTree = "<group>"; };
-		8A6B0F2218277315009C2ABF /* GBAnalytics_OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GBAnalytics_OpenUDID.m; path = GBAnalytics/GBAnalytics_OpenUDID.m; sourceTree = "<group>"; };
 		8A6B0F241827732E009C2ABF /* TSApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSApi.h; path = GBAnalytics/TSApi.h; sourceTree = "<group>"; };
 		8A6B0F251827732E009C2ABF /* TSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSConfig.h; path = GBAnalytics/TSConfig.h; sourceTree = "<group>"; };
 		8A6B0F261827732E009C2ABF /* TSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSConfig.m; path = GBAnalytics/TSConfig.m; sourceTree = "<group>"; };
@@ -169,7 +166,6 @@
 		8A2800E716B7CEE6007CEEC2 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				8A6B0F1D1827727D009C2ABF /* OpenUDID */,
 				8A2800DE16B7CEE3007CEEC2 /* GBToolbox.xcodeproj */,
 			);
 			name = Libraries;
@@ -276,15 +272,6 @@
 			name = Tapstream;
 			sourceTree = "<group>";
 		};
-		8A6B0F1D1827727D009C2ABF /* OpenUDID */ = {
-			isa = PBXGroup;
-			children = (
-				8A6B0F2118277315009C2ABF /* GBAnalytics_OpenUDID.h */,
-				8A6B0F2218277315009C2ABF /* GBAnalytics_OpenUDID.m */,
-			);
-			name = OpenUDID;
-			sourceTree = "<group>";
-		};
 		8AF6863116B7E5D400FEF6A7 /* Flurry */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,7 +373,6 @@
 				8A6B0F401827732E009C2ABF /* TSHit.m in Sources */,
 				8A6B0F421827732E009C2ABF /* TSPlatformImpl.m in Sources */,
 				8A6B0F431827732E009C2ABF /* TSResponse.m in Sources */,
-				8A6B0F2318277315009C2ABF /* GBAnalytics_OpenUDID.m in Sources */,
 				8A6B0F3D1827732E009C2ABF /* TSCore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
