@@ -3,7 +3,7 @@
 //  GBAnalytics
 //
 //  Created by Luka Mirosevic on 12/12/2013.
-//  Copyright (c) 2013 Goonbee. All rights reserved.
+//  Copyright (c) 2015 Goonbee. All rights reserved.
 //
 
 #import "GBAnalyticsSettings.h"
