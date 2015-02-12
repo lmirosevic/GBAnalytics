@@ -15,30 +15,42 @@
 NSString * const kGBAnalyticsDefaultEventRoute =                                        @"kGBAnalyticsDefaultEventRoute";
 
 #if !DEBUG
-BOOL const kProductionBuild = YES;
+static BOOL const kProductionBuild =                                                    YES;
 #else
-BOOL const kProductionBuild = NO;
+static BOOL const kProductionBuild =                                                    NO;
 #endif
 
-//Google Analytics
+// Google Analytics
 static NSString * const kGBAnalyticsCredentialsGoogleAnalyticsTrackingID =              @"kGBAnalyticsCredentialsGoogleAnalyticsTrackingID";
 static NSString * const kGBAnalyticsGoogleAnalyticsActionlessEventActionString =        @"Plain";
 
-//Flurry
+// Flurry
 static NSString * const kGBAnalyticsCredentialsFlurryAPIKey =                           @"kGBAnalyticsCredentialsFlurryAPIKey";
 
-//Crashlytics
+// Crashlytics
 static NSString * const kGBAnalyticsCredentialsCrashlyticsAPIKey =                      @"kGBAnalyticsCredentialsCrashlyticsAPIKey";
 
-//Tapstream
+// Tapstream
 static NSString * const kGBAnalyticsCredentialsTapstreamAccountName =                   @"kGBAnalyticsCredentialsTapstreamAccountName";
 static NSString * const kGBAnalyticsCredentialsTapstreamSDKSecret =                     @"kGBAnalyticsCredentialsTapstreamSDKSecret";
 
-//Facebook
+// Facebook
 static NSString * const kGBAnalyticsCredentialsFacebookAppID =                          @"kGBAnalyticsCredentialsFacebookAppID";
 
-//Mixpanel
+// Mixpanel
 static NSString * const kGBAnalyticsCredentialsMixpanelToken =                          @"kGBAnalyticsCredentialsMixpanelToken";
+
+// Parse Analytics
+static NSString * const kGBAnalyticsCredentialsParseApplicationID =                     @"kGBAnalyticsCredentialsParseApplicationID";
+static NSString * const kGBAnalyticsCredentialsParseClientKey =                         @"kGBAnalyticsCredentialsParseClientKey";
+
+// Localytics
+static NSString * const kGBAnalyticsCredentialsLocalyticsAppKey =                       @"kGBAnalyticsCredentialsLocalyticsAppKey";
+
+// Amplitude
+static NSString * const kGBAnalyticsCredentialsAmplitudeAPIKey =                        @"kGBAnalyticsCredentialsAmplitudeAPIKey";
+
+typedef void(^ApplicationDidGenerateNotificationBlock)(NSString *notificationName, NSDictionary *userInfo);
 
 BOOL _GBAnalyticsEnabled() {
     return GBAnalytics.force || kProductionBuild;
@@ -46,27 +58,29 @@ BOOL _GBAnalyticsEnabled() {
 
 @interface GBAnalyticsManager ()
 
-@property (strong, nonatomic) NSMutableDictionary               *connectedAnalyticsNetworks;
-@property (strong, nonatomic, readonly) NSMutableDictionary     *eventRouters;
+@property (strong, nonatomic) NSMutableDictionary                                       *connectedAnalyticsNetworks;
+@property (strong, nonatomic, readonly) NSMutableDictionary                             *eventRouters;
+
+@property (strong, nonatomic) NSMutableArray                                            *applicationNotificationDelegateHandlers;
 
 @end
 
 @interface GBAnalyticsEventRouter ()
 
-@property (copy, nonatomic, readwrite) NSString     *route;
-@property (strong, nonatomic) NSArray               *eventRoutes;
+@property (copy, nonatomic, readwrite) NSString                                         *route;
+@property (strong, nonatomic) NSArray                                                   *eventRoutes;
 
--(id)initWithRoute:(NSString *)route;
+- (id)initWithRoute:(NSString *)route;
 
 @end
 
 @implementation GBAnalyticsManager {
-    NSMutableDictionary *_eventRouters;
+    NSMutableDictionary                                                                 *_eventRouters;
 }
 
 #pragma mark - Storage
 
-+(GBAnalyticsManager *)sharedManager {
++ (GBAnalyticsManager *)sharedManager {
     static GBAnalyticsManager *_sharedManager;
     @synchronized(self) {
         if (!_sharedManager) {
@@ -77,7 +91,7 @@ BOOL _GBAnalyticsEnabled() {
     return _sharedManager;
 }
 
--(NSMutableDictionary *)connectedAnalyticsNetworks {
+- (NSMutableDictionary *)connectedAnalyticsNetworks {
     if (!_connectedAnalyticsNetworks) {
         _connectedAnalyticsNetworks = [NSMutableDictionary new];
     }
@@ -85,7 +99,7 @@ BOOL _GBAnalyticsEnabled() {
     return _connectedAnalyticsNetworks;
 }
 
--(NSMutableDictionary *)eventRouters {
+- (NSMutableDictionary *)eventRouters {
     if (!_eventRouters) {
         _eventRouters = [NSMutableDictionary new];
     }
@@ -95,20 +109,33 @@ BOOL _GBAnalyticsEnabled() {
 
 #pragma mark - Initialiser
 
--(id)init {
+- (id)init {
     if (self = [super init]) {
         self.isDebugEnabled = NO;
 
         _settings = [GBAnalyticsSettings new];
         _eventRouters = [NSMutableDictionary new];
+        _applicationNotificationDelegateHandlers = [NSMutableArray new];
+        
+        for (NSString *notificationName in @[UIApplicationDidBecomeActiveNotification,
+                                             UIApplicationWillEnterForegroundNotification,
+                                             UIApplicationWillResignActiveNotification,
+                                             UIApplicationWillTerminateNotification,
+                                             UIApplicationDidEnterBackgroundNotification]) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_applicationDidGenerateNotification:) name:notificationName object:nil];
+        }
     }
     
     return self;
 }
 
-#pragma mark - Public API (AppStore)
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
--(void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ... {
+#pragma mark - Public API
+
+- (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ... {
     [self.class _debugSessionStartWithNetwork:network force:NO];
     
     //don't send data if debugging
@@ -122,31 +149,37 @@ BOOL _GBAnalyticsEnabled() {
 
         switch (network) {
             case GBAnalyticsNetworkGoogleAnalytics: {
-                if (IsValidString(credentials)) {
-                    self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkGoogleAnalytics)] = @{kGBAnalyticsCredentialsGoogleAnalyticsTrackingID: credentials};
+                NSString *TrackingID = credentials;
+                
+                if (IsValidString(TrackingID)) {
+                    self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkGoogleAnalytics)] = @{kGBAnalyticsCredentialsGoogleAnalyticsTrackingID: TrackingID};
                     
                     [GAI sharedInstance].dispatchInterval = self.settings.GoogleAnalytics.dispatchInterval;
                     [GAI sharedInstance].trackUncaughtExceptions = self.settings.GoogleAnalytics.shouldTrackUncaughtExceptions;
                     
-                    [[GAI sharedInstance] trackerWithTrackingId:credentials];
+                    [[GAI sharedInstance] trackerWithTrackingId:TrackingID];
                 }
                 else invalidCredentialsErrorHandler();
             } break;
                 
             case GBAnalyticsNetworkFlurry: {
-                if (IsValidString(credentials)) {
-                    self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkFlurry)] = @{kGBAnalyticsCredentialsFlurryAPIKey: credentials};
+                NSString *APIKey = credentials;
+                
+                if (IsValidString(APIKey)) {
+                    self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkFlurry)] = @{kGBAnalyticsCredentialsFlurryAPIKey: APIKey};
                     
-                    [Flurry startSession:credentials];
+                    [Flurry startSession:APIKey];
                 }
                 else invalidCredentialsErrorHandler();
             } break;
                 
             case GBAnalyticsNetworkCrashlytics: {
-                if (IsValidString(credentials)) {
-                    self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkCrashlytics)] = @{kGBAnalyticsCredentialsCrashlyticsAPIKey: credentials};
+                NSString *APIKey = credentials;
+                
+                if (IsValidString(APIKey)) {
+                    self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkCrashlytics)] = @{kGBAnalyticsCredentialsCrashlyticsAPIKey: APIKey};
                     
-                    [Crashlytics startWithAPIKey:credentials];
+                    [Crashlytics startWithAPIKey:APIKey];
                 }
                 else invalidCredentialsErrorHandler();
             } break;
@@ -177,12 +210,84 @@ BOOL _GBAnalyticsEnabled() {
             } break;
                 
             case GBAnalyticsNetworkMixpanel: {
-                if (IsValidString(credentials)) {
-                    self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkMixpanel)] = @{kGBAnalyticsCredentialsMixpanelToken: credentials};
+                NSString *Token = credentials;
+                
+                if (IsValidString(Token)) {
+                    self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkMixpanel)] = @{kGBAnalyticsCredentialsMixpanelToken: Token};
                     
-                    [Mixpanel sharedInstanceWithToken:credentials];
+                    [Mixpanel sharedInstanceWithToken:Token];
                     [Mixpanel sharedInstance].flushInterval = self.settings.Mixpanel.flushInterval;
                     [Mixpanel sharedInstance].showNetworkActivityIndicator = self.settings.Mixpanel.shouldShowNetworkActivityIndicator;
+                }
+                else invalidCredentialsErrorHandler();
+            } break;
+                
+            case GBAnalyticsNetworkParse: {
+                NSString *ApplicationID = credentials;
+                NSString *ClientKey = va_arg(args, NSString *);
+                
+                if (IsValidString(ApplicationID) && IsValidString(ClientKey)) {
+                    self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkParse)] = @{kGBAnalyticsCredentialsParseApplicationID: ApplicationID, kGBAnalyticsCredentialsParseClientKey: ClientKey};
+                    
+                    [Parse setApplicationId:ApplicationID clientKey:ClientKey];
+                    
+                    [self _addHandlerForApplicationNotification:^(NSString *notificationName, NSDictionary *userInfo) {
+                        if ([notificationName isEqualToString:UIApplicationDidFinishLaunchingNotification]) {
+                            [PFAnalytics trackAppOpenedWithLaunchOptions:userInfo];
+                        }
+                    }];
+                }
+                else invalidCredentialsErrorHandler();
+            } break;
+                
+            case GBAnalyticsNetworkLocalytics: {
+                NSString *AppKey = credentials;
+                
+                if (IsValidString(AppKey)) {
+                    self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkLocalytics)] = @{kGBAnalyticsCredentialsLocalyticsAppKey: AppKey};
+                    
+                    [Localytics integrate:AppKey];
+                    
+                    [Localytics setCollectAdvertisingIdentifier:self.settings.Localytics.isCollectingAdvertisingIdentifier];
+                    [Localytics setSessionTimeoutInterval:self.settings.Localytics.sessionTimeoutInterval];
+                    
+                    
+                    [self _addHandlerForApplicationNotification:^(NSString *notificationName, NSDictionary *userInfo) {
+                        if ([notificationName isEqualToString:UIApplicationDidBecomeActiveNotification] ||
+                            [notificationName isEqualToString:UIApplicationWillEnterForegroundNotification]) {
+                            [Localytics openSession];
+                            [Localytics upload];
+                        }
+                        else if ([notificationName isEqualToString:UIApplicationWillResignActiveNotification] ||
+                                 [notificationName isEqualToString:UIApplicationDidEnterBackgroundNotification] ||
+                                 [notificationName isEqualToString:UIApplicationWillTerminateNotification]) {
+                            [Localytics closeSession];
+                            [Localytics upload];
+                        }
+                    }];
+                }
+                else invalidCredentialsErrorHandler();
+            } break;
+                
+            case GBAnalyticsNetworkAmplitude: {
+                NSString *APIKey = credentials;
+                
+                if (IsValidString(APIKey)) {
+                    self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkAmplitude)] = @{kGBAnalyticsCredentialsAmplitudeAPIKey: APIKey};
+                    
+                    // for Amplitude, it's important to apply the settings first, before initialising it
+                    if (self.settings.Amplitude.useAdvertisingIdForDeviceId) {
+                        [Amplitude useAdvertisingIdForDeviceId];
+                    }
+                    
+                    if (self.settings.Amplitude.enableLocationListening) {
+                        [Amplitude enableLocationListening];
+                    }
+                    else {
+                        [Amplitude disableLocationListening];
+                    }
+                    
+                    [Amplitude initializeApiKey:APIKey];
                 }
                 else invalidCredentialsErrorHandler();
             } break;
@@ -196,7 +301,7 @@ BOOL _GBAnalyticsEnabled() {
     }
 }
 
--(GBAnalyticsEventRouter *)objectForKeyedSubscript:(NSString *)route {
+- (GBAnalyticsEventRouter *)objectForKeyedSubscript:(NSString *)route {
     if (!self.eventRouters[route]) {
         self.eventRouters[route] = [[GBAnalyticsEventRouter alloc] initWithRoute:route];
     }
@@ -204,8 +309,8 @@ BOOL _GBAnalyticsEnabled() {
     return self.eventRouters[route];
 }
 
-//These alias the default event router
--(id)forwardingTargetForSelector:(SEL)selector {
+// These alias the default event router on the manager object
+- (id)forwardingTargetForSelector:(SEL)selector {
     if (selector == @selector(routeToNetworks:) ||
         selector == @selector(trackEvent:) ||
         selector == @selector(trackEvent:withParameters:)) {
@@ -216,47 +321,63 @@ BOOL _GBAnalyticsEnabled() {
     }
 }
 
+#pragma mark - Private
+
+- (void)_addHandlerForApplicationNotification:(ApplicationDidGenerateNotificationBlock)block {
+    // without a block it's all a moo point
+    if (block) {
+        [self.applicationNotificationDelegateHandlers addObject:[block copy]];
+    }
+}
+
+- (void)_applicationDidGenerateNotification:(NSNotification *)notification {
+    // call our handlers
+    for (ApplicationDidGenerateNotificationBlock block in self.applicationNotificationDelegateHandlers) {
+        block(notification.name, notification.userInfo);
+    }
+}
+
 #pragma mark - Debug Util
 
-+(void)_debugSessionStartWithNetwork:(GBAnalyticsNetwork)network force:(BOOL)force {
++ (void)_debugSessionStartWithNetwork:(GBAnalyticsNetwork)network force:(BOOL)force {
     [self _debugLogString:[NSString stringWithFormat:@"Started session with analytics network: %@", [self.class _networkNameForNetwork:network]] force:force];
 }
 
-+(void)_debugErrorString:(NSString *)warning force:(BOOL)force {
++ (void)_debugErrorString:(NSString *)warning force:(BOOL)force {
     if ([GBAnalyticsManager sharedManager].isDebugEnabled || force) {
         [self _debugType:@"Error" withString:warning];
     }
 }
 
-+(void)_debugWarningString:(NSString *)warning force:(BOOL)force {
++ (void)_debugWarningString:(NSString *)warning force:(BOOL)force {
     if ([GBAnalyticsManager sharedManager].isDebugEnabled || force) {
         [self _debugType:@"Warning" withString:warning];
     }
 }
 
-+(void)_debugLogString:(NSString *)event force:(BOOL)force {
++ (void)_debugLogString:(NSString *)event force:(BOOL)force {
     if ([GBAnalyticsManager sharedManager].isDebugEnabled || force) {
         [self _debugType:@"Log" withString:event];
     }
 }
 
-+(void)_debugLogString:(NSString *)event withDictionary:(NSDictionary *)dictionary force:(BOOL)force {
++ (void)_debugLogString:(NSString *)event withDictionary:(NSDictionary *)dictionary force:(BOOL)force {
     if ([GBAnalyticsManager sharedManager].isDebugEnabled || force) {
         [self _debugType:@"Log" withString:event withDictionary:dictionary];
     }
 }
 
-+(void)_debugType:(NSString *)type withString:(NSString *)event {
++ (void)_debugType:(NSString *)type withString:(NSString *)event {
     NSLog(@"GBAnalytics %@: %@", type, event);
 }
 
-+(void)_debugType:(NSString *)type withString:(NSString *)event withDictionary:(NSDictionary *)dictionary {
++ (void)_debugType:(NSString *)type withString:(NSString *)event withDictionary:(NSDictionary *)dictionary {
     NSLog(@"GBAnalytics %@: %@, %@", type, event, dictionary);
 }
 
 #pragma mark - Util
 
-+(NSString *)_networkNameForNetwork:(GBAnalyticsNetwork)network {
++ (NSString *)_networkNameForNetwork:(GBAnalyticsNetwork)network {
     switch (network) {
         case GBAnalyticsNetworkGoogleAnalytics: {
             return @"Google Analytics";
@@ -281,10 +402,22 @@ BOOL _GBAnalyticsEnabled() {
         case GBAnalyticsNetworkMixpanel: {
             return @"Mixpanel";
         } break;
+            
+        case GBAnalyticsNetworkParse: {
+            return @"Parse";
+        } break;
+            
+        case GBAnalyticsNetworkLocalytics: {
+            return @"Localytics";
+        } break;
+            
+        case GBAnalyticsNetworkAmplitude: {
+            return @"Amplitude";
+        } break;
     }
 }
 
-+(NSString *)_formatEventNameForFacebook:(NSString *)eventName {
++ (NSString *)_formatEventNameForFacebook:(NSString *)eventName {
     NSMutableString *formattedName = [eventName mutableCopy];
     
     [formattedName replaceOccurrencesOfString:@"(" withString:@"_" options:NSCaseInsensitiveSearch range:NSMakeRange(0, formattedName.length)];
@@ -301,7 +434,7 @@ BOOL _GBAnalyticsEnabled() {
 
 #pragma mark - Life
 
--(id)initWithRoute:(NSString *)route {
+- (id)initWithRoute:(NSString *)route {
     if (self = [super init]) {
         self.route = route;
     }
@@ -309,9 +442,9 @@ BOOL _GBAnalyticsEnabled() {
     return self;
 }
 
-#pragma mark - API
+#pragma mark - Public API
 
--(void)routeToNetworks:(GBAnalyticsNetwork)network, ... NS_REQUIRES_NIL_TERMINATION {
+- (void)routeToNetworks:(GBAnalyticsNetwork)network, ... NS_REQUIRES_NIL_TERMINATION {
     //convert args into array
     va_list args;
     GBAnalyticsNetwork aNetwork;
@@ -335,7 +468,7 @@ BOOL _GBAnalyticsEnabled() {
     self.eventRoutes = networks;
 }
 
--(void)trackEvent:(NSString *)event {
+- (void)trackEvent:(NSString *)event {
     [GBAnalyticsManager _debugLogString:event force:NO];
     
     //Warn if there are no routes associated here
@@ -376,6 +509,18 @@ BOOL _GBAnalyticsEnabled() {
                     case GBAnalyticsNetworkMixpanel: {
                         [[Mixpanel sharedInstance] track:event];
                     } break;
+                        
+                    case GBAnalyticsNetworkParse: {
+                        [PFAnalytics trackEvent:event];
+                    } break;
+                        
+                    case GBAnalyticsNetworkLocalytics: {
+                        [Localytics tagEvent:event];
+                    } break;
+                        
+                    case GBAnalyticsNetworkAmplitude: {
+                        [Amplitude logEvent:event];
+                    } break;
                 }
             }
         }
@@ -385,7 +530,7 @@ BOOL _GBAnalyticsEnabled() {
     }
 }
 
--(void)trackEvent:(NSString *)event withParameters:(NSDictionary *)parameters {
+- (void)trackEvent:(NSString *)event withParameters:(NSDictionary *)parameters {
     [GBAnalyticsManager _debugLogString:event withDictionary:parameters force:NO];
     
     //Warn if there are no routes associated here
@@ -439,6 +584,18 @@ BOOL _GBAnalyticsEnabled() {
                         
                     case GBAnalyticsNetworkMixpanel: {
                         [[Mixpanel sharedInstance] track:event properties:parameters];
+                    } break;
+                        
+                    case GBAnalyticsNetworkParse: {
+                        [PFAnalytics trackEvent:event dimensions:parameters];
+                    } break;
+                        
+                    case GBAnalyticsNetworkLocalytics: {
+                        [Localytics tagEvent:event attributes:parameters];
+                    } break;
+                        
+                    case GBAnalyticsNetworkAmplitude: {
+                        [Amplitude logEvent:event withEventProperties:parameters];
                     } break;
                 }
             }

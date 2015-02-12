@@ -10,7 +10,7 @@
 
 @implementation GBAnalyticsSettings
 
--(id)init {
+- (id)init {
     if (self = [super init]) {
         self.GoogleAnalytics = [GBAnalyticsGoogleAnalyticsSettings new];
         self.Flurry = [GBAnalyticsFlurrySettings new];
@@ -18,6 +18,9 @@
         self.Tapstream = [GBAnalyticsTapstreamSettings new];
         self.Facebook = [GBAnalyticsFacebookSettings new];
         self.Mixpanel = [GBAnalyticsMixpanelSettings new];
+        self.Parse = [GBAnalyticsParseSettings new];
+        self.Localytics = [GBAnalyticsLocalyticsSettings new];
+        self.Amplitude = [GBAnalyticsAmplitudeSettings new];
     }
     
     return self;
@@ -27,12 +30,12 @@
 
 #pragma mark - Google Analytics
 
-static NSTimeInterval const kDefaultGoogleAnalyticsDispatchInterval = 10;
-static BOOL const kDefaultGoogleAnalyticsShouldTrackUncaughtExceptions = NO;
+static NSTimeInterval const kDefaultGoogleAnalyticsDispatchInterval =       10;
+static BOOL const kDefaultGoogleAnalyticsShouldTrackUncaughtExceptions =    NO;
 
 @implementation GBAnalyticsGoogleAnalyticsSettings
 
--(id)init {
+- (id)init {
     if (self = [super init]) {
         self.dispatchInterval = kDefaultGoogleAnalyticsDispatchInterval;
         self.shouldTrackUncaughtExceptions = kDefaultGoogleAnalyticsShouldTrackUncaughtExceptions;
@@ -47,7 +50,7 @@ static BOOL const kDefaultGoogleAnalyticsShouldTrackUncaughtExceptions = NO;
 
 @implementation GBAnalyticsFlurrySettings
 
--(id)init {
+- (id)init {
     if (self = [super init]) {
     }
     
@@ -60,7 +63,7 @@ static BOOL const kDefaultGoogleAnalyticsShouldTrackUncaughtExceptions = NO;
 
 @implementation GBAnalyticsCrashlyticsSettings
 
--(id)init {
+- (id)init {
     if (self = [super init]) {
     }
     
@@ -71,11 +74,11 @@ static BOOL const kDefaultGoogleAnalyticsShouldTrackUncaughtExceptions = NO;
 
 #pragma mark - Tapstream
 
-static TapstreamLogger const kDefaultTapstreamLogger = nil;
+static TapstreamLogger const kDefaultTapstreamLogger =                      nil;
 
 @implementation GBAnalyticsTapstreamSettings
 
--(id)init {
+- (id)init {
     if (self = [super init]) {
         self.logger = kDefaultTapstreamLogger;
     }
@@ -89,7 +92,7 @@ static TapstreamLogger const kDefaultTapstreamLogger = nil;
 
 @implementation GBAnalyticsFacebookSettings
 
--(id)init {
+- (id)init {
     if (self = [super init]) {
     }
     
@@ -100,15 +103,64 @@ static TapstreamLogger const kDefaultTapstreamLogger = nil;
 
 #pragma mark - Mixpanel
 
-static NSTimeInterval const kDefaultMixpanelFlushInterval = 10;
-static BOOL const kDefaultMixpanelShouldShowNetworkActivityIndicator = NO;
+static NSTimeInterval const kDefaultMixpanelFlushInterval =                 10;
+static BOOL const kDefaultMixpanelShouldShowNetworkActivityIndicator =      NO;
 
 @implementation GBAnalyticsMixpanelSettings
 
--(id)init {
+- (id)init {
     if (self = [super init]) {
         self.flushInterval = kDefaultMixpanelFlushInterval;
         self.shouldShowNetworkActivityIndicator = kDefaultMixpanelShouldShowNetworkActivityIndicator;
+    }
+    
+    return self;
+}
+
+@end
+
+#pragma mark - Parse
+
+@implementation GBAnalyticsParseSettings : NSObject
+
+- (id)init {
+    if (self = [super init]) {
+    }
+    
+    return self;
+}
+
+@end
+
+#pragma mark - Localytics
+
+@implementation GBAnalyticsLocalyticsSettings : NSObject
+
+static BOOL const kDefaultLocalyticsIsCollectingAvertisingIdentifier =      YES;
+static NSTimeInterval const kDefaultLocalyticsTimeoutInterval =             15;
+
+- (id)init {
+    if (self = [super init]) {
+        self.isCollectingAdvertisingIdentifier = kDefaultLocalyticsIsCollectingAvertisingIdentifier;
+        self.sessionTimeoutInterval = kDefaultLocalyticsTimeoutInterval;
+    }
+    
+    return self;
+}
+
+@end
+
+#pragma mark - Amplitude
+
+@implementation GBAnalyticsAmplitudeSettings : NSObject
+
+static BOOL const kDefaultAmplitudeEnableLocationListening =                YES;
+static BOOL const kDefaultAmplitudeUserAdvertisingIdForDeviceId =           YES;
+
+- (id)init {
+    if (self = [super init]) {
+        self.enableLocationListening = kDefaultAmplitudeEnableLocationListening;
+        self.useAdvertisingIdForDeviceId = kDefaultAmplitudeUserAdvertisingIdForDeviceId;
     }
     
     return self;

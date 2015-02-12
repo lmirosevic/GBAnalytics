@@ -5,12 +5,15 @@ Abstracts away different analytics networks and provides a unified simple interf
 Supported networks
 ------------
 
-* Flurry
+* Mixpanel
+* Localytics
+* Amplitude
+* Parse Analytics
 * Google Analytics
 * Crashlytics
-* Tapstream
 * Facebook
-* Mixpanel
+* Tapstream
+* Flurry
 
 Usage
 ------------

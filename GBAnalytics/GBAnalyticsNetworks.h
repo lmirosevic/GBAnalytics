@@ -8,16 +8,14 @@
 
 #import <GoogleAnalytics-iOS-SDK/GAI.h>
 #import <GoogleAnalytics-iOS-SDK/GAIDictionaryBuilder.h>
-
 #import <FlurrySDK/Flurry.h>
-
 #import <CrashlyticsFramework/Crashlytics.h>
-
 #import <Tapstream/TSTapstream.h>
-
 #import <FacebookSDK/FacebookSDK.h>
-
 #import <Mixpanel/Mixpanel.h>
+#import <Parse/Parse.h>
+#import <Localytics/Localytics.h>
+#import <Amplitude-iOS/Amplitude.h>
 
 typedef enum {
     GBAnalyticsNetworkGoogleAnalytics = 1,
@@ -26,6 +24,9 @@ typedef enum {
     GBAnalyticsNetworkTapstream,
     GBAnalyticsNetworkFacebook,
     GBAnalyticsNetworkMixpanel,
+    GBAnalyticsNetworkParse,
+    GBAnalyticsNetworkLocalytics,
+    GBAnalyticsNetworkAmplitude,
 } GBAnalyticsNetwork;
 
 #define kGBAnalyticsFacebookAppIDFromPlist nil
@@ -37,12 +38,10 @@ typedef enum {
     Settings: 
     Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkFlurry withCredentials:@"FlurryAPIKey"];
  
- 
  Google Analytics
     Params: GoogleAnalyticsTrackingID
     Settings: NSTimeInterval dispatchInterval, BOOL shouldTrackUncaughtExceptions
     Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkGoogleAnalytics withCredentials:@"GoogleAnalyticsTrackingID"];
- 
  
  Crashlytics
     Params: CrashlyticsAPIKey
@@ -63,5 +62,20 @@ typedef enum {
     Params: MixpanelToken
     Settings: NSUInteger flushInterval, BOOL shouldShowNetworkActivityIndicator
     Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkMixpanel withCredentials:@"MixpanelToken"];
-  
+ 
+ Parse
+    Params: ApplicationID, ClientKey
+    Settings:
+    Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkParse withCredentials:@"ParseApplicationID", @"ParseClientKey"];
+ 
+ Localytics
+    Params: AppKey
+    Settings: BOOL isCollectingAdvertisingIdentifier, NSTimeInterval sessionTimeoutInterval
+    Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkFacebook withCredentials:@"LocalyticsAppKey"];
+ 
+ Amplitude
+    Params: APIKey
+    Settings: BOOL enableLocationListening, BOOL useAdvertisingIdForDeviceId
+    Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkFacebook withCredentials:@"AmplitudeAPIKey"];
+ 
  */

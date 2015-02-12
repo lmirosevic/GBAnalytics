@@ -8,12 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-//GBAnalyticsNetworkGoogleAnalytics = 1,
-//GBAnalyticsNetworkFlurry,
-//GBAnalyticsNetworkCrashlytics,
-//GBAnalyticsNetworkTapstream,
-//GBAnalyticsNetworkFacebook,
-//GBAnalyticsNetworkMixpanel,
+// GBAnalyticsNetworkGoogleAnalytics = 1,
+// GBAnalyticsNetworkFlurry,
+// GBAnalyticsNetworkCrashlytics,
+// GBAnalyticsNetworkTapstream,
+// GBAnalyticsNetworkFacebook,
+// GBAnalyticsNetworkMixpanel,
+// GBAnalyticsNetworkParse,
+// GBAnalyticsNetworkLocalytics,
+// GBAnalyticsNetworkAmplitude,
 
 @class GBAnalyticsGoogleAnalyticsSettings;
 @class GBAnalyticsFlurrySettings;
@@ -21,6 +24,9 @@
 @class GBAnalyticsTapstreamSettings;
 @class GBAnalyticsFacebookSettings;
 @class GBAnalyticsMixpanelSettings;
+@class GBAnalyticsParseSettings;
+@class GBAnalyticsLocalyticsSettings;
+@class GBAnalyticsAmplitudeSettings;
 
 @interface GBAnalyticsSettings : NSObject
 
@@ -30,6 +36,9 @@
 @property (strong, nonatomic) GBAnalyticsTapstreamSettings				*Tapstream;
 @property (strong, nonatomic) GBAnalyticsFacebookSettings				*Facebook;
 @property (strong, nonatomic) GBAnalyticsMixpanelSettings				*Mixpanel;
+@property (strong, nonatomic) GBAnalyticsParseSettings                  *Parse;
+@property (strong, nonatomic) GBAnalyticsLocalyticsSettings             *Localytics;
+@property (strong, nonatomic) GBAnalyticsAmplitudeSettings              *Amplitude;
 
 @end
 
@@ -73,5 +82,28 @@ typedef void(^TapstreamLogger)(int, NSString *);
 
 @property (assign, nonatomic) NSUInteger                    flushInterval;                          //default: 10
 @property (assign, nonatomic) BOOL                          shouldShowNetworkActivityIndicator;     //default: NO
+
+@end
+
+#pragma mark - Parse
+
+@interface GBAnalyticsParseSettings : NSObject
+@end
+
+#pragma mark - Localytics
+
+@interface GBAnalyticsLocalyticsSettings : NSObject
+
+@property (assign, nonatomic) BOOL                          isCollectingAdvertisingIdentifier;      //default: YES
+@property (assign, nonatomic) NSTimeInterval                sessionTimeoutInterval;                 //default: 15
+
+@end
+
+#pragma mark - Amplitude
+
+@interface GBAnalyticsAmplitudeSettings : NSObject
+
+@property (assign, nonatomic) BOOL                          enableLocationListening;                //default: YES
+@property (assign, nonatomic) BOOL                          useAdvertisingIdForDeviceId;            //default: YES
 
 @end
