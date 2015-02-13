@@ -61,7 +61,9 @@ Track event with parameters:
 [GBAnalytics trackEvent:@"Purchased in-app" withParameters:@{@"item": @"red sword"}];
 ```
 
-You can still use all the more advanced features of the individual analytics networks libraries, GBAnalytics just helps you unify their setup and event tracking interfaces--the parts which would otherwise litter your code the most.
+That's it, you can now use all of your favourite analytics dashboards with just one simple API.
+
+You can still use all of the more advanced features that the individual analytics networks support by accessign them directly, GBAnalytics just helps you unify their setup and event tracking interfaces--the parts which would otherwise litter your code the most.
 
 By default, GBAnalytics will not send any events for builds in the `Debug` configuration (unless you've modified your schemes, then this applies to all builds in the Simulator) to prevent littering your analytics dashboards with test data. If you DO want to send data when running on the Simulator, for example for testing integrations, then make sure you enable it:
 
