@@ -117,9 +117,6 @@ BOOL _GBAnalyticsEnabled() {
         _eventRouters = [NSMutableDictionary new];
         _applicationNotificationDelegateHandlers = [NSMutableArray new];
         
-        // by default, for the default route, we should route to all networks
-        [self routeToNetworks:GBAnalyticsNetworkAmplitude, GBAnalyticsNetworkCrashlytics, GBAnalyticsNetworkFacebook, GBAnalyticsNetworkFlurry, GBAnalyticsNetworkGoogleAnalytics, GBAnalyticsNetworkLocalytics, GBAnalyticsNetworkMixpanel, GBAnalyticsNetworkParse, GBAnalyticsNetworkTapstream, nil];
-        
         for (NSString *notificationName in @[UIApplicationDidBecomeActiveNotification,
                                              UIApplicationWillEnterForegroundNotification,
                                              UIApplicationWillResignActiveNotification,
@@ -442,6 +439,10 @@ BOOL _GBAnalyticsEnabled() {
 - (id)initWithRoute:(NSString *)route {
     if (self = [super init]) {
         self.route = route;
+        
+        if ([route isEqualToString:kGBAnalyticsDefaultEventRoute]) {
+            _eventRoutes = kGBAnalyticsAllNetworks;
+        }
     }
     
     return self;

@@ -31,6 +31,8 @@ typedef enum {
 
 #define kGBAnalyticsFacebookAppIDFromPlist nil
 
+#define kGBAnalyticsAllNetworks [NSSet setWithObjects:@(GBAnalyticsNetworkGoogleAnalytics), @(GBAnalyticsNetworkFlurry), @(GBAnalyticsNetworkCrashlytics), @(GBAnalyticsNetworkTapstream), @(GBAnalyticsNetworkFacebook), @(GBAnalyticsNetworkMixpanel), @(GBAnalyticsNetworkParse), @(GBAnalyticsNetworkLocalytics), @(GBAnalyticsNetworkAmplitude), nil]
+
 /* Networks
  
  Flurry
