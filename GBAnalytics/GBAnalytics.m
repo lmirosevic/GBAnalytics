@@ -68,7 +68,7 @@ BOOL _GBAnalyticsEnabled() {
 @interface GBAnalyticsEventRouter ()
 
 @property (copy, nonatomic, readwrite) NSString                                         *route;
-@property (strong, nonatomic) NSArray                                                   *eventRoutes;
+@property (strong, nonatomic) NSSet                                                     *eventRoutes;
 
 - (id)initWithRoute:(NSString *)route;
 
@@ -138,7 +138,7 @@ BOOL _GBAnalyticsEnabled() {
 - (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ... {
     [self.class _debugSessionStartWithNetwork:network force:NO];
     
-    //don't send data if debugging
+    // don't send data if it's not enabled
     if (GBAnalyticsEnabled) {
         void(^invalidCredentialsErrorHandler)(void) = ^{
             @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:@"GBAnalytics Error: Didn't pass valid credentials for %@", [self.class _networkNameForNetwork:network]] userInfo:nil];
@@ -309,11 +309,13 @@ BOOL _GBAnalyticsEnabled() {
     return self.eventRouters[route];
 }
 
-// These alias the default event router on the manager object
+// these alias the default event router on the manager object
 - (id)forwardingTargetForSelector:(SEL)selector {
     if (selector == @selector(routeToNetworks:) ||
         selector == @selector(trackEvent:) ||
-        selector == @selector(trackEvent:withParameters:)) {
+        selector == @selector(trackEvent:withParameters:) ||
+        selector == @selector(setNetworksToRouteTo:) ||
+        selector == @selector(networksToRouteTo)) {
         return self[kGBAnalyticsDefaultEventRoute];
     }
     else {
@@ -445,10 +447,10 @@ BOOL _GBAnalyticsEnabled() {
 #pragma mark - Public API
 
 - (void)routeToNetworks:(GBAnalyticsNetwork)network, ... NS_REQUIRES_NIL_TERMINATION {
-    //convert args into array
+    // convert varargs into set
     va_list args;
     GBAnalyticsNetwork aNetwork;
-    NSMutableArray *networks = [NSMutableArray new];
+    NSMutableSet *networks = [NSMutableSet new];
     [networks addObject:@(network)];
     va_start(args, network);
     while ((aNetwork = va_arg(args, GBAnalyticsNetwork))) {
@@ -456,32 +458,41 @@ BOOL _GBAnalyticsEnabled() {
     }
     va_end(args);
     
+    // set the actual routes
+    self.networksToRouteTo = networks;
+}
+
+- (NSSet *)networksToRouteTo {
+    return self.eventRoutes;
+}
+
+- (void)setNetworksToRouteTo:(NSSet *)networksToRouteTo {
     if (GBAnalyticsEnabled) {
-        //for any network that isn't enabled yet, show a warning
-        for (NSNumber *networkNumber in networks) {
+        // for any network that isn't enabled yet, show a warning
+        for (NSNumber *networkNumber in networksToRouteTo) {
             if (![GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[networkNumber]) {
                 [GBAnalyticsManager _debugWarningString:[NSString stringWithFormat:@"You are adding the network \"%@\" to the route \"%@\" which is not connected yet. Your events will NOT be sent until you connect the network using `[GBAnalytics connectNetwork:withCredentials:]`. Connect networks before settings up routes to silence this warning.", [GBAnalyticsManager _networkNameForNetwork:[networkNumber intValue]], self.route] force:YES];
             }
         }
     }
-
-    self.eventRoutes = networks;
+    
+    self.eventRoutes = networksToRouteTo;
 }
 
 - (void)trackEvent:(NSString *)event {
     [GBAnalyticsManager _debugLogString:event force:NO];
     
-    //Warn if there are no routes associated here
-    if (!(self.eventRoutes.count > 0)) [GBAnalyticsManager _debugWarningString:[NSString stringWithFormat:@"There are no networks associated with the route %@, the following event was not sent: %@", self.route, event] force:YES];
+    // warn if there are no routes associated here
+    if (![self _areNetworksAssociatedWithThisRoute]) [GBAnalyticsManager _debugWarningString:[NSString stringWithFormat:@"There are no networks associated with the route %@, the following event was not sent: %@", self.route, event] force:YES];
     
-    //don't send data if building in debug configuration
+    // don't send data if it's not enabled
     if (GBAnalyticsEnabled) {
         if (IsValidString(event)) {
             for (NSNumber *number in [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks) {
                 GBAnalyticsNetwork network = [number intValue];
                 
-                //if it's not routing to this network, then skip it
-                if (![self.eventRoutes containsObject:@(network)]) {
+                // if it's not routing to this network, then skip it and go on to the next connected network
+                if (![self _shouldRouteToNetwork:network]) {
                     continue;
                 }
                 
@@ -495,7 +506,7 @@ BOOL _GBAnalyticsEnabled() {
                     } break;
                         
                     case GBAnalyticsNetworkCrashlytics: {
-                        //noop, doesn't support events
+                        // noop, doesn't support events
                     } break;
 
                     case GBAnalyticsNetworkTapstream: {
@@ -533,13 +544,13 @@ BOOL _GBAnalyticsEnabled() {
 - (void)trackEvent:(NSString *)event withParameters:(NSDictionary *)parameters {
     [GBAnalyticsManager _debugLogString:event withDictionary:parameters force:NO];
     
-    //Warn if there are no routes associated here
-    if (!(self.eventRoutes.count > 0)) [GBAnalyticsManager _debugWarningString:[NSString stringWithFormat:@"There are no networks associated with the route %@, the following event was not sent: %@", self.route, event] force:YES];
+    // warn if there are no routes associated here
+    if (![self _areNetworksAssociatedWithThisRoute]) [GBAnalyticsManager _debugWarningString:[NSString stringWithFormat:@"There are no networks associated with the route %@, the following event was not sent: %@", self.route, event] force:YES];
     
-    //don't send data if building in debug configuration
+    // don't send data if it's not enabled
     if (GBAnalyticsEnabled) {
         if (IsValidString(event)) {
-            //if the dictionary is not a dict or empty, just forward the call to the simple trackEvent: and thereby discard the event nonsense
+            // if the dictionary is not a dict or empty, just forward the call to the simple trackEvent: and thereby discard the event nonsense
             if (![parameters isKindOfClass:[NSDictionary class]] || parameters.count == 0) {
                 [self trackEvent:event];
                 return;
@@ -548,14 +559,14 @@ BOOL _GBAnalyticsEnabled() {
             for (NSNumber *number in [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks) {
                 GBAnalyticsNetwork network = [number intValue];
                 
-                //if it's not routing to this network, then skip it
-                if (![self.eventRoutes containsObject:@(network)]) {
+                // if it's not routing to this network, then skip it and go on to the next connected network
+                if (![self _shouldRouteToNetwork:network]) {
                     continue;
                 }
                 
                 switch (network) {
                     case GBAnalyticsNetworkGoogleAnalytics: {
-                        //for each key/value pair in the dict, send a separate event with a corresponding action/label pair
+                        // for each key/value pair in the dict, send a separate event with a corresponding action/label pair
                         for (NSString *key in parameters) {
                             [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:event action:key label:parameters[key] value:nil] build]];
                         }
@@ -566,7 +577,7 @@ BOOL _GBAnalyticsEnabled() {
                     } break;
                         
                     case GBAnalyticsNetworkCrashlytics: {
-                        //noop, doesn't support events
+                        // noop, doesn't support events
                     } break;
                         
                     case GBAnalyticsNetworkTapstream: {
@@ -603,6 +614,47 @@ BOOL _GBAnalyticsEnabled() {
         else {
             [GBAnalyticsManager _debugErrorString:@"trackEvent:withParameters: has not been called with a valid non-empty string" force:YES];
         }
+    }
+}
+
+#pragma mark - Private
+
+- (BOOL)_shouldRouteToNetwork:(GBAnalyticsNetwork)network {
+    // if an event route has been set, and it's not nil
+    if (self.eventRoutes) {
+        return [self.eventRoutes containsObject:@(network)];
+    }
+    // default behaviour
+    else {
+        // we delegate to a helper method
+        return [self _defaultRoutingBehaviour];
+    }
+}
+
+- (BOOL)_areNetworksAssociatedWithThisRoute {
+    // if an event route has been set, and it's not nil
+    if (self.eventRoutes) {
+        return self.eventRoutes.count > 0;
+    }
+    // default behaviour
+    else {
+        // we delegate to a helper method
+        return [self _defaultRoutingBehaviour];
+    }
+}
+
+- (BOOL)_defaultRoutingBehaviour {
+    // this method answers both the question of "are there any networks to route to?" and "should I route to this particular network?"
+    
+    // default route
+    if ([self.route isEqualToString:kGBAnalyticsDefaultEventRoute]) {
+        // by default, the default route routes to all networks
+        return YES;
+    }
+    // custom route
+    else {
+        // by default, custom routes route to no networks
+        return NO;
     }
 }
 

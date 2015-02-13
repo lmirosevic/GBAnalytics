@@ -21,6 +21,30 @@ BOOL _GBAnalyticsEnabled();
 
 #pragma mark - GBAnalyticsManager
 
+@protocol GBAnalyticsEventRouterInterface <NSObject>
+
+/**
+ Set which networks events should be sent to. For the default route, events are sent to all networks. For all custom routes events are sent to no network by default.
+ */
+- (void)routeToNetworks:(GBAnalyticsNetwork)network, ... NS_REQUIRES_NIL_TERMINATION;
+
+/**
+ The set of networks which events should be routed to. All values are boxed inside an NSNumber.
+ */
+@property (copy, nonatomic) NSSet                                                   *networksToRouteTo;
+
+/**
+ Track a simple event.
+ */
+- (void)trackEvent:(NSString *)event;
+
+/**
+ Track an event with a params dictionary. The library will try to normalise this as far as possible for the different analytics networks.
+ */
+- (void)trackEvent:(NSString *)event withParameters:(NSDictionary *)parameters;
+
+@end
+
 @interface GBAnalyticsManager : NSObject
 
 /**
@@ -45,59 +69,31 @@ BOOL _GBAnalyticsEnabled();
 /**
  Shared instance singleton
  */
-+(GBAnalyticsManager *)sharedManager;
++ (GBAnalyticsManager *)sharedManager;
 
 /**
  Enables a given analytics network. See GBAnalyticsNetworks.h for param list
  */
--(void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ...;
+- (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials, ...;
 
 /**
  This is the square bracket syntax for choosing the event router
  */
--(GBAnalyticsEventRouter *)objectForKeyedSubscript:(NSString *)route;
+- (GBAnalyticsEventRouter *)objectForKeyedSubscript:(NSString *)route;
 
 @end
 
-@interface GBAnalyticsManager (DefaultAliases)
-
-/**
- Set which networks events should be sent to.
- */
--(void)routeToNetworks:(GBAnalyticsNetwork)network, ... NS_REQUIRES_NIL_TERMINATION;
-
-/**
- Track a simple event.
- */
--(void)trackEvent:(NSString *)event;
-
-/**
- Track an event with a params dictionary. The library will try to normalise this as far as possible for the different analytics networks.
- */
--(void)trackEvent:(NSString *)event withParameters:(NSDictionary *)parameters;
-
+@interface GBAnalyticsManager (DefaultRouteAliases) <GBAnalyticsEventRouterInterface>
 @end
 
 #pragma mark - GBAnalyticsEventRouter
 
-@interface GBAnalyticsEventRouter : NSObject
+@interface GBAnalyticsEventRouter : NSObject <GBAnalyticsEventRouterInterface>
 
+/**
+ Returns the name of the route.
+ */
 @property (copy, nonatomic, readonly) NSString *route;
-
-/**
- Set which networks events should be sent to.
- */
--(void)routeToNetworks:(GBAnalyticsNetwork)network, ... NS_REQUIRES_NIL_TERMINATION;
-
-/**
- Track a simple event.
- */
--(void)trackEvent:(NSString *)event;
-
-/**
- Track an event with a params dictionary. The library will try to normalise this as far as possible for the different analytics networks.
- */
--(void)trackEvent:(NSString *)event withParameters:(NSDictionary *)parameters;
 
 @end
 
