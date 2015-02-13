@@ -117,6 +117,9 @@ BOOL _GBAnalyticsEnabled() {
         _eventRouters = [NSMutableDictionary new];
         _applicationNotificationDelegateHandlers = [NSMutableArray new];
         
+        // by default, for the default route, we should route to all networks
+        [self routeToNetworks:GBAnalyticsNetworkAmplitude, GBAnalyticsNetworkCrashlytics, GBAnalyticsNetworkFacebook, GBAnalyticsNetworkFlurry, GBAnalyticsNetworkGoogleAnalytics, GBAnalyticsNetworkLocalytics, GBAnalyticsNetworkMixpanel, GBAnalyticsNetworkParse, GBAnalyticsNetworkTapstream, nil];
+        
         for (NSString *notificationName in @[UIApplicationDidBecomeActiveNotification,
                                              UIApplicationWillEnterForegroundNotification,
                                              UIApplicationWillResignActiveNotification,
@@ -463,7 +466,8 @@ BOOL _GBAnalyticsEnabled() {
 }
 
 - (NSSet *)networksToRouteTo {
-    return self.eventRoutes;
+    // we return a copy, and never nil
+    return [self.eventRoutes copy] ?: [NSSet new];
 }
 
 - (void)setNetworksToRouteTo:(NSSet *)networksToRouteTo {
@@ -620,42 +624,11 @@ BOOL _GBAnalyticsEnabled() {
 #pragma mark - Private
 
 - (BOOL)_shouldRouteToNetwork:(GBAnalyticsNetwork)network {
-    // if an event route has been set, and it's not nil
-    if (self.eventRoutes) {
-        return [self.eventRoutes containsObject:@(network)];
-    }
-    // default behaviour
-    else {
-        // we delegate to a helper method
-        return [self _defaultRoutingBehaviour];
-    }
+    return [self.eventRoutes containsObject:@(network)];
 }
 
 - (BOOL)_areNetworksAssociatedWithThisRoute {
-    // if an event route has been set, and it's not nil
-    if (self.eventRoutes) {
-        return self.eventRoutes.count > 0;
-    }
-    // default behaviour
-    else {
-        // we delegate to a helper method
-        return [self _defaultRoutingBehaviour];
-    }
-}
-
-- (BOOL)_defaultRoutingBehaviour {
-    // this method answers both the question of "are there any networks to route to?" and "should I route to this particular network?"
-    
-    // default route
-    if ([self.route isEqualToString:kGBAnalyticsDefaultEventRoute]) {
-        // by default, the default route routes to all networks
-        return YES;
-    }
-    // custom route
-    else {
-        // by default, custom routes route to no networks
-        return NO;
-    }
+    return self.eventRoutes.count > 0;
 }
 
 @end
