@@ -18,20 +18,35 @@ Supported networks
 Usage
 ------------
 
-Connect to any number of networks you want in `application:didFinishLaunching:withOptions:`. This will automatically enable all their default stuff like session tracking, retention, etc.
+Connect to any number of networks you want in `application:didFinishLaunching:withOptions:`. This will automatically enable all their default stuff like session tracking, retention, etc. You can choose however few or many you want/need.
 
 ```objective-c
-// Connect Flurry
-[GBAnalytics connectNetwork:GBAnalyticsNetworkFlurry withCredentials:@"FlurryAPIKey"];
+// Mixpanel
+[GBAnalytics connectNetwork:GBAnalyticsNetworkMixpanel withCredentials:@"MixpanelToken"];
+ 
+// Parse
+[GBAnalytics connectNetwork:GBAnalyticsNetworkParse withCredentials:@"ParseApplicationID", @"ParseClientKey"];
+ 
+// Localytics
+[GBAnalytics connectNetwork:GBAnalyticsNetworkFacebook withCredentials:@"LocalyticsAppKey"];
+ 
+// Amplitude
+[GBAnalytics connectNetwork:GBAnalyticsNetworkFacebook withCredentials:@"AmplitudeAPIKey"];
 
-// Connect Google Analytics
+// Crashlytics
+[GBAnalytics connectNetwork:GBAnalyticsNetworkCrashlytics withCredentials:@"CrashlyticsAPIKey"];
+
+// Tapstream
+[GBAnalytics connectNetwork:GBAnalyticsNetworkTapstream withCredentials:@"TapstreamAccountName", @"TapstreamSDKSecret"];
+ 
+// Google Analytics
 [GBAnalytics connectNetwork:GBAnalyticsNetworkGoogleAnalytics withCredentials:@"GoogleAnalyticsTrackingID"];
 
-// Connect Mixpanel
-[GBAnalytics connectNetwork:GBAnalyticsNetworkMixpanel withCredentials:@"MixpanelToken"];
-
-// Connect Crashlytics
-[GBAnalytics connectNetwork:GBAnalyticsNetworkCrashlytics withCredentials:@"CrashlyticsAPIKey"];
+// Facebook
+[GBAnalytics connectNetwork:GBAnalyticsNetworkFacebook withCredentials:@"FacebookAppID"];
+ 
+// Flurry
+[GBAnalytics connectNetwork:GBAnalyticsNetworkFlurry withCredentials:@"FlurryAPIKey"];
 ```
 
 Track simple event:
@@ -96,6 +111,13 @@ If you want to override which network the default route sends to, you can do so 
 ```
 
 By default, the default route (`kGBAnalyticsDefaultEventRoute`) will send events to all connected networks, so if you just want to keep things simple and not worry about routes and send all events to all connected networks, you can ignore this API. If you do want to use custom routes (i.e. `route != kGBAnalyticsDefaultEventRoute`), the default behaviour is to not send any events until the networks to route to are explicitly specified using `routeToNetworks:`, in other words if you want to use `[GBAnalytics[@"someCustomRoute"] trackEvent:@"Beat the final level"]`, then make sure you call `[GBAnalytics[@"someCustomRoute"] routeToNetworks:...]` first or the events won't be sent anywhere.
+
+There are also some settings you can configure for different networks, which you can set before you connect to the networks. Check the `GBAnalyticsNetworks.h` and `GBAnalyticsSettings.h` headers for the full list. To configure some settings for Mixpanel, you would do the following:
+```objective-c
+GBAnalytics.settings.Mixpanel.flushInterval = 5.0;
+GBAnalytics.settings.Mixpanel.shouldShowNetworkActivityIndicator = NO;
+[GBAnalytics connectNetwork:GBAnalyticsNetworkMixpanel withCredentials:@"MixpanelToken"];
+```
 
 Crashlytics Server-side Symbolication
 ------------
