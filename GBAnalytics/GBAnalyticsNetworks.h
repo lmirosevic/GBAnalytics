@@ -6,32 +6,6 @@
 //  Copyright (c) 2015 Goonbee. All rights reserved.
 //
 
-#import <GoogleAnalytics-iOS-SDK/GAI.h>
-#import <GoogleAnalytics-iOS-SDK/GAIDictionaryBuilder.h>
-#import <FlurrySDK/Flurry.h>
-#import <CrashlyticsFramework/Crashlytics.h>
-#import <Tapstream/TSTapstream.h>
-#import <FacebookSDK/FacebookSDK.h>
-#import <Mixpanel/Mixpanel.h>
-#import <Parse/Parse.h>
-#import <Localytics/Localytics.h>
-#import <Amplitude-iOS/Amplitude.h>
-
-typedef enum {
-    GBAnalyticsNetworkGoogleAnalytics = 1,
-    GBAnalyticsNetworkFlurry,
-    GBAnalyticsNetworkCrashlytics,
-    GBAnalyticsNetworkTapstream,
-    GBAnalyticsNetworkFacebook,
-    GBAnalyticsNetworkMixpanel,
-    GBAnalyticsNetworkParse,
-    GBAnalyticsNetworkLocalytics,
-    GBAnalyticsNetworkAmplitude,
-} GBAnalyticsNetwork;
-
-#define kGBAnalyticsFacebookAppIDFromPlist nil
-
-#define kGBAnalyticsAllNetworks [NSSet setWithObjects:@(GBAnalyticsNetworkGoogleAnalytics), @(GBAnalyticsNetworkFlurry), @(GBAnalyticsNetworkCrashlytics), @(GBAnalyticsNetworkTapstream), @(GBAnalyticsNetworkFacebook), @(GBAnalyticsNetworkMixpanel), @(GBAnalyticsNetworkParse), @(GBAnalyticsNetworkLocalytics), @(GBAnalyticsNetworkAmplitude), nil]
 
 /* Networks
  
@@ -81,3 +55,30 @@ typedef enum {
     Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkFacebook withCredentials:@"AmplitudeAPIKey"];
  
  */
+
+#import <GoogleAnalytics-iOS-SDK/GAI.h>
+#import <GoogleAnalytics-iOS-SDK/GAIDictionaryBuilder.h>
+#import <FlurrySDK/Flurry.h>
+#import <CrashlyticsFramework/Crashlytics.h>
+#import <Tapstream/TSTapstream.h>
+#import <FacebookSDK/FacebookSDK.h>
+#import <Mixpanel/Mixpanel.h>
+#import <Parse/Parse.h>
+#import <Localytics/Localytics.h>
+#import <Amplitude-iOS/Amplitude.h>
+
+typedef enum {
+    GBAnalyticsNetworkGoogleAnalytics = 1,
+    GBAnalyticsNetworkFlurry,
+    GBAnalyticsNetworkCrashlytics,
+    GBAnalyticsNetworkTapstream,
+    GBAnalyticsNetworkFacebook,
+    GBAnalyticsNetworkMixpanel,
+    GBAnalyticsNetworkParse,
+    GBAnalyticsNetworkLocalytics,
+    GBAnalyticsNetworkAmplitude,
+} GBAnalyticsNetwork;
+
+#define kGBAnalyticsFacebookAppIDFromPlist nil
+
+#define kGBAnalyticsAllNetworks [NSSet setWithObjects:@(GBAnalyticsNetworkGoogleAnalytics), @(GBAnalyticsNetworkFlurry), @(GBAnalyticsNetworkCrashlytics), @(GBAnalyticsNetworkTapstream), @(GBAnalyticsNetworkFacebook), @(GBAnalyticsNetworkMixpanel), @(GBAnalyticsNetworkParse), @(GBAnalyticsNetworkLocalytics), @(GBAnalyticsNetworkAmplitude), nil]
