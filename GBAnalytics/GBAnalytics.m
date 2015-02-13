@@ -527,7 +527,11 @@ BOOL _GBAnalyticsEnabled() {
                     } break;
                         
                     case GBAnalyticsNetworkParse: {
-                        [PFAnalytics trackEvent:event];
+                        // we need to remove spaces from the event name
+                        NSString *safeEventName = [event stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+                        
+                        // send the actual event
+                        [PFAnalytics trackEvent:safeEventName];
                     } break;
                         
                     case GBAnalyticsNetworkLocalytics: {
@@ -603,7 +607,49 @@ BOOL _GBAnalyticsEnabled() {
                     } break;
                         
                     case GBAnalyticsNetworkParse: {
-                        [PFAnalytics trackEvent:event dimensions:parameters];
+                        // we need to remove spaces from the event name
+                        NSString *safeEventName = [event stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+                        
+                        // we need to flatten the dictionary because otherwise it causes an error
+                        NSMutableDictionary *flatDictionary = [NSMutableDictionary new];
+                        for (NSString *key in parameters) {
+                            id value = parameters[key];
+
+                            // KEY
+                            NSString *keyString;
+                            
+                            // force as string
+                            keyString = [key description];
+                            
+                            // VALUE
+                            NSString *valueString;
+                            
+                            // try json first
+                            if ([NSJSONSerialization isValidJSONObject:value]) {
+                                NSError *error;
+                                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:value
+                                                                                   options:0
+                                                                                     error:&error];
+                                
+                                // we got some data and no error was returned
+                                if (jsonData && !error) {
+                                    // we update the string
+                                    valueString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                                }
+                            }
+                            
+                            // JSON didn't work
+                            if (!valueString) {
+                                
+                                valueString = [value description];
+                            }
+                            
+                            // put it into the flat dictionary
+                            flatDictionary[keyString] = valueString;
+                        }
+                        
+                        // send the actual data
+                        [PFAnalytics trackEvent:safeEventName dimensions:flatDictionary];
                     } break;
                         
                     case GBAnalyticsNetworkLocalytics: {
