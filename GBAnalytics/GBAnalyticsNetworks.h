@@ -61,7 +61,7 @@
 #import <FlurrySDK/Flurry.h>
 #import <CrashlyticsFramework/Crashlytics.h>
 #import <Tapstream/TSTapstream.h>
-#import <FacebookSDK/FacebookSDK.h>
+#import <Facebook-iOS-SDK/FacebookSDK/FacebookSDK.h>
 #import <Mixpanel/Mixpanel.h>
 #import <Parse/Parse.h>
 #import <Localytics/Localytics.h>

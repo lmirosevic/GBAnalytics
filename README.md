@@ -134,8 +134,10 @@ For Crashlytics to be able to symbolicate your crash reports, your app needs to 
 # get Crashlytics API Key and Build Secret from precompiled header and call the dSYM uploader with the key
 CRASHLYTICSAPIKEY=$(grep CRASHLYTICSAPIKEY "${PROJECT_DIR}/${GCC_PREFIX_HEADER}" | awk '{print $3}' | grep -oEi "[^@^\"]+")
 CRASHLYTICSBUILDSECRET=$(grep CRASHLYTICSAPIKEY "${PROJECT_DIR}/${GCC_PREFIX_HEADER}" | awk '{print $3}' | grep -oEi "[^@^\"]+")
-"${SRCROOT}/Pods/CrashlyticsFramework/Crashlytics.framework/run" $CRASHLYTICSAPIKEY $CRASHLYTICSBUILDSECRET
+"${PODS_ROOT}/CrashlyticsFramework/Crashlytics.framework/run" $CRASHLYTICSAPIKEY $CRASHLYTICSBUILDSECRET
 ```
+
+This script assumes that you installed GBAnalytics using CocoaPods. If you added it manually, please you must update the path above to point correctly to the Crashlytics `run` binary.
 
 Install
 ------------
