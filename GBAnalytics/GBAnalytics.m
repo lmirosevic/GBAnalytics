@@ -152,21 +152,21 @@ BOOL _GBAnalyticsEnabled() {
                 NSString *TrackingID = credentials;
                 
                 if (IsValidString(TrackingID)) {
-                    //support for multiple tracking ids
+                    // support for multiple tracking ids
                     NSArray *trackingIDs = self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkGoogleAnalytics)][kGBAnalyticsCredentialsGoogleAnalyticsTrackingIDs];
-                    //if trackingIDs is nil then it's initalization of GA
-                    if(!trackingIDs) {
+                    // if trackingIDs is nil then it's initalization of GA
+                    if (!trackingIDs) {
                         trackingIDs = [NSArray new];
                     }
                     
                     trackingIDs = [trackingIDs arrayByAddingObject:TrackingID];
                     self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkGoogleAnalytics)] = @{kGBAnalyticsCredentialsGoogleAnalyticsTrackingIDs: trackingIDs};
                     
-                    //apply GA settings
+                    // apply GA settings
                     [GAI sharedInstance].dispatchInterval = self.settings.GoogleAnalytics.dispatchInterval;
                     [GAI sharedInstance].trackUncaughtExceptions = self.settings.GoogleAnalytics.shouldTrackUncaughtExceptions;
                     
-                    //if it's the first tracker it will be set as GA defaultTracker
+                    // if it's the first tracker it will be set as GA defaultTracker
                     [[GAI sharedInstance] trackerWithTrackingId:TrackingID];
                 }
                 else invalidCredentialsErrorHandler();
@@ -514,7 +514,7 @@ BOOL _GBAnalyticsEnabled() {
                 switch (network) {
                     case GBAnalyticsNetworkGoogleAnalytics: {
                         NSArray *trackingIDs = [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkGoogleAnalytics)][kGBAnalyticsCredentialsGoogleAnalyticsTrackingIDs];
-                        for(NSString *trackingID in trackingIDs) {
+                        for (NSString *trackingID in trackingIDs) {
                             id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:trackingID];
                             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:event action:kGBAnalyticsGoogleAnalyticsActionlessEventActionString label:nil value:nil] build]];
                         }
@@ -591,7 +591,7 @@ BOOL _GBAnalyticsEnabled() {
                     case GBAnalyticsNetworkGoogleAnalytics: {
                         // for each key/value pair in the dict, send a separate event with a corresponding action/label pair
                         NSArray *trackingIDs = [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkGoogleAnalytics)][kGBAnalyticsCredentialsGoogleAnalyticsTrackingIDs];
-                        for(NSString *trackingID in trackingIDs) {
+                        for (NSString *trackingID in trackingIDs) {
                             for (NSString *key in parameters) {
                                 id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:trackingID];
                                 [tracker send:[[GAIDictionaryBuilder createEventWithCategory:event action:key label:parameters[key] value:nil] build]];
