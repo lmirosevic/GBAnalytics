@@ -59,7 +59,7 @@
 #import <GoogleAnalytics-iOS-SDK/GAI.h>
 #import <GoogleAnalytics-iOS-SDK/GAIDictionaryBuilder.h>
 #import <FlurrySDK/Flurry.h>
-#import <CrashlyticsFramework/Crashlytics.h>
+#import <Fabric/Crashlytics.h>
 #import <Tapstream/TSTapstream.h>
 #import <Facebook-iOS-SDK/FacebookSDK/FacebookSDK.h>
 #import <Mixpanel/Mixpanel.h>
