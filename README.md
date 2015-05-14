@@ -18,7 +18,13 @@ Supported networks
 Usage
 ------------
 
-Connect to any number of networks you want in `application:didFinishLaunching:withOptions:`. This will automatically enable all their default stuff like session tracking, retention, etc. You can choose however few or many you want/need.
+First import the header (it's probably a good idea to put this in the precompiled header so that it's accessible application wide):
+
+```objective-c
+#import <GBAnaytics/GBAnalytics.h>
+```
+
+Connect to any number of networks you want in `application:didFinishLaunching:withOptions:`. This will automatically enable all their default stuff like session tracking, retention, etc. You can choose however few or many you need.
 
 ```objective-c
 // Mixpanel
@@ -71,12 +77,6 @@ By default, GBAnalytics will not send any events for builds in the `Debug` confi
 GBAnalytics.force = YES;
 ```
 
-Don't forget to import header, probably a good idea to put this in the precompiled header so it's accessible application wide:
-
-```objective-c
-#import <GBAnaytics/GBAnalytics.h>
-```
-
 Advanced usage
 ------------
 
@@ -121,23 +121,19 @@ GBAnalytics.settings.Mixpanel.shouldShowNetworkActivityIndicator = NO;
 [GBAnalytics connectNetwork:GBAnalyticsNetworkMixpanel withCredentials:@"MixpanelToken"];
 ```
 
-Crashlytics Server-side Symbolication
+Crashlytics/Fabric Server-side Symbolication
 ------------
 
-For Crashlytics to be able to symbolicate your crash reports, your app needs to send the dSYM file up to the Crashlytics servers. To do this automatically in post-build:
+For Crashlytics/Fabric to be able to symbolicate your crash reports, your app needs to send the dSYM file up to the Crashlytics servers. You probably want to do this automatically at post-build time:
 
-* Add a "Run Script" build phase to the target. This script assumes you have defined CRASHLYTICSAPIKEY and CRASHLYTICSBUILDSECRET inside your precompiled header file ("Prefix Header" build setting for target). You can also just put the keys directly into the script.
+* Add a "Run Script" build phase to the target.
 
 ```sh
-# Crashlytics dSYM upload
-
-# get Crashlytics API Key and Build Secret from precompiled header and call the dSYM uploader with the key
-CRASHLYTICSAPIKEY=$(grep CRASHLYTICSAPIKEY "${PROJECT_DIR}/${GCC_PREFIX_HEADER}" | awk '{print $3}' | grep -oEi "[^@^\"]+")
-CRASHLYTICSBUILDSECRET=$(grep CRASHLYTICSAPIKEY "${PROJECT_DIR}/${GCC_PREFIX_HEADER}" | awk '{print $3}' | grep -oEi "[^@^\"]+")
-"${PODS_ROOT}/CrashlyticsFramework/Crashlytics.framework/run" $CRASHLYTICSAPIKEY $CRASHLYTICSBUILDSECRET
+# Crashlytics/Fabric dSYM upload
+"${PODS_ROOT}/Fabric/Crashlytics.framework/run" <API_KEY> <BUILD_SECRET>
 ```
 
-This script assumes that you installed GBAnalytics using CocoaPods. If you added it manually, please you must update the path above to point correctly to the Crashlytics `run` binary.
+This script assumes that you have installed GBAnalytics using CocoaPods in which case the framework wil lbe in the PODS_ROOT. If you added GBAnalytics manually, then you should update the script to point to the Crashlytics `run` binary location.
 
 Install
 ------------
@@ -158,7 +154,7 @@ Requirements & Details
 * Built using ARC
 * Supports iOS 6 and above
 * Does not use Apple's UDID.
-* Does use Apple's IDFA so make sure you tick the correct boxes in iTunes Connect (aleays tick "this app uses the advertising identifier for attribution", if you should ads then also tick "this app shows ads", and if you use some of the attribution information from the analytics' networks' SDKs' to customise the user experience then tick that box too).
+* DOES use Apple's IDFA so make sure you tick the correct boxes in iTunes Connect (always tick "this app uses the advertising identifier for attribution", if you show ads then also tick "this app shows ads", and if you use some of the attribution information from the analytics' networks' SDKs' to customise the user experience then tick that box too).
 
 Copyright & License
 ------------
