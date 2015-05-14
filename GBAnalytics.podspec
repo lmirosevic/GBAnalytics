@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.dependency 'FlurrySDK', '~> 4.3'
   s.dependency 'GoogleAnalytics-iOS-SDK', '~> 3.0'
   s.dependency 'Tapstream', '~> 2.6'
-  s.dependency 'Facebook-iOS-SDK', '~> 3.10'
+  s.dependency 'Facebook-iOS-SDK', '~> 3.22.0'
   s.dependency 'Mixpanel', '~> 2.3'
   s.dependency 'Localytics', '~> 3.0'
   s.dependency 'Parse', '~> 1.6'
