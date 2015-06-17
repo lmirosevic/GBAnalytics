@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'GBAnalytics'
-  s.version      = '2.11.0'
+  s.version      = '2.11.1'
   s.summary      = 'Abstracts away different analytics networks and provides a unified simple interface.'
   s.homepage     = 'https://github.com/lmirosevic/GBAnalytics'
   s.license      = 'Apache License, Version 2.0'
@@ -13,8 +13,8 @@ Pod::Spec.new do |s|
 
   s.frameworks = 'SystemConfiguration', 'CoreData'
 
-  s.dependency 'Fabric', '~> 1.2'
-  s.dependency 'Fabric/Crashlytics', '~> 1.2'
+  s.dependency 'Fabric', '~> 1.3'
+  s.dependency 'Fabric/Crashlytics', '~> 1.3'
   s.dependency 'FlurrySDK', '~> 6.4'
   s.dependency 'GoogleAnalytics-iOS-SDK', '~> 3.0'
   s.dependency 'Tapstream', '~> 2.6'
@@ -23,4 +23,6 @@ Pod::Spec.new do |s|
   s.dependency 'Localytics', '~> 3.0'
   s.dependency 'Parse', '~> 1.6'
   s.dependency 'Amplitude-iOS', '~> 2.2'
+
+  s.libraries = 'z', 'c++'
 end
