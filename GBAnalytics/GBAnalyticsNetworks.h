@@ -56,8 +56,8 @@
  
  */
 
-#import <GoogleAnalytics-iOS-SDK/GAI.h>
-#import <GoogleAnalytics-iOS-SDK/GAIDictionaryBuilder.h>
+#import <GoogleAnalytics/GAI.h>
+#import <GoogleAnalytics/GAIDictionaryBuilder.h>
 #import <FlurrySDK/Flurry.h>
 #import <Fabric/Fabric.h>
 #import <Fabric/Crashlytics.h>
