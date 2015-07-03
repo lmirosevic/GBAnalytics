@@ -287,17 +287,17 @@ BOOL _GBAnalyticsEnabled() {
                     
                     // for Amplitude, it's important to apply the settings first, before initialising it
                     if (self.settings.Amplitude.useAdvertisingIdForDeviceId) {
-                        [Amplitude useAdvertisingIdForDeviceId];
+                        [[Amplitude instance] useAdvertisingIdForDeviceId];
                     }
                     
                     if (self.settings.Amplitude.enableLocationListening) {
-                        [Amplitude enableLocationListening];
+                        [[Amplitude instance] enableLocationListening];
                     }
                     else {
-                        [Amplitude disableLocationListening];
+                        [[Amplitude instance] disableLocationListening];
                     }
                     
-                    [Amplitude initializeApiKey:APIKey];
+                    [[Amplitude instance] initializeApiKey:APIKey];
                 }
                 else invalidCredentialsErrorHandler();
             } break;
@@ -553,7 +553,7 @@ BOOL _GBAnalyticsEnabled() {
                     } break;
                         
                     case GBAnalyticsNetworkAmplitude: {
-                        [Amplitude logEvent:event];
+                        [[Amplitude instance] logEvent:event];
                     } break;
                 }
             }
@@ -675,7 +675,7 @@ BOOL _GBAnalyticsEnabled() {
                     } break;
                         
                     case GBAnalyticsNetworkAmplitude: {
-                        [Amplitude logEvent:event withEventProperties:parameters];
+                        [[Amplitude instance] logEvent:event withEventProperties:parameters];
                     } break;
                 }
             }
