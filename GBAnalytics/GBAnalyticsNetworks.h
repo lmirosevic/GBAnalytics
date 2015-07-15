@@ -59,8 +59,8 @@
 #import <GoogleAnalytics/GAI.h>
 #import <GoogleAnalytics/GAIDictionaryBuilder.h>
 #import <FlurrySDK/Flurry.h>
+#import <Crashlytics/Crashlytics.h>
 #import <Fabric/Fabric.h>
-#import <Fabric/Crashlytics.h>
 #import <Tapstream/TSTapstream.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <Mixpanel/Mixpanel.h>
