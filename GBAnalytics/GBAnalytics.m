@@ -213,8 +213,7 @@ BOOL _GBAnalyticsEnabled() {
                 
                 if (IsValidString(FBAppID)) {
                     self.connectedAnalyticsNetworks[@(GBAnalyticsNetworkFacebook)] = @{kGBAnalyticsCredentialsFacebookAppID: FBAppID};
-                    
-                    [FBSettings setDefaultAppID:FBAppID];
+                    [FBSDKSettings setAppID:FBAppID];
                 }
                 else invalidCredentialsErrorHandler();
             } break;
@@ -533,7 +532,7 @@ BOOL _GBAnalyticsEnabled() {
                     } break;
                         
                     case GBAnalyticsNetworkFacebook: {
-                        [FBAppEvents logEvent:[GBAnalyticsManager _formatEventNameForFacebook:event]];
+                        [FBSDKAppEvents logEvent:[GBAnalyticsManager _formatEventNameForFacebook:event]];
                     } break;
                         
                     case GBAnalyticsNetworkMixpanel: {
@@ -617,7 +616,7 @@ BOOL _GBAnalyticsEnabled() {
                     } break;
                         
                     case GBAnalyticsNetworkFacebook: {
-                        [FBAppEvents logEvent:[GBAnalyticsManager _formatEventNameForFacebook:event] parameters:parameters];
+                        [FBSDKAppEvents logEvent:[GBAnalyticsManager _formatEventNameForFacebook:event] parameters:parameters];
                     } break;
                         
                     case GBAnalyticsNetworkMixpanel: {

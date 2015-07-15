@@ -62,7 +62,7 @@
 #import <Fabric/Fabric.h>
 #import <Fabric/Crashlytics.h>
 #import <Tapstream/TSTapstream.h>
-#import <Facebook-iOS-SDK/FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <Mixpanel/Mixpanel.h>
 #import <Parse/Parse.h>
 #import <Localytics/Localytics.h>
