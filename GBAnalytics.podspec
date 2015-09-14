@@ -13,8 +13,8 @@ Pod::Spec.new do |s|
 
   s.frameworks = 'SystemConfiguration', 'CoreData'
 
-  s.dependency 'Fabric', '~> 1.2'
-  s.dependency 'Crashlytics', '~> 3.0'
+  s.dependency 'Fabric', '~> 1.5'
+  s.dependency 'Crashlytics', '~> 3.3'
   s.dependency 'FlurrySDK', '~> 6.4'
   s.dependency 'GoogleAnalytics', '~> 3.0'
   s.dependency 'Tapstream', '~> 2.6'
