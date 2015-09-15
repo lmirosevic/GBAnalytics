@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage     = 'https://github.com/lmirosevic/GBAnalytics'
   s.license      = 'Apache License, Version 2.0'
   s.author       = { 'Luka Mirosevic' => 'luka@goonbee.com' }
-  s.platform     = :ios, '6.0'
+  s.platform     = :ios, '7.0'
   s.source       = { git: 'https://github.com/lmirosevic/GBAnalytics.git', tag: s.version.to_s }
   s.source_files  = 'GBAnalytics/GBAnalytics.{h,m}', 'GBAnalytics/GBAnalyticsSettings.{h,m}', 'GBAnalytics/GBAnalyticsNetworks.h'
   s.public_header_files = 'GBAnalytics/GBAnalytics.h', 'GBAnalytics/GBAnalyticsSettings.h', 'GBAnalytics/GBAnalyticsNetworks.h'
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.dependency 'FlurrySDK', '~> 6.4'
   s.dependency 'GoogleAnalytics', '~> 3.0'
   s.dependency 'Tapstream', '~> 2.6'
-  s.dependency 'FBSDKCoreKit', '~> 4.0'
+  s.dependency 'FBSDKCoreKit', '~> 4.6'
   s.dependency 'Mixpanel', '~> 2.3'
   s.dependency 'Localytics', '~> 3.0'
   s.dependency 'Parse', '~> 1.6'
