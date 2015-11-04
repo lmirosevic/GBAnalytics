@@ -9,15 +9,15 @@
 
 /* Networks
  
- Flurry
-    Params: FlurryAPIKey
-    Settings: 
-    Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkFlurry withCredentials:@"FlurryAPIKey"];
- 
  Google Analytics
     Params: GoogleAnalyticsTrackingID
     Settings: NSTimeInterval dispatchInterval, BOOL shouldTrackUncaughtExceptions
     Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkGoogleAnalytics withCredentials:@"GoogleAnalyticsTrackingID"];
+ 
+ Flurry
+    Params: FlurryAPIKey
+    Settings:
+    Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkFlurry withCredentials:@"FlurryAPIKey"];
  
  Crashlytics
     Params: CrashlyticsAPIKey
@@ -56,18 +56,6 @@
  
  */
 
-#import <GoogleAnalytics/GAI.h>
-#import <GoogleAnalytics/GAIDictionaryBuilder.h>
-#import <FlurrySDK/Flurry.h>
-#import <Crashlytics/Crashlytics.h>
-#import <Fabric/Fabric.h>
-#import <Tapstream/TSTapstream.h>
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <Mixpanel/Mixpanel.h>
-#import <Parse/Parse.h>
-#import <Localytics/Localytics.h>
-#import <Amplitude-iOS/Amplitude.h>
-
 typedef enum {
     GBAnalyticsNetworkGoogleAnalytics = 1,
     GBAnalyticsNetworkFlurry,
@@ -79,6 +67,46 @@ typedef enum {
     GBAnalyticsNetworkLocalytics,
     GBAnalyticsNetworkAmplitude,
 } GBAnalyticsNetwork;
+
+static inline NSString * NetworkNameForNetwork(GBAnalyticsNetwork network) {
+    switch (network) {
+        case GBAnalyticsNetworkGoogleAnalytics: {
+            return @"Google Analytics";
+        } break;
+            
+        case GBAnalyticsNetworkFlurry: {
+            return @"Flurry";
+        } break;
+            
+        case GBAnalyticsNetworkCrashlytics: {
+            return @"Crashlytics";
+        } break;
+            
+        case GBAnalyticsNetworkTapstream: {
+            return @"Tapstream";
+        } break;
+            
+        case GBAnalyticsNetworkFacebook: {
+            return @"Facebook";
+        } break;
+            
+        case GBAnalyticsNetworkMixpanel: {
+            return @"Mixpanel";
+        } break;
+            
+        case GBAnalyticsNetworkParse: {
+            return @"Parse";
+        } break;
+            
+        case GBAnalyticsNetworkLocalytics: {
+            return @"Localytics";
+        } break;
+            
+        case GBAnalyticsNetworkAmplitude: {
+            return @"Amplitude";
+        } break;
+    }
+}
 
 #define kGBAnalyticsFacebookAppIDFromPlist nil
 
