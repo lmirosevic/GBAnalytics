@@ -8,7 +8,7 @@
 
 #import "GBAnalyticsModule_Mixpanel.h"
 
-#import "GBAnalytics.h"
+#import "GBAnalyticsCore.h"
 
 #import <Mixpanel/Mixpanel.h>
 

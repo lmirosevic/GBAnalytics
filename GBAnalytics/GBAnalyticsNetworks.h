@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Goonbee. All rights reserved.
 //
 
-
 /* Networks
  
  Google Analytics
@@ -56,6 +55,8 @@
  
  */
 
+#import "GBAnalyticsCore.h"
+
 typedef enum {
     GBAnalyticsNetworkGoogleAnalytics = 1,
     GBAnalyticsNetworkFlurry,
@@ -67,6 +68,8 @@ typedef enum {
     GBAnalyticsNetworkLocalytics,
     GBAnalyticsNetworkAmplitude,
 } GBAnalyticsNetwork;
+
+// warning, when adding a new network, don't forget to add the import to the module to GBAnalytics.h
 
 static inline NSString * NetworkNameForNetwork(GBAnalyticsNetwork network) {
     switch (network) {
@@ -107,7 +110,5 @@ static inline NSString * NetworkNameForNetwork(GBAnalyticsNetwork network) {
         } break;
     }
 }
-
-#define kGBAnalyticsFacebookAppIDFromPlist nil
 
 #define kGBAnalyticsAllNetworks [NSSet setWithObjects:@(GBAnalyticsNetworkGoogleAnalytics), @(GBAnalyticsNetworkFlurry), @(GBAnalyticsNetworkCrashlytics), @(GBAnalyticsNetworkTapstream), @(GBAnalyticsNetworkFacebook), @(GBAnalyticsNetworkMixpanel), @(GBAnalyticsNetworkParse), @(GBAnalyticsNetworkLocalytics), @(GBAnalyticsNetworkAmplitude), nil]

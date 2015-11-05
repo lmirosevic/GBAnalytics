@@ -8,7 +8,7 @@
 
 #import "GBAnalyticsModule_Parse.h"
 
-#import "GBAnalytics.h"
+#import "GBAnalyticsCore.h"
 
 #import <Parse/Parse.h>
 

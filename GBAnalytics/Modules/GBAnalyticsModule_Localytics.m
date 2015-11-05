@@ -8,7 +8,7 @@
 
 #import "GBAnalyticsModule_Localytics.h"
 
-#import "GBAnalytics.h"
+#import "GBAnalyticsCore.h"
 
 #import <Localytics/Localytics.h>
 

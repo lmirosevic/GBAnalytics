@@ -8,7 +8,7 @@
 
 #import "GBAnalyticsModule_Amplitude.h"
 
-#import "GBAnalytics.h"
+#import "GBAnalyticsCore.h"
 
 #import <Amplitude-iOS/Amplitude.h>
 

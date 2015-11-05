@@ -10,6 +10,8 @@
 
 #import "GBAnalyticsModule.h"
 
+#define kGBAnalyticsFacebookAppIDFromPlist nil
+
 @interface GBAnalyticsModule_Facebook : NSObject <GBAnalyticsModule>
 
 @end

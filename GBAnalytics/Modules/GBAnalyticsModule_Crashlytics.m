@@ -8,7 +8,7 @@
 
 #import "GBAnalyticsModule_Crashlytics.h"
 
-#import "GBAnalytics.h"
+#import "GBAnalyticsCore.h"
 
 #import <Crashlytics/Crashlytics.h>
 #import <Fabric/Fabric.h>

@@ -8,7 +8,7 @@
 
 #import "GBAnalyticsModule_GoogleAnalytics.h"
 
-#import "GBAnalytics.h"
+#import "GBAnalyticsCore.h"
 
 #import <GoogleAnalytics/GAI.h>
 #import <GoogleAnalytics/GAIDictionaryBuilder.h>

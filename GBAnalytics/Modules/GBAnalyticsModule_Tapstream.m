@@ -8,7 +8,7 @@
 
 #import "GBAnalyticsModule_Tapstream.h"
 
-#import "GBAnalytics.h"
+#import "GBAnalyticsCore.h"
 
 #import <Tapstream/TSTapstream.h>
 

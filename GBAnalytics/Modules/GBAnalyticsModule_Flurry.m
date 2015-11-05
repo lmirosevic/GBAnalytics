@@ -8,7 +8,7 @@
 
 #import "GBAnalyticsModule_Flurry.h"
 
-#import "GBAnalytics.h"
+#import "GBAnalyticsCore.h"
 
 #import <Flurry-iOS-SDK/Flurry.h>
 

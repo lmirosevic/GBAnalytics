@@ -8,7 +8,7 @@
 
 #import "GBAnalyticsModule_Facebook.h"
 
-#import "GBAnalytics.h"
+#import "GBAnalyticsCore.h"
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 

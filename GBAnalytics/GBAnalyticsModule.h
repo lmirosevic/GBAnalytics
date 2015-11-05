@@ -8,9 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "GBAnalyticsNetworks.h"
-
-#import "GBAnalytics.h"
+#import "GBAnalyticsCore.h"
 
 #define IsValidString(string) (([string isKindOfClass:NSString.class] && ((NSString *)string).length > 0) ? YES : NO)
 
