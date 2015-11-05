@@ -1,12 +1,12 @@
 //
-//  GBAnalytics.h
+//  GBAnalyticsModule_Tapstream.m
 //  GBAnalytics
 //
 //  Created by Luka Mirosevic on 29/01/2013.
 //  Copyright (c) 2015 Goonbee. All rights reserved.
 //
 
-#import "GBAnalyticsModule_GoogleAnalytics.h"
+#import "GBAnalyticsModule_Tapstream.h"
 
 #import "GBAnalytics.h"
 
@@ -15,7 +15,17 @@
 static NSString * const kGBAnalyticsCredentialsTapstreamAccountName =                   @"kGBAnalyticsCredentialsTapstreamAccountName";
 static NSString * const kGBAnalyticsCredentialsTapstreamSDKSecret =                     @"kGBAnalyticsCredentialsTapstreamSDKSecret";
 
-@implementation GBAnalyticsModule_GoogleAnalaytics
+static TapstreamLogger const kDefaultTapstreamLogger =                                  nil;
+
+@implementation GBAnalyticsModule_Tapstream
+
+- (id)init {
+    if (self = [super init]) {
+        self.logger = kDefaultTapstreamLogger;
+    }
+    
+    return self;
+}
 
 + (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials args:(va_list)args {
     NSString *AccountName = credentials;

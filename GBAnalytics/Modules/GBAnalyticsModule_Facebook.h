@@ -1,5 +1,5 @@
 //
-//  GBAnalytics.h
+//  GBAnalyticsModule_Facebook.h
 //  GBAnalytics
 //
 //  Created by Luka Mirosevic on 29/01/2013.
@@ -10,6 +10,12 @@
 
 #import "GBAnalyticsModule.h"
 
-@interface GBAnalyticsModule_GoogleAnalaytics : NSObject <GBAnalyticsModule>
+@interface GBAnalyticsModule_Facebook : NSObject <GBAnalyticsModule>
+
+@end
+
+@interface GBAnalyticsSettings (Facebook)
+
+@property (strong, nonatomic, readonly) GBAnalyticsModule_Facebook     *Facebook;
 
 @end

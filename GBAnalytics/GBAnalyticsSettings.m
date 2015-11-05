@@ -8,162 +8,53 @@
 
 #import "GBAnalyticsSettings.h"
 
+#import "GBAnalyticsModule.h"
+
+@interface GBAnalyticsSettings ()
+
+@property (strong, nonatomic) NSMutableDictionary   *settingsObjects;
+
+@end
+
 @implementation GBAnalyticsSettings
 
 - (id)init {
     if (self = [super init]) {
-        self.GoogleAnalytics = [GBAnalyticsGoogleAnalyticsSettings new];
-        self.Flurry = [GBAnalyticsFlurrySettings new];
-        self.Crashlytics = [GBAnalyticsCrashlyticsSettings new];
-        self.Tapstream = [GBAnalyticsTapstreamSettings new];
-        self.Facebook = [GBAnalyticsFacebookSettings new];
-        self.Mixpanel = [GBAnalyticsMixpanelSettings new];
-        self.Parse = [GBAnalyticsParseSettings new];
-        self.Localytics = [GBAnalyticsLocalyticsSettings new];
-        self.Amplitude = [GBAnalyticsAmplitudeSettings new];
+        self.settingsObjects = [NSMutableDictionary new];
     }
     
     return self;
 }
 
-@end
+- (NSObject *)settingsObjectForSelector:(SEL)selector {
+    NSString *networkName = NSStringFromSelector(selector);// the network name is the same as the property name
+    Class<GBAnalyticsModule> moduleClass = NSClassFromString([NSString stringWithFormat:@"GBAnalytics_%@", NSStringFromSelector(selector)]);
 
-#pragma mark - Google Analytics
-
-static NSTimeInterval const kDefaultGoogleAnalyticsDispatchInterval =       10;
-static BOOL const kDefaultGoogleAnalyticsShouldTrackUncaughtExceptions =    NO;
-
-@implementation GBAnalyticsGoogleAnalyticsSettings
-
-- (id)init {
-    if (self = [super init]) {
-        self.dispatchInterval = kDefaultGoogleAnalyticsDispatchInterval;
-        self.shouldTrackUncaughtExceptions = kDefaultGoogleAnalyticsShouldTrackUncaughtExceptions;
+    // if we know about the class then it means it has been included and we can use it
+    if (moduleClass) {
+        // check first if we need to init this network
+        if (!self.settingsObjects[networkName]) {
+            self.settingsObjects[networkName] = [moduleClass.class new];
+        }
+        
+        return self.settingsObjects[networkName];
     }
-    
-    return self;
+    // otherwise chances are that this network has not been included/does not exist
+    else {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:@"GBAnalytics Error: Tried to use a network which hasn't been included. To use this network add the following to your Podfile: `pod 'GBAnalytics/%@`", networkName] userInfo:nil];
+    }
 }
 
-@end
-
-#pragma mark - Flurry
-
-@implementation GBAnalyticsFlurrySettings
-
-- (id)init {
-    if (self = [super init]) {
-    }
-    
-    return self;
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
+    return [NSMethodSignature methodSignatureForSelector:@selector(settingsObjectForSelector:)];
 }
-
-@end
-
-#pragma mark - Crashlytics
-
-@implementation GBAnalyticsCrashlyticsSettings
-
-- (id)init {
-    if (self = [super init]) {
-    }
     
-    return self;
-}
-
-@end
-
-#pragma mark - Tapstream
-
-static TapstreamLogger const kDefaultTapstreamLogger =                      nil;
-
-@implementation GBAnalyticsTapstreamSettings
-
-- (id)init {
-    if (self = [super init]) {
-        self.logger = kDefaultTapstreamLogger;
-    }
+- (void)forwardInvocation:(NSInvocation *)invocation {
+    // redirect the invocation to our single method
+    invocation.selector = @selector(settingsObjectForSelector:);
     
-    return self;
-}
-
-@end
-
-#pragma mark - Facebook
-
-@implementation GBAnalyticsFacebookSettings
-
-- (id)init {
-    if (self = [super init]) {
-    }
-    
-    return self;
-}
-
-@end
-
-#pragma mark - Mixpanel
-
-static NSTimeInterval const kDefaultMixpanelFlushInterval =                 10;
-static BOOL const kDefaultMixpanelShouldShowNetworkActivityIndicator =      NO;
-
-@implementation GBAnalyticsMixpanelSettings
-
-- (id)init {
-    if (self = [super init]) {
-        self.flushInterval = kDefaultMixpanelFlushInterval;
-        self.shouldShowNetworkActivityIndicator = kDefaultMixpanelShouldShowNetworkActivityIndicator;
-    }
-    
-    return self;
-}
-
-@end
-
-#pragma mark - Parse
-
-@implementation GBAnalyticsParseSettings : NSObject
-
-- (id)init {
-    if (self = [super init]) {
-    }
-    
-    return self;
-}
-
-@end
-
-#pragma mark - Localytics
-
-@implementation GBAnalyticsLocalyticsSettings : NSObject
-
-static BOOL const kDefaultLocalyticsIsCollectingAvertisingIdentifier =      YES;
-static NSTimeInterval const kDefaultLocalyticsTimeoutInterval =             15;
-
-- (id)init {
-    if (self = [super init]) {
-        self.isCollectingAdvertisingIdentifier = kDefaultLocalyticsIsCollectingAvertisingIdentifier;
-        self.sessionTimeoutInterval = kDefaultLocalyticsTimeoutInterval;
-    }
-    
-    return self;
-}
-
-@end
-
-#pragma mark - Amplitude
-
-@implementation GBAnalyticsAmplitudeSettings : NSObject
-
-static BOOL const kDefaultAmplitudeEnableLocationListening =                YES;
-static BOOL const kDefaultAmplitudeUserAdvertisingIdForDeviceId =           YES;
-
-- (id)init {
-    if (self = [super init]) {
-        self.enableLocationListening = kDefaultAmplitudeEnableLocationListening;
-        self.useAdvertisingIdForDeviceId = kDefaultAmplitudeUserAdvertisingIdForDeviceId;
-    }
-    
-    return self;
+    // invoke the selector on ourself, just now on a different method
+    [invocation invokeWithTarget:self];
 }
 
 @end

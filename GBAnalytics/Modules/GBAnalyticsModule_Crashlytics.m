@@ -1,12 +1,12 @@
 //
-//  GBAnalytics.h
+//  GBAnalyticsModule_Crashlytics.m
 //  GBAnalytics
 //
 //  Created by Luka Mirosevic on 29/01/2013.
 //  Copyright (c) 2015 Goonbee. All rights reserved.
 //
 
-#import "GBAnalyticsModule_GoogleAnalytics.h"
+#import "GBAnalyticsModule_Crashlytics.h"
 
 #import "GBAnalytics.h"
 
@@ -15,7 +15,7 @@
 
 static NSString * const kGBAnalyticsCredentialsCrashlyticsAPIKey =                      @"kGBAnalyticsCredentialsCrashlyticsAPIKey";
 
-@implementation GBAnalyticsModule_GoogleAnalaytics
+@implementation GBAnalyticsModule_Crashlytics
 
 + (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials args:(va_list)args {
     NSString *APIKey = credentials;

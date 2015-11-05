@@ -1,12 +1,12 @@
 //
-//  GBAnalytics.h
+//  GBAnalyticsModule_Amplitude.m
 //  GBAnalytics
 //
 //  Created by Luka Mirosevic on 29/01/2013.
 //  Copyright (c) 2015 Goonbee. All rights reserved.
 //
 
-#import "GBAnalyticsModule_GoogleAnalytics.h"
+#import "GBAnalyticsModule_Amplitude.h"
 
 #import "GBAnalytics.h"
 
@@ -14,7 +14,19 @@
 
 static NSString * const kGBAnalyticsCredentialsAmplitudeAPIKey =                        @"kGBAnalyticsCredentialsAmplitudeAPIKey";
 
-@implementation GBAnalyticsModule_GoogleAnalaytics
+static BOOL const kDefaultAmplitudeEnableLocationListening =                            YES;
+static BOOL const kDefaultAmplitudeUserAdvertisingIdForDeviceId =                       YES;
+
+@implementation GBAnalyticsModule_Amplitude
+
+- (id)init {
+    if (self = [super init]) {
+        self.enableLocationListening = kDefaultAmplitudeEnableLocationListening;
+        self.useAdvertisingIdForDeviceId = kDefaultAmplitudeUserAdvertisingIdForDeviceId;
+    }
+    
+    return self;
+}
 
 + (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials args:(va_list)args {
     NSString *APIKey = credentials;

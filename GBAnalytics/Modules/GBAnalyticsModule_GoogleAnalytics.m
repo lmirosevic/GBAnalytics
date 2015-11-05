@@ -1,5 +1,5 @@
 //
-//  GBAnalytics.h
+//  GBAnalyticsModule_GoogleAnalytics.m
 //  GBAnalytics
 //
 //  Created by Luka Mirosevic on 29/01/2013.
@@ -16,7 +16,19 @@
 static NSString * const kGBAnalyticsCredentialsGoogleAnalyticsTrackingIDs =             @"kGBAnalyticsCredentialsGoogleAnalyticsTrackingIDs";
 static NSString * const kGBAnalyticsGoogleAnalyticsActionlessEventActionString =        @"Plain";
 
-@implementation GBAnalyticsModule_GoogleAnalaytics
+static NSTimeInterval const kDefaultGoogleAnalyticsDispatchInterval =                   10;
+static BOOL const kDefaultGoogleAnalyticsShouldTrackUncaughtExceptions =                NO;
+
+@implementation GBAnalyticsModule_GoogleAnalytics
+
+- (id)init {
+    if (self = [super init]) {
+        self.dispatchInterval = kDefaultGoogleAnalyticsDispatchInterval;
+        self.shouldTrackUncaughtExceptions = kDefaultGoogleAnalyticsShouldTrackUncaughtExceptions;
+    }
+
+    return self;
+}
 
 + (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials args:(va_list)args {
     NSString *TrackingID = credentials;

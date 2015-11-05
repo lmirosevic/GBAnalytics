@@ -1,12 +1,12 @@
 //
-//  GBAnalytics.h
+//  GBAnalyticsModule_Parse.m
 //  GBAnalytics
 //
 //  Created by Luka Mirosevic on 29/01/2013.
 //  Copyright (c) 2015 Goonbee. All rights reserved.
 //
 
-#import "GBAnalyticsModule_GoogleAnalytics.h"
+#import "GBAnalyticsModule_Parse.h"
 
 #import "GBAnalytics.h"
 
@@ -15,7 +15,7 @@
 static NSString * const kGBAnalyticsCredentialsParseApplicationID =                     @"kGBAnalyticsCredentialsParseApplicationID";
 static NSString * const kGBAnalyticsCredentialsParseClientKey =                         @"kGBAnalyticsCredentialsParseClientKey";
 
-@implementation GBAnalyticsModule_GoogleAnalaytics
+@implementation GBAnalyticsModule_Parse
 
 + (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials args:(va_list)args {
     NSString *ApplicationID = credentials;

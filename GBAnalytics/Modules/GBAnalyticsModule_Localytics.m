@@ -1,12 +1,12 @@
 //
-//  GBAnalytics.h
+//  GBAnalyticsModule_Localytics.m
 //  GBAnalytics
 //
 //  Created by Luka Mirosevic on 29/01/2013.
 //  Copyright (c) 2015 Goonbee. All rights reserved.
 //
 
-#import "GBAnalyticsModule_GoogleAnalytics.h"
+#import "GBAnalyticsModule_Localytics.h"
 
 #import "GBAnalytics.h"
 
@@ -14,7 +14,19 @@
 
 static NSString * const kGBAnalyticsCredentialsLocalyticsAppKey =                       @"kGBAnalyticsCredentialsLocalyticsAppKey";
 
-@implementation GBAnalyticsModule_GoogleAnalaytics
+static BOOL const kDefaultLocalyticsIsCollectingAvertisingIdentifier =                  YES;
+static NSTimeInterval const kDefaultLocalyticsTimeoutInterval =                         15;
+
+
+@implementation GBAnalyticsModule_Localytics
+- (id)init {
+    if (self = [super init]) {
+        self.isCollectingAdvertisingIdentifier = kDefaultLocalyticsIsCollectingAvertisingIdentifier;
+        self.sessionTimeoutInterval = kDefaultLocalyticsTimeoutInterval;
+    }
+    
+    return self;
+}
 
 + (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials args:(va_list)args {
     NSString *AppKey = credentials;

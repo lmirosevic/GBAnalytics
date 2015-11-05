@@ -1,5 +1,5 @@
 //
-//  GBAnalytics.h
+//  GBAnalyticsModule_Flurry.h
 //  GBAnalytics
 //
 //  Created by Luka Mirosevic on 29/01/2013.
@@ -10,6 +10,12 @@
 
 #import "GBAnalyticsModule.h"
 
-@interface GBAnalyticsModule_GoogleAnalaytics : NSObject <GBAnalyticsModule>
+@interface GBAnalyticsModule_Flurry : NSObject <GBAnalyticsModule>
+
+@end
+
+@interface GBAnalyticsSettings (Flurry)
+
+@property (strong, nonatomic, readonly) GBAnalyticsModule_Flurry     *Flurry;
 
 @end

@@ -1,5 +1,5 @@
 //
-//  GBAnalytics.h
+//  GBAnalyticsModule_Amplitude.h
 //  GBAnalytics
 //
 //  Created by Luka Mirosevic on 29/01/2013.
@@ -10,6 +10,15 @@
 
 #import "GBAnalyticsModule.h"
 
-@interface GBAnalyticsModule_GoogleAnalaytics : NSObject <GBAnalyticsModule>
+@interface GBAnalyticsModule_Amplitude : NSObject <GBAnalyticsModule>
+
+@property (assign, nonatomic) BOOL                                      enableLocationListening;                //default: YES
+@property (assign, nonatomic) BOOL                                      useAdvertisingIdForDeviceId;            //default: YES
+
+@end
+
+@interface GBAnalyticsSettings (Amplitude)
+
+@property (strong, nonatomic, readonly) GBAnalyticsModule_Amplitude     *Amplitude;
 
 @end

@@ -1,5 +1,5 @@
 //
-//  GBAnalytics.h
+//  GBAnalyticsModule.h
 //  GBAnalytics
 //
 //  Created by Luka Mirosevic on 29/01/2013.

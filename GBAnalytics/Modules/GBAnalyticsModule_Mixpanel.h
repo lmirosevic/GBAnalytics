@@ -1,5 +1,5 @@
 //
-//  GBAnalytics.h
+//  GBAnalyticsModule_Mixpanel.h
 //  GBAnalytics
 //
 //  Created by Luka Mirosevic on 29/01/2013.
@@ -10,6 +10,15 @@
 
 #import "GBAnalyticsModule.h"
 
-@interface GBAnalyticsModule_GoogleAnalaytics : NSObject <GBAnalyticsModule>
+@interface GBAnalyticsModule_Mixpanel : NSObject <GBAnalyticsModule>
+
+@property (assign, nonatomic) NSUInteger                                flushInterval;                          //default: 10
+@property (assign, nonatomic) BOOL                                      shouldShowNetworkActivityIndicator;     //default: NO
+
+@end
+
+@interface GBAnalyticsSettings (Mixpanel)
+
+@property (strong, nonatomic, readonly) GBAnalyticsModule_Mixpanel      *Mixpanel;
 
 @end

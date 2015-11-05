@@ -1,12 +1,12 @@
 //
-//  GBAnalytics.h
+//  GBAnalyticsModule_Mixpanel.m
 //  GBAnalytics
 //
 //  Created by Luka Mirosevic on 29/01/2013.
 //  Copyright (c) 2015 Goonbee. All rights reserved.
 //
 
-#import "GBAnalyticsModule_GoogleAnalytics.h"
+#import "GBAnalyticsModule_Mixpanel.h"
 
 #import "GBAnalytics.h"
 
@@ -14,7 +14,19 @@
 
 static NSString * const kGBAnalyticsCredentialsMixpanelToken =                          @"kGBAnalyticsCredentialsMixpanelToken";
 
-@implementation GBAnalyticsModule_GoogleAnalaytics
+static NSTimeInterval const kDefaultMixpanelFlushInterval =                             10;
+static BOOL const kDefaultMixpanelShouldShowNetworkActivityIndicator =                  NO;
+
+@implementation GBAnalyticsModule_Mixpanel
+
+- (id)init {
+    if (self = [super init]) {
+        self.flushInterval = kDefaultMixpanelFlushInterval;
+        self.shouldShowNetworkActivityIndicator = kDefaultMixpanelShouldShowNetworkActivityIndicator;
+    }
+    
+    return self;
+}
 
 + (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials args:(va_list)args {
     NSString *Token = credentials;

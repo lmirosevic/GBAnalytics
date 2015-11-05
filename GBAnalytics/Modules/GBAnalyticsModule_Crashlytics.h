@@ -1,5 +1,5 @@
 //
-//  GBAnalytics.h
+//  GBAnalyticsModule_Crashlytics.h
 //  GBAnalytics
 //
 //  Created by Luka Mirosevic on 29/01/2013.
@@ -10,6 +10,13 @@
 
 #import "GBAnalyticsModule.h"
 
-@interface GBAnalyticsModule_GoogleAnalaytics : NSObject <GBAnalyticsModule>
+@interface GBAnalyticsModule_Crashlytics : NSObject <GBAnalyticsModule>
 
 @end
+
+@interface GBAnalyticsSettings (Crashlytics)
+
+@property (strong, nonatomic, readonly) GBAnalyticsModule_Crashlytics     *Crashlytics;
+
+@end
+
