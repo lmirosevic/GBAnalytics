@@ -12,10 +12,11 @@
 
 #import <AdSupport/AdSupport.h>
 
-//lm add the subspecs to the podspec, adding the files and also the deps, (i dont htink i will need the define)
 //lm tst it properly
 
 NSString * const kGBAnalyticsDefaultEventRoute =                                        @"kGBAnalyticsDefaultEventRoute";
+
+static NSString * const kNetworkNotIncludedErrorFormatString =                          @"GBAnalytics Error: Tried to use a network which hasn't been included. To use this network add the following to your Podfile: `pod 'GBAnalytics/%@'`";
 
 #if !DEBUG
 static BOOL const kProductionBuild =                                                    YES;
@@ -120,7 +121,7 @@ BOOL _GBAnalyticsEnabled() {
         }
     } else {
         // module not loaded!
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:@"GBAnalytics Error: Tried to use a network which hasn't been included. To use this network add the following to your Podfile: `pod 'GBAnalytics/%@`", [self.class _subspecNameForNetwork:network]] userInfo:nil];
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:kNetworkNotIncludedErrorFormatString, [self.class _subspecNameForNetwork:network]] userInfo:nil];
     }
 }
 
@@ -314,7 +315,7 @@ BOOL _GBAnalyticsEnabled() {
                 }
             } else {
                 // module not loaded!
-                @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:@"GBAnalytics Error: Tried to use a network which hasn't been included. To use this network add the following to your Podfile: `pod 'GBAnalytics/%@`", [self.class _subspecNameForNetwork:network]] userInfo:nil];
+                @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:kNetworkNotIncludedErrorFormatString, [self.class _subspecNameForNetwork:network]] userInfo:nil];
             }
         }
     }
@@ -366,7 +367,7 @@ BOOL _GBAnalyticsEnabled() {
     }
     // otherwise chances are that this network has not been included/does not exist
     else {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:@"GBAnalytics Error: Tried to use a network which hasn't been included. To use this network add the following to your Podfile: `pod 'GBAnalytics/%@`", networkName] userInfo:nil];
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:kNetworkNotIncludedErrorFormatString, networkName] userInfo:nil];
     }
 }
 
