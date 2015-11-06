@@ -12,11 +12,9 @@
 
 #import <AdSupport/AdSupport.h>
 
-//lm tst it properly
-
 NSString * const kGBAnalyticsDefaultEventRoute =                                        @"kGBAnalyticsDefaultEventRoute";
 
-static NSString * const kNetworkNotIncludedErrorFormatString =                          @"GBAnalytics Error: Tried to use a network which hasn't been included. To use this network add the following to your Podfile: `pod 'GBAnalytics/%@'`";
+static NSString * const kNetworkNotIncludedErrorFormatString =                          @"GBAnalytics Error: Tried to use a network which hasn't been included. To use this network add the following line to your Podfile: `pod 'GBAnalytics/%1$@'`, or alternatively like so: `pod 'GBAnalytics', subspecs: ['%1$@']`";
 
 #if !DEBUG
 static BOOL const kProductionBuild =                                                    YES;
@@ -352,9 +350,9 @@ BOOL _GBAnalyticsEnabled() {
     return self;
 }
 
-- (NSObject *)settingsObjectForSelector:(SEL)selector {
+- (NSObject *)_settingsObjectForSelector:(SEL)selector {
     NSString *networkName = NSStringFromSelector(selector);// the network name is the same as the property name
-    Class<GBAnalyticsModule> moduleClass = NSClassFromString([NSString stringWithFormat:@"GBAnalytics_%@", NSStringFromSelector(selector)]);
+    Class<GBAnalyticsModule> moduleClass = NSClassFromString([NSString stringWithFormat:@"GBAnalyticsModule_%@", NSStringFromSelector(selector)]);
     
     // if we know about the class then it means it has been included and we can use it
     if (moduleClass) {
@@ -372,12 +370,18 @@ BOOL _GBAnalyticsEnabled() {
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
-    return [NSMethodSignature methodSignatureForSelector:@selector(settingsObjectForSelector:)];
+    return [super methodSignatureForSelector:@selector(_settingsObjectForSelector:)];
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
+    // we get the old selector out
+    SEL oldSelector = invocation.selector;
+    
     // redirect the invocation to our single method
-    invocation.selector = @selector(settingsObjectForSelector:);
+    invocation.selector = @selector(_settingsObjectForSelector:);
+    
+    // we pass the initial selector as the first argument, so our eventual processing method (_settingsObjectForSelector:) knows what was requested
+    [invocation setArgument:&oldSelector atIndex:2];
     
     // invoke the selector on ourself, just now on a different method
     [invocation invokeWithTarget:self];
