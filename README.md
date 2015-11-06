@@ -18,7 +18,11 @@ Supported networks
 Usage
 ------------
 
-First import the header (it's probably a good idea to put this in the precompiled header so that it's accessible application wide):
+Add the library to your Podfile and specify the networks that you want to use. Let's say we want to use Crashlytics, Mixpanel and Localytics:
+
+`pod 'GBAnalytics', subspecs: ['Crashlytics', 'Mixpanel', 'Localytics']`
+
+Then in your project import the header (it's probably a good idea to put this in the precompiled header so that it's accessible application wide):
 
 ```objective-c
 #import <GBAnaytics/GBAnalytics.h>
@@ -130,7 +134,7 @@ For Crashlytics/Fabric to be able to symbolicate your crash reports, your app ne
 
 ```sh
 # Crashlytics/Fabric dSYM upload
-"${PODS_ROOT}/Crashlytics/Crashlytics.framework/run" <API_KEY> <BUILD_SECRET>
+"${PODS_ROOT}/Fabric/Fabric.framework/run" <API_KEY> <BUILD_SECRET>
 ```
 
 This script assumes that you have installed GBAnalytics using CocoaPods in which case the framework will be in the PODS_ROOT. If you added GBAnalytics manually, then you should update the script to point to the Crashlytics `run` binary location.
@@ -138,9 +142,9 @@ This script assumes that you have installed GBAnalytics using CocoaPods in which
 Install
 ------------
 
-Add to your project's Podfile:
+Add to your project's Podfile (only include the subspecs that you are using):
 
-`pod 'GBAnalytics'`
+`pod 'GBAnalytics', subspecs: ['GoogleAnalytics', 'Flurry', 'Crashlytics', 'Tapstream', 'Facebook', 'Mixpanel', 'Parse', 'Localytics', 'Amplitude']`
 
 And run this in your project folder:
 
