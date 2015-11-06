@@ -20,85 +20,94 @@ Pod::Spec.new do |s|
   # Modules
 
   s.subspec 'GoogleAnalytics' do |ss|
-    ss.source_files = "GBAnalytics/Modules/GBAnalyticsModule_GoogleAnalytics.{h,m}"
+    ss.source_files = 'GBAnalytics/Modules/GBAnalyticsModule_GoogleAnalytics.{h,m}'
     ss.public_header_files = 'GBAnalytics/Modules/GBAnalyticsModule_GoogleAnalytics.h'
 
     ss.dependency 'GoogleAnalytics', '~> 3.0'
 
-    ss.pod_target_xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBAnalyticsModule_GoogleAnalytics' }
+    ss.dependency 'GBAnalytics/Core'
+    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_GOOGLEANALYTICS' }
   end
 
   s.subspec 'Flurry' do |ss|
-    ss.source_files = "GBAnalytics/Modules/GBAnalyticsModule_Flurry.{h,m}"
+    ss.source_files = 'GBAnalytics/Modules/GBAnalyticsModule_Flurry.{h,m}'
     ss.public_header_files = 'GBAnalytics/Modules/GBAnalyticsModule_Flurry.h'
 
     ss.dependency 'Flurry-iOS-SDK', '~> 7.3'
 
-    ss.pod_target_xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBAnalyticsModule_Flurry' }
+    ss.dependency 'GBAnalytics/Core'
+    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_FLURRY' }
   end
 
   s.subspec 'Crashlytics' do |ss|
-    ss.source_files = "GBAnalytics/Modules/GBAnalyticsModule_Crashlytics.{h,m}"
+    ss.source_files = 'GBAnalytics/Modules/GBAnalyticsModule_Crashlytics.{h,m}'
     ss.public_header_files = 'GBAnalytics/Modules/GBAnalyticsModule_Crashlytics.h'
 
     ss.dependency 'Fabric', '~> 1.5'
 
-    ss.pod_target_xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBAnalyticsModule_Crashlytics' }
+    ss.dependency 'GBAnalytics/Core'
+    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_CRASHLYTICS' }
     ss.dependency 'Crashlytics', '~> 3.3'
     ss.libraries = 'z', 'c++'
   end
 
   s.subspec 'Tapstream' do |ss|
-    ss.source_files = "GBAnalytics/Modules/GBAnalyticsModule_Tapstream.{h,m}"
+    ss.source_files = 'GBAnalytics/Modules/GBAnalyticsModule_Tapstream.{h,m}'
     ss.public_header_files = 'GBAnalytics/Modules/GBAnalyticsModule_Tapstream.h'
 
     ss.dependency 'Tapstream', '~> 2.6'
 
-    ss.pod_target_xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBAnalyticsModule_Tapstream' }
+    ss.dependency 'GBAnalytics/Core'
+    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_TAPSTREAM' }
   end
 
   s.subspec 'Facebook' do |ss|
-    ss.source_files = "GBAnalytics/Modules/GBAnalyticsModule_Facebook.{h,m}"
+    ss.source_files = 'GBAnalytics/Modules/GBAnalyticsModule_Facebook.{h,m}'
     ss.public_header_files = 'GBAnalytics/Modules/GBAnalyticsModule_Facebook.h'
 
     ss.dependency 'FBSDKCoreKit', '~> 4.6'
 
-    ss.pod_target_xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBAnalyticsModule_Facebook' }
+    ss.dependency 'GBAnalytics/Core'
+    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_FACEBOOK' }
   end
 
   s.subspec 'Mixpanel' do |ss|
-    ss.source_files = "GBAnalytics/Modules/GBAnalyticsModule_Mixpanel.{h,m}"
+    ss.source_files = 'GBAnalytics/Modules/GBAnalyticsModule_Mixpanel.{h,m}'
     ss.public_header_files = 'GBAnalytics/Modules/GBAnalyticsModule_Mixpanel.h'
 
     ss.dependency 'Mixpanel', '~> 2.3'
 
-    ss.pod_target_xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBAnalyticsModule_Mixpanel' }
+    ss.dependency 'GBAnalytics/Core'
+    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_MIXPANEL' }
   end
 
   s.subspec 'Parse' do |ss|
-    ss.source_files = "GBAnalytics/Modules/GBAnalyticsModule_Parse.{h,m}"
+    ss.source_files = 'GBAnalytics/Modules/GBAnalyticsModule_Parse.{h,m}'
     ss.public_header_files = 'GBAnalytics/Modules/GBAnalyticsModule_Parse.h'
 
     ss.dependency 'Parse', '~> 1.6'
 
-    ss.pod_target_xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBAnalyticsModule_Parse' }
+    ss.dependency 'GBAnalytics/Core'
+    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_PARSE' }
   end
 
   s.subspec 'Localytics' do |ss|
-    ss.source_files = "GBAnalytics/Modules/GBAnalyticsModule_Localytics.{h,m}"
+    ss.source_files = 'GBAnalytics/Modules/GBAnalyticsModule_Localytics.{h,m}'
     ss.public_header_files = 'GBAnalytics/Modules/GBAnalyticsModule_Localytics.h'
 
     ss.dependency 'Localytics', '~> 3.0'
 
-    ss.pod_target_xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBAnalyticsModule_Localytics' }
+    ss.dependency 'GBAnalytics/Core'
+    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_LOCALYTICS' }
   end
 
   s.subspec 'Amplitude' do |ss|
-    ss.source_files = "GBAnalytics/Modules/GBAnalyticsModule_Amplitude.{h,m}"
+    ss.source_files = 'GBAnalytics/Modules/GBAnalyticsModule_Amplitude.{h,m}'
     ss.public_header_files = 'GBAnalytics/Modules/GBAnalyticsModule_Amplitude.h'
 
     ss.dependency 'Amplitude-iOS', '~> 3.2'
 
-    ss.pod_target_xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBAnalyticsModule_Amplitude' }
+    ss.dependency 'GBAnalytics/Core'
+    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_AMPLITUDE' }
   end
 end

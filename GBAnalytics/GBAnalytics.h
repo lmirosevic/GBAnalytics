@@ -8,39 +8,39 @@
 
 #import "GBAnalyticsCore.h"
 
-#ifdef GBAnalyticsModule_GoogleAnalytics
+#ifdef GBANALYTICS_GOOGLEANALYTICS
 #import "GBAnalyticsModule_GoogleAnalytics.h"
 #endif
 
-#ifdef GBAnalyticsModule_Flurry
+#ifdef GBANALYTICS_FLURRY
 #import "GBAnalyticsModule_Flurry.h"
 #endif
 
-#ifdef GBAnalyticsModule_Crashlytics
+#ifdef GBANALYTICS_CRASHLYTICS
 #import "GBAnalyticsModule_Crashlytics.h"
 #endif
 
-#ifdef GBAnalyticsModule_Tapstream
+#ifdef GBANALYTICS_TAPSTREAM
 #import "GBAnalyticsModule_Tapstream.h"
 #endif
 
-#ifdef GBAnalyticsModule_Facebook
+#ifdef GBANALYTICS_FACEBOOK
 #import "GBAnalyticsModule_Facebook.h"
 #endif
 
-#ifdef GBAnalyticsModule_Mixpanel
+#ifdef GBANALYTICS_MIXPANEL
 #import "GBAnalyticsModule_Mixpanel.h"
 #endif
 
-#ifdef GBAnalyticsModule_Parse
+#ifdef GBANALYTICS_PARSE
 #import "GBAnalyticsModule_Parse.h"
 #endif
 
-#ifdef GBAnalyticsModule_Localytics
+#ifdef GBANALYTICS_LOCALYTICS
 #import "GBAnalyticsModule_Localytics.h"
 #endif
 
-#ifdef GBAnalyticsModule_Amplitude
+#ifdef GBANALYTICS_AMPLITUDE
 #import "GBAnalyticsModule_Amplitude.h"
 #endif
 
