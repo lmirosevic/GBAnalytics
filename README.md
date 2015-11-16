@@ -11,6 +11,7 @@ Supported networks
 * Parse
 * Google Analytics
 * Crashlytics
+* Answers
 * Facebook
 * Tapstream
 * Flurry
@@ -44,7 +45,10 @@ Connect to any number of networks you want in `application:didFinishLaunching:wi
 [GBAnalytics connectNetwork:GBAnalyticsNetworkFacebook withCredentials:@"AmplitudeAPIKey"];
 
 // Crashlytics
-[GBAnalytics connectNetwork:GBAnalyticsNetworkCrashlytics withCredentials:@"CrashlyticsAPIKey"];
+[GBAnalytics connectNetwork:GBAnalyticsNetworkCrashlytics withCredentials:@"FabricAPIKey"];
+
+// Answers
+[GBAnalytics connectNetwork:GBAnalyticsNetworkAnswers withCredentials:@"FabricAPIKey"];
 
 // Tapstream
 [GBAnalytics connectNetwork:GBAnalyticsNetworkTapstream withCredentials:@"TapstreamAccountName", @"TapstreamSDKSecret"];
@@ -144,7 +148,7 @@ Install
 
 Add to your project's Podfile (only include the subspecs that you are using):
 
-`pod 'GBAnalytics', subspecs: ['GoogleAnalytics', 'Flurry', 'Crashlytics', 'Tapstream', 'Facebook', 'Mixpanel', 'Parse', 'Localytics', 'Amplitude']`
+`pod 'GBAnalytics', subspecs: ['GoogleAnalytics', 'Flurry', 'Crashlytics', 'Answers', 'Tapstream', 'Facebook', 'Mixpanel', 'Parse', 'Localytics', 'Amplitude']`
 
 And run this in your project folder:
 
