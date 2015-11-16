@@ -20,6 +20,10 @@
 #import "GBAnalyticsModule_Crashlytics.h"
 #endif
 
+#ifdef GBANALYTICS_ANSWERS
+#import "GBAnalyticsModule_Answers.h"
+#endif
+
 #ifdef GBANALYTICS_TAPSTREAM
 #import "GBAnalyticsModule_Tapstream.h"
 #endif

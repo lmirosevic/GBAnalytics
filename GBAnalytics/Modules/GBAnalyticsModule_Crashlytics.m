@@ -13,27 +13,30 @@
 #import <Crashlytics/Crashlytics.h>
 #import <Fabric/Fabric.h>
 
-static NSString * const kGBAnalyticsCredentialsCrashlyticsAPIKey =                      @"kGBAnalyticsCredentialsCrashlyticsAPIKey";
+static NSString * const kGBAnalyticsCredentialsFabricAPIKey = @"kGBAnalyticsCredentialsFabricAPIKey";
 
 @implementation GBAnalyticsModule_Crashlytics
 
 + (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials args:(va_list)args {
-    NSString *APIKey = credentials;
+    // this one might be called again from Answers, as that one is just an alias, so we want to be idempotent
+    if (![GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkCrashlytics)]) {
+        NSString *APIKey = credentials;
+        
+        if (IsValidString(APIKey)) {
+            [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkCrashlytics)] = @{kGBAnalyticsCredentialsFabricAPIKey: APIKey};
 
-    if (IsValidString(APIKey)) {
-        [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkCrashlytics)] = @{kGBAnalyticsCredentialsCrashlyticsAPIKey: APIKey};
-
-        [Crashlytics startWithAPIKey:APIKey];
+            [Crashlytics startWithAPIKey:APIKey];
+        }
+        else [GBAnalyticsManager signalInvalidCredentialsForNetwork:network];
     }
-    else [GBAnalyticsManager signalInvalidCredentialsForNetwork:network];
 }
 
 + (void)trackEvent:(NSString *)event {
-    // noop, doesn't support events
+    [Answers logCustomEventWithName:event customAttributes:nil];
 }
 
 + (void)trackEvent:(NSString *)event withParameters:(NSDictionary *)parameters {
-    // noop, doesn't support events
+    [Answers logCustomEventWithName:event customAttributes:parameters];
 }
 
 @end

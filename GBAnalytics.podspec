@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   # s.frameworks = 'SystemConfiguration', 'CoreData'
 
   s.subspec 'Core' do |ss|
-    ss.source_files  = 'GBAnalytics/*.{h,m}'
+    ss.source_files = 'GBAnalytics/*.{h,m}'
     ss.public_header_files = 'GBAnalytics/*.h'
   end
 
@@ -43,12 +43,22 @@ Pod::Spec.new do |s|
     ss.source_files = 'GBAnalytics/Modules/GBAnalyticsModule_Crashlytics.{h,m}'
     ss.public_header_files = 'GBAnalytics/Modules/GBAnalyticsModule_Crashlytics.h'
 
-    ss.dependency 'Fabric', '~> 1.5'
+    ss.dependency 'Crashlytics', '~> 3.3'
+    ss.libraries = 'z', 'c++'
 
     ss.dependency 'GBAnalytics/Core'
     ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_CRASHLYTICS' }
-    ss.dependency 'Crashlytics', '~> 3.3'
-    ss.libraries = 'z', 'c++'
+  end
+
+  s.subspec 'Answers' do |ss|
+    ss.source_files = 'GBAnalytics/Modules/GBAnalyticsModule_Answers.{h,m}'
+    ss.public_header_files = 'GBAnalytics/Modules/GBAnalyticsModule_Answers.h'
+
+    # This one is really just an alias for Crashlytics, which includes answers
+    ss.dependency 'GBAnalytics/Crashlytics'
+
+    ss.dependency 'GBAnalytics/Core'
+    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_ANSWERS' }
   end
 
   s.subspec 'Tapstream' do |ss|

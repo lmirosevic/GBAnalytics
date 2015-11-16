@@ -19,9 +19,14 @@
     Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkFlurry withCredentials:@"FlurryAPIKey"];
  
  Crashlytics
-    Params: CrashlyticsAPIKey
+    Params: FabricAPIKey
     Settings:
-    Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkCrashlytics withCredentials:@"CrashlyticsAPIKey"];
+    Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkCrashlytics withCredentials:@"FabricAPIKey"];
+ 
+ Answers
+    Params: FabricAPIKey
+    Settings:
+    Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkAnswers withCredentials:@"FabricAPIKey"];
  
  Tapstream
     Params: TapstreamAccountName, TapstreamSDKSecret
@@ -61,6 +66,7 @@ typedef enum {
     GBAnalyticsNetworkGoogleAnalytics = 1,
     GBAnalyticsNetworkFlurry,
     GBAnalyticsNetworkCrashlytics,
+    GBAnalyticsNetworkAnswers,
     GBAnalyticsNetworkTapstream,
     GBAnalyticsNetworkFacebook,
     GBAnalyticsNetworkMixpanel,
@@ -83,6 +89,10 @@ static inline NSString * NetworkNameForNetwork(GBAnalyticsNetwork network) {
             
         case GBAnalyticsNetworkCrashlytics: {
             return @"Crashlytics";
+        } break;
+            
+        case GBAnalyticsNetworkAnswers: {
+            return @"Answers";
         } break;
             
         case GBAnalyticsNetworkTapstream: {
