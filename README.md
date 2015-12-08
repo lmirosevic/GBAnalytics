@@ -138,7 +138,7 @@ For Crashlytics/Fabric to be able to symbolicate your crash reports, your app ne
 
 ```sh
 # Crashlytics/Fabric dSYM upload
-"${PODS_ROOT}/Fabric/Fabric.framework/run" <API_KEY> <BUILD_SECRET>
+"${PODS_ROOT}/Fabric/run" <API_KEY> <BUILD_SECRET>
 ```
 
 This script assumes that you have installed GBAnalytics using CocoaPods in which case the framework will be in the PODS_ROOT. If you added GBAnalytics manually, then you should update the script to point to the Crashlytics `run` binary location.
