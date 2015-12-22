@@ -141,6 +141,8 @@ For Crashlytics/Fabric to be able to symbolicate your crash reports, your app ne
 "${PODS_ROOT}/Fabric/run" <API_KEY> <BUILD_SECRET>
 ```
 
+Also ensure that your project's `Debug Information Format` (under Build Settings) is set to `DWARF with dSYM File` for all build configurations.
+
 This script assumes that you have installed GBAnalytics using CocoaPods in which case the framework will be in the PODS_ROOT. If you added GBAnalytics manually, then you should update the script to point to the Crashlytics `run` binary location.
 
 Install
