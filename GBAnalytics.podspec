@@ -33,7 +33,7 @@ Pod::Spec.new do |s|
     ss.source_files = 'GBAnalytics/Modules/GBAnalyticsModule_Flurry.{h,m}'
     ss.public_header_files = 'GBAnalytics/Modules/GBAnalyticsModule_Flurry.h'
 
-    ss.dependency 'Flurry-iOS-SDK', '~> 7.3'
+    ss.dependency 'Flurry-iOS-SDK/FlurrySDK', '~> 7.3'
 
     ss.dependency 'GBAnalytics/Core'
     ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_FLURRY' }
