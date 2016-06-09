@@ -39,10 +39,10 @@ Connect to any number of networks you want in `application:didFinishLaunching:wi
 [GBAnalytics connectNetwork:GBAnalyticsNetworkParse withCredentials:@"ParseApplicationID", @"ParseClientKey"];
  
 // Localytics
-[GBAnalytics connectNetwork:GBAnalyticsNetworkFacebook withCredentials:@"LocalyticsAppKey"];
+[GBAnalytics connectNetwork:GBAnalyticsNetworkLocalytics withCredentials:@"LocalyticsAppKey"];
  
 // Amplitude
-[GBAnalytics connectNetwork:GBAnalyticsNetworkFacebook withCredentials:@"AmplitudeAPIKey"];
+[GBAnalytics connectNetwork:GBAnalyticsNetworkAmplitude withCredentials:@"AmplitudeAPIKey"];
 
 // Crashlytics
 [GBAnalytics connectNetwork:GBAnalyticsNetworkCrashlytics withCredentials:@"FabricAPIKey"];
