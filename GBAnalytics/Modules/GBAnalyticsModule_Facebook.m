@@ -19,7 +19,7 @@ static NSString * const kGBAnalyticsCredentialsFacebookAppID =                  
 + (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials args:(va_list)args {
     NSString *FBAppID = credentials ?: [[NSBundle mainBundle] objectForInfoDictionaryKey:@"FacebookAppID"];
     
-    if (IsValidString(FBAppID)) {
+    if (FBAppID.length > 0) {
         [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkFacebook)] = @{kGBAnalyticsCredentialsFacebookAppID: FBAppID};
         [FBSDKSettings setAppID:FBAppID];
     }

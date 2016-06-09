@@ -22,7 +22,7 @@ static NSString * const kGBAnalyticsCredentialsFabricAPIKey = @"kGBAnalyticsCred
     if (![GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkCrashlytics)]) {
         NSString *APIKey = credentials;
         
-        if ([APIKey isKindOfClass:NSString.class] && ((NSString *)APIKey).length > 0) {
+        if (APIKey.length > 0) {
             [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkCrashlytics)] = @{kGBAnalyticsCredentialsFabricAPIKey: APIKey};
 
             [Crashlytics startWithAPIKey:APIKey];

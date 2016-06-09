@@ -21,7 +21,7 @@ static NSString * const kGBAnalyticsCredentialsParseClientKey =                 
     NSString *ApplicationID = credentials;
     NSString *ClientKey = va_arg(args, NSString *);
     
-    if (IsValidString(ApplicationID) && IsValidString(ClientKey)) {
+    if (ApplicationID.length > 0 && ClientKey.length > 0) {
         [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkParse)] = @{kGBAnalyticsCredentialsParseApplicationID: ApplicationID, kGBAnalyticsCredentialsParseClientKey: ClientKey};
         
         [Parse setApplicationId:ApplicationID clientKey:ClientKey];

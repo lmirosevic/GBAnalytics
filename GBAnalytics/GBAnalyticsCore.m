@@ -291,7 +291,7 @@ BOOL _GBAnalyticsEnabled() {
     if (![self _areNetworksAssociatedWithThisRoute]) [GBAnalyticsManager _debugWarningString:[NSString stringWithFormat:@"There are no networks associated with the route %@, the following event was not sent: %@", self.route, event] force:YES];
     
     // make sure first of all that it's a valid string
-    if ([event isKindOfClass:NSString.class] && ((NSString *)event).length > 0) {
+    if (event.length > 0) {
         for (NSNumber *number in [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks) {
             GBAnalyticsNetwork network = [number intValue];
             

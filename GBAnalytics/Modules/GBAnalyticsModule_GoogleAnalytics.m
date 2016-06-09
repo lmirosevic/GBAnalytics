@@ -33,7 +33,7 @@ static BOOL const kDefaultGoogleAnalyticsShouldTrackUncaughtExceptions =        
 + (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials args:(va_list)args {
     NSString *TrackingID = credentials;
     
-    if (IsValidString(TrackingID)) {
+    if (TrackingID.length > 0) {
         // support for multiple tracking ids
         NSArray *trackingIDs = [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkGoogleAnalytics)][kGBAnalyticsCredentialsGoogleAnalyticsTrackingIDs];
         // if trackingIDs is nil then it's initalization of GA

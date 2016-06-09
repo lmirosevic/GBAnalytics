@@ -31,7 +31,7 @@ static BOOL const kDefaultMixpanelShouldShowNetworkActivityIndicator =          
 + (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials args:(va_list)args {
     NSString *Token = credentials;
     
-    if (IsValidString(Token)) {
+    if (Token.length > 0) {
         [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkMixpanel)] = @{kGBAnalyticsCredentialsMixpanelToken: Token};
         
         [Mixpanel sharedInstanceWithToken:Token];

@@ -31,7 +31,7 @@ static TapstreamLogger const kDefaultTapstreamLogger =                          
     NSString *AccountName = credentials;
     NSString *SDKSecret = va_arg(args, NSString *);
     
-    if (IsValidString(AccountName) && IsValidString(SDKSecret)) {
+    if (AccountName.length > 0 && SDKSecret.length > 0) {
         [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkTapstream)] = @{kGBAnalyticsCredentialsTapstreamAccountName: AccountName, kGBAnalyticsCredentialsTapstreamSDKSecret: SDKSecret};
         
         [TSLogging setLogger:[GBAnalyticsManager sharedManager].settings.Tapstream.logger];

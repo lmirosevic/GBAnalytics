@@ -19,7 +19,7 @@ static NSString * const kGBAnalyticsCredentialsFlurryAPIKey =                   
 + (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials args:(va_list)args {
     NSString *APIKey = credentials;
     
-    if (IsValidString(APIKey)) {
+    if (APIKey.length > 0) {
         [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkFlurry)] = @{kGBAnalyticsCredentialsFlurryAPIKey: APIKey};
         
         [Flurry startSession:APIKey];
