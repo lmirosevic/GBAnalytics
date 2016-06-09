@@ -10,8 +10,6 @@
 
 #import "GBAnalyticsCore.h"
 
-#define IsValidString(string) (([string isKindOfClass:NSString.class] && ((NSString *)string).length > 0) ? YES : NO)
-
 typedef void(^ApplicationDidGenerateNotificationBlock)(NSString *notificationName, NSDictionary *userInfo);
 
 @protocol GBAnalyticsModule <NSObject>
