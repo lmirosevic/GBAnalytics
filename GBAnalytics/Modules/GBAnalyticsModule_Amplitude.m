@@ -31,7 +31,7 @@ static BOOL const kDefaultAmplitudeUserAdvertisingIdForDeviceId =               
 + (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials args:(va_list)args {
     NSString *APIKey = credentials;
     
-    if (IsValidString(APIKey)) {
+    if (APIKey.length > 0) {
         [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkAmplitude)] = @{kGBAnalyticsCredentialsAmplitudeAPIKey: APIKey};
         
         // for Amplitude, it's important to apply the settings first, before initialising it

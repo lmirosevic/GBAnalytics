@@ -31,7 +31,7 @@ static NSTimeInterval const kDefaultLocalyticsTimeoutInterval =                 
 + (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials args:(va_list)args {
     NSString *AppKey = credentials;
     
-    if (IsValidString(AppKey)) {
+    if (AppKey.length > 0) {
         [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkLocalytics)] = @{kGBAnalyticsCredentialsLocalyticsAppKey: AppKey};
         
         [Localytics integrate:AppKey];
