@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name            = 'GBAnalytics'
-  s.version         = '4.2.0'
+  s.version         = '4.2.1'
   s.summary         = 'Abstracts away different analytics networks and provides a unified simple interface.'
   s.homepage        = 'https://github.com/lmirosevic/GBAnalytics'
   s.license         = 'Apache License, Version 2.0'
