@@ -26,7 +26,6 @@ Pod::Spec.new do |s|
     ss.dependency 'GoogleAnalytics', '~> 3.0'
 
     ss.dependency 'GBAnalytics/Core'
-    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_GOOGLEANALYTICS' }
   end
 
   s.subspec 'Flurry' do |ss|
@@ -36,7 +35,6 @@ Pod::Spec.new do |s|
     ss.dependency 'Flurry-iOS-SDK/FlurrySDK', '~> 7.3'
 
     ss.dependency 'GBAnalytics/Core'
-    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_FLURRY' }
   end
 
   s.subspec 'Crashlytics' do |ss|
@@ -47,7 +45,6 @@ Pod::Spec.new do |s|
     ss.libraries = 'z', 'c++'
 
     ss.dependency 'GBAnalytics/Core'
-    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_CRASHLYTICS' }
   end
 
   s.subspec 'Answers' do |ss|
@@ -58,7 +55,6 @@ Pod::Spec.new do |s|
     ss.dependency 'GBAnalytics/Crashlytics'
 
     ss.dependency 'GBAnalytics/Core'
-    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_ANSWERS' }
   end
 
   s.subspec 'Tapstream' do |ss|
@@ -68,7 +64,6 @@ Pod::Spec.new do |s|
     ss.dependency 'Tapstream', '~> 2.6'
 
     ss.dependency 'GBAnalytics/Core'
-    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_TAPSTREAM' }
   end
 
   s.subspec 'Facebook' do |ss|
@@ -78,7 +73,6 @@ Pod::Spec.new do |s|
     ss.dependency 'FBSDKCoreKit', '~> 4.6'
 
     ss.dependency 'GBAnalytics/Core'
-    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_FACEBOOK' }
   end
 
   s.subspec 'Mixpanel' do |ss|
@@ -88,7 +82,6 @@ Pod::Spec.new do |s|
     ss.dependency 'Mixpanel', '~> 2.3'
 
     ss.dependency 'GBAnalytics/Core'
-    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_MIXPANEL' }
   end
 
   s.subspec 'Parse' do |ss|
@@ -98,7 +91,6 @@ Pod::Spec.new do |s|
     ss.dependency 'Parse', '~> 1.6'
 
     ss.dependency 'GBAnalytics/Core'
-    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_PARSE' }
   end
 
   s.subspec 'Localytics' do |ss|
@@ -108,7 +100,6 @@ Pod::Spec.new do |s|
     ss.dependency 'Localytics', '~> 3.0'
 
     ss.dependency 'GBAnalytics/Core'
-    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_LOCALYTICS' }
   end
 
   s.subspec 'Amplitude' do |ss|
@@ -118,6 +109,5 @@ Pod::Spec.new do |s|
     ss.dependency 'Amplitude-iOS', '~> 3.2'
 
     ss.dependency 'GBAnalytics/Core'
-    ss.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -DGBANALYTICS_AMPLITUDE' }
   end
 end
