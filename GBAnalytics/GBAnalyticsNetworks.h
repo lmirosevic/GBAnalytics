@@ -58,6 +58,11 @@
     Settings: BOOL enableLocationListening, BOOL useAdvertisingIdForDeviceId
     Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkFacebook withCredentials:@"AmplitudeAPIKey"];
  
+ Firebase
+    Params: PlistName
+    Settings:
+    Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkFirebase withCredentials:@"PlistName"];
+ 
  */
 
 #import "GBAnalyticsCore.h"
@@ -73,9 +78,8 @@ typedef enum {
     GBAnalyticsNetworkParse,
     GBAnalyticsNetworkLocalytics,
     GBAnalyticsNetworkAmplitude,
+    GBAnalyticsNetworkFirebase,
 } GBAnalyticsNetwork;
-
-// warning, when adding a new network, don't forget to add the import to the module to GBAnalytics.h
 
 static inline NSString * NetworkNameForNetwork(GBAnalyticsNetwork network) {
     switch (network) {
@@ -118,7 +122,17 @@ static inline NSString * NetworkNameForNetwork(GBAnalyticsNetwork network) {
         case GBAnalyticsNetworkAmplitude: {
             return @"Amplitude";
         } break;
+            
+        case GBAnalyticsNetworkFirebase: {
+            return @"Firebase";
+        } break;
+            
+        /**
+         * WARNING: when adding a new network, don't forget to:
+         *   1) add the import to the module to GBAnalytics.h
+         *   2) add the network to kGBAnalyticsAllNetworks below
+         */
     }
 }
 
-#define kGBAnalyticsAllNetworks [NSSet setWithObjects:@(GBAnalyticsNetworkGoogleAnalytics), @(GBAnalyticsNetworkFlurry), @(GBAnalyticsNetworkCrashlytics), @(GBAnalyticsNetworkTapstream), @(GBAnalyticsNetworkFacebook), @(GBAnalyticsNetworkMixpanel), @(GBAnalyticsNetworkParse), @(GBAnalyticsNetworkLocalytics), @(GBAnalyticsNetworkAmplitude), nil]
+#define kGBAnalyticsAllNetworks [NSSet setWithObjects:@(GBAnalyticsNetworkGoogleAnalytics), @(GBAnalyticsNetworkFlurry), @(GBAnalyticsNetworkCrashlytics), @(GBAnalyticsNetworkTapstream), @(GBAnalyticsNetworkFacebook), @(GBAnalyticsNetworkMixpanel), @(GBAnalyticsNetworkParse), @(GBAnalyticsNetworkLocalytics), @(GBAnalyticsNetworkAmplitude), @(GBAnalyticsNetworkFirebase), nil]

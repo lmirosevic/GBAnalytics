@@ -147,8 +147,19 @@ BOOL _GBAnalyticsEnabled() {
 
 #pragma mark - Module API
 
++ (void)signalInvalidCredentialsForNetwork:(GBAnalyticsNetwork)network additionalInfo:(NSString *)infoString {
+    NSMutableString *errorString = [NSString stringWithFormat:@"GBAnalytics Error: Didn't pass valid credentials for %@", [self _networkNameForNetwork:network]].mutableCopy;
+    
+    // if we have an info string, append it
+    if (infoString) {
+        [errorString appendFormat:@". %@", infoString];
+    }
+    
+    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:errorString userInfo:nil];
+}
+
 + (void)signalInvalidCredentialsForNetwork:(GBAnalyticsNetwork)network {
-    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:@"GBAnalytics Error: Didn't pass valid credentials for %@", [self _networkNameForNetwork:network]] userInfo:nil];
+    [self signalInvalidCredentialsForNetwork:network additionalInfo:nil];
 }
 
 - (void)addHandlerForApplicationNotification:(ApplicationDidGenerateNotificationBlock)block {

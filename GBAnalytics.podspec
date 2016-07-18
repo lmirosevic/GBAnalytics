@@ -19,6 +19,15 @@ Pod::Spec.new do |s|
 
   # Modules
 
+  s.subspec 'Firebase' do |ss|
+    ss.source_files = 'GBAnalytics/Modules/GBAnalyticsModule_Firebase.{h,m}'
+    ss.public_header_files = 'GBAnalytics/Modules/GBAnalyticsModule_Firebase.h'
+
+    ss.dependency 'Firebase/Core', '~> 3.3'
+
+    ss.dependency 'GBAnalytics/Core'
+  end
+
   s.subspec 'GoogleAnalytics' do |ss|
     ss.source_files = 'GBAnalytics/Modules/GBAnalyticsModule_GoogleAnalytics.{h,m}'
     ss.public_header_files = 'GBAnalytics/Modules/GBAnalyticsModule_GoogleAnalytics.h'

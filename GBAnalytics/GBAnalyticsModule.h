@@ -34,6 +34,11 @@ typedef void(^ApplicationDidGenerateNotificationBlock)(NSString *notificationNam
 + (void)signalInvalidCredentialsForNetwork:(GBAnalyticsNetwork)network;
 
 /**
+ Used to signal that the credentials passed were invalid. The infoString will be displayed to the user.
+ */
++ (void)signalInvalidCredentialsForNetwork:(GBAnalyticsNetwork)network additionalInfo:(NSString *)infoString;
+
+/**
  Used by some modules which need to hook into the application notifications stream.
  */
 - (void)addHandlerForApplicationNotification:(ApplicationDidGenerateNotificationBlock)block;

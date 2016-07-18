@@ -15,6 +15,7 @@ Supported networks
 * Facebook
 * Tapstream
 * Flurry
+* Firebase
 
 Usage
 ------------
@@ -61,6 +62,9 @@ Connect to any number of networks you want in `application:didFinishLaunching:wi
  
 // Flurry
 [GBAnalytics connectNetwork:GBAnalyticsNetworkFlurry withCredentials:@"FlurryAPIKey"];
+
+// Firebase
+[GBAnalytics connectNetwork:GBAnalyticsNetworkFlurry withCredentials:@"PlistName"]; // e.g. @"GoogleService-Info"
 ```
 
 Track simple event:
@@ -150,7 +154,7 @@ Install
 
 Add to your project's Podfile (only include the subspecs that you are using):
 
-`pod 'GBAnalytics', subspecs: ['GoogleAnalytics', 'Flurry', 'Crashlytics', 'Answers', 'Tapstream', 'Facebook', 'Mixpanel', 'Parse', 'Localytics', 'Amplitude']`
+`pod 'GBAnalytics', subspecs: ['GoogleAnalytics', 'Flurry', 'Crashlytics', 'Answers', 'Tapstream', 'Facebook', 'Mixpanel', 'Parse', 'Localytics', 'Amplitude', 'Firebase']`
 
 And run this in your project folder:
 
@@ -169,7 +173,7 @@ Requirements & Details
 Copyright & License
 ------------
 
-Copyright 2015 Goonbee
+Copyright 2016 Goonbee
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with the License. You may obtain a copy of the License in the LICENSE file, or at:
 
