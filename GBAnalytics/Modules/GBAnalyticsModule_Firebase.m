@@ -24,12 +24,12 @@ static NSString * const kGBAnalyticsCredentialsFirebasePListFile = @"kGBAnalytic
     self.APIKey =               firebaseSettings[@"API_KEY"];
     self.bundleID =             firebaseSettings[@"BUNDLE_ID"];
     self.clientID =             firebaseSettings[@"CLIENT_ID"];
-    self.trackingID =           firebaseSettings[@"TRACKING_ID"];//param name here not verified
+    self.trackingID =           firebaseSettings[@"TRACKING_ID"];
     self.GCMSenderID =          firebaseSettings[@"GCM_SENDER_ID"];
-    self.androidClientID =      firebaseSettings[@"ANDROID_CLIENT_ID"];//param name here not verified
+    self.androidClientID =      firebaseSettings[@"ANDROID_CLIENT_ID"];
     self.googleAppID =          firebaseSettings[@"GOOGLE_APP_ID"];
     self.databaseURL =          firebaseSettings[@"DATABASE_URL"];
-    self.deepLinkURLScheme =    firebaseSettings[@"DEEP_LINK_URL_SCHEME"];//param name here not verified
+    self.deepLinkURLScheme =    firebaseSettings[@"DEEP_LINK_URL_SCHEME"];//param name here not verified, and not found when decompiling the binary FirebaseAnalytics static library
     self.storageBucket =        firebaseSettings[@"STORAGE_BUCKET"];
 }
 
