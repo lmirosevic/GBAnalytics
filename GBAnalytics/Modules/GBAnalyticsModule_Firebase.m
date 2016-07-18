@@ -35,7 +35,7 @@ static NSString * const kGBAnalyticsCredentialsFirebasePListFile = @"kGBAnalytic
 
 + (void)connectNetwork:(GBAnalyticsNetwork)network withCredentials:(NSString *)credentials args:(va_list)args {
     NSString *FirebaseOptionsPlistName = credentials;
-    NSBundle *firebaseOptionsPath = [[NSBundle mainBundle] pathForResource:FirebaseOptionsPlistName ofType:@"plist"];
+    NSString *firebaseOptionsPath = [[NSBundle mainBundle] pathForResource:FirebaseOptionsPlistName ofType:@"plist"];
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:firebaseOptionsPath]) {
         [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkFirebase)] = @{kGBAnalyticsCredentialsFirebasePListFile: FirebaseOptionsPlistName};
