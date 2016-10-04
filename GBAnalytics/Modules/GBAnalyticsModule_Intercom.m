@@ -33,6 +33,10 @@ static BOOL const kDefaultIntercomShouldAutomaticallyRegisterUser =         YES;
     [self _registerUser];
 }
 
+- (void)setApnsDeviceToken:(NSData *)apnsDeviceToken {
+    [Intercom setDeviceToken:apnsDeviceToken];
+}
+
 - (void)setShouldAutomaticallyRegisterUser:(BOOL)shouldAutomaticallyRegisterUser {
     _shouldAutomaticallyRegisterUser = shouldAutomaticallyRegisterUser;
     

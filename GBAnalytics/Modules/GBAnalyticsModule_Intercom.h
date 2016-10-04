@@ -36,6 +36,11 @@
  */
 @property (copy, nonatomic) NSString                                        *userId;
 
+/**
+ Setting this will register the APNS Device Token with Intercom.
+ */
+- (void)setApnsDeviceToken:(NSData *)apnsDeviceToken;
+
 @end
 
 @interface GBAnalyticsSettings (Intercom)
