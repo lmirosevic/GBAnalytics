@@ -16,6 +16,7 @@ Supported networks
 * Tapstream
 * Flurry
 * Firebase
+* Intercom
 
 Usage
 ------------
@@ -65,6 +66,9 @@ Connect to any number of networks you want in `application:didFinishLaunching:wi
 
 // Firebase
 [GBAnalytics connectNetwork:GBAnalyticsNetworkFlurry withCredentials:@"PlistName"]; // e.g. @"GoogleService-Info"
+
+// Intercom
+[GBAnalytics connectNetwork:GBAnalyticsNetworkIntercom withCredentials:@"APIKey", @"AppID"];
 ```
 
 Track simple event:
@@ -154,7 +158,7 @@ Install
 
 Add to your project's Podfile (only include the subspecs that you are using):
 
-`pod 'GBAnalytics', subspecs: ['GoogleAnalytics', 'Flurry', 'Crashlytics', 'Answers', 'Tapstream', 'Facebook', 'Mixpanel', 'Parse', 'Localytics', 'Amplitude', 'Firebase']`
+`pod 'GBAnalytics', subspecs: ['GoogleAnalytics', 'Flurry', 'Crashlytics', 'Answers', 'Tapstream', 'Facebook', 'Mixpanel', 'Parse', 'Localytics', 'Amplitude', 'Firebase', 'Intercom']`
 
 And run this in your project folder:
 

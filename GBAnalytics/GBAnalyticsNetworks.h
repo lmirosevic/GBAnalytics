@@ -63,6 +63,11 @@
     Settings:
     Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkFirebase withCredentials:@"PlistName"];
  
+ Intercom
+    Params: APIKey, AppID
+    Settings:
+    Example: [GBAnalytics connectNetwork:GBAnalyticsNetworkIntercom withCredentials:@"APIKey", @"AppID"];
+ 
  */
 
 #import "GBAnalyticsCore.h"
@@ -79,6 +84,7 @@ typedef enum {
     GBAnalyticsNetworkLocalytics,
     GBAnalyticsNetworkAmplitude,
     GBAnalyticsNetworkFirebase,
+    GBAnalyticsNetworkIntercom,
 } GBAnalyticsNetwork;
 
 static inline NSString * NetworkNameForNetwork(GBAnalyticsNetwork network) {
@@ -127,6 +133,10 @@ static inline NSString * NetworkNameForNetwork(GBAnalyticsNetwork network) {
             return @"Firebase";
         } break;
             
+        case GBAnalyticsNetworkIntercom: {
+            return @"Intercom";
+        } break;
+            
         /**
          * WARNING: when adding a new network, don't forget to:
          *   1) add the import to the module to GBAnalytics.h
@@ -135,4 +145,4 @@ static inline NSString * NetworkNameForNetwork(GBAnalyticsNetwork network) {
     }
 }
 
-#define kGBAnalyticsAllNetworks [NSSet setWithObjects:@(GBAnalyticsNetworkGoogleAnalytics), @(GBAnalyticsNetworkFlurry), @(GBAnalyticsNetworkCrashlytics), @(GBAnalyticsNetworkTapstream), @(GBAnalyticsNetworkFacebook), @(GBAnalyticsNetworkMixpanel), @(GBAnalyticsNetworkParse), @(GBAnalyticsNetworkLocalytics), @(GBAnalyticsNetworkAmplitude), @(GBAnalyticsNetworkFirebase), nil]
+#define kGBAnalyticsAllNetworks [NSSet setWithObjects:@(GBAnalyticsNetworkGoogleAnalytics), @(GBAnalyticsNetworkFlurry), @(GBAnalyticsNetworkCrashlytics), @(GBAnalyticsNetworkTapstream), @(GBAnalyticsNetworkFacebook), @(GBAnalyticsNetworkMixpanel), @(GBAnalyticsNetworkParse), @(GBAnalyticsNetworkLocalytics), @(GBAnalyticsNetworkAmplitude), @(GBAnalyticsNetworkFirebase), @(GBAnalyticsNetworkIntercom), nil]
