@@ -27,14 +27,14 @@
  
  If `shouldAutomaticallyRegisterUser` is set to NO then the user is not automatically registered when connecting the Intercom network. Setting this property after connecting will however still register the user.
  */
-@property (nonatomic, strong) NSString                                      *userEmail;
+@property (copy, nonatomic) NSString                                        *userEmail;
 
 /**
  Setting a userId will register the user with a userId with Intercom when connecting the network, if an email is set as well then both will be used to register the user. If you set this after the network has been connected it will have the effect of re-registering the user with the userId.
  
  If `shouldAutomaticallyRegisterUser` is set to NO then the user is not automatically registered when connecting the Intercom network. Setting this property after connecting will however still register the user.
  */
-@property (nonatomic, strong) NSString                                      *userId;
+@property (copy, nonatomic) NSString                                        *userId;
 
 @end
 
