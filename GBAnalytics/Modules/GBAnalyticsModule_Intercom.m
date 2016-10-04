@@ -51,7 +51,7 @@ static BOOL const kDefaultIntercomShouldAutomaticallyRegisterUser =         YES;
 
 - (id)init {
     if (self = [super init]) {
-        self.shouldAutomaticallyRegisterUser = kDefaultIntercomShouldAutomaticallyRegisterUser;
+        _shouldAutomaticallyRegisterUser = kDefaultIntercomShouldAutomaticallyRegisterUser;
     }
 
     return self;
