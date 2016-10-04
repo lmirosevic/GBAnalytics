@@ -65,7 +65,6 @@ static BOOL const kDefaultIntercomShouldAutomaticallyRegisterUser =         YES;
         [GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkIntercom)] = @{kGBAnalyticsCredentialsIntercomAPIKey: APIKey, kGBAnalyticsCredentialsIntercomAppID: AppID};
         
         // connect to network
-        NSLog(@"setapikeyforappid");
         [Intercom setApiKey:APIKey forAppId:AppID];
         
         // register user
@@ -93,16 +92,12 @@ static BOOL const kDefaultIntercomShouldAutomaticallyRegisterUser =         YES;
     // check to make sure that we are already connected
     if ([GBAnalyticsManager sharedManager].connectedAnalyticsNetworks[@(GBAnalyticsNetworkIntercom)]) {
         if (self.userId && self.userEmail) {
-            NSLog(@"userid and email");
             [Intercom registerUserWithUserId:self.userId email:self.userEmail];
         } else if (self.userId) {
-            NSLog(@"userid");
             [Intercom registerUserWithUserId:self.userId];
         } else if (self.userEmail) {
-            NSLog(@"email");
             [Intercom registerUserWithEmail:self.userEmail];
         } else {
-            NSLog(@"unindent");
             [Intercom registerUnidentifiedUser];
         }
     }
