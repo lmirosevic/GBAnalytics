@@ -119,4 +119,14 @@ Pod::Spec.new do |s|
 
     ss.dependency 'GBAnalytics/Core'
   end
+
+  s.subspec 'Intercom' do |ss|
+    ss.source_files = 'GBAnalytics/Modules/GBAnalyticsModule_Intercom.{h,m}'
+    ss.public_header_files = 'GBAnalytics/Modules/GBAnalyticsModule_Intercom.h'
+
+    ss.ios.deployment_target = '8.0'
+    ss.dependency 'Intercom', '~> 3.0'
+
+    ss.dependency 'GBAnalytics/Core'
+  end
 end

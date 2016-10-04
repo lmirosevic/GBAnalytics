@@ -54,4 +54,8 @@
     #if __has_include("GBAnalyticsModule_Firebase.h")
         #import "GBAnalyticsModule_Firebase.h"
     #endif
+
+    #if __has_include("GBAnalyticsModule_Intercom.h")
+        #import "GBAnalyticsModule_Intercom.h"
+    #endif
 #endif  // defined(__has_include)
