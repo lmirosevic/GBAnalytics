@@ -10,7 +10,7 @@
 
 #import "GBAnalyticsCore.h"
 
-#import <Amplitude-iOS/Amplitude.h>
+#import "Amplitude.h"
 
 static NSString * const kGBAnalyticsCredentialsAmplitudeAPIKey =                        @"kGBAnalyticsCredentialsAmplitudeAPIKey";
 

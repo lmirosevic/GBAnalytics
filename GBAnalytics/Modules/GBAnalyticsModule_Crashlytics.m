@@ -10,8 +10,8 @@
 
 #import "GBAnalyticsCore.h"
 
-#import <Crashlytics/Crashlytics.h>
-#import <Fabric/Fabric.h>
+#import "Crashlytics.h"
+#import "Fabric.h"
 
 static NSString * const kGBAnalyticsCredentialsFabricAPIKey = @"kGBAnalyticsCredentialsFabricAPIKey";
 

@@ -23,7 +23,11 @@ Pod::Spec.new do |s|
     ss.source_files = 'GBAnalytics/Modules/GBAnalyticsModule_Firebase.{h,m}'
     ss.public_header_files = 'GBAnalytics/Modules/GBAnalyticsModule_Firebase.h'
 
-    ss.dependency 'Firebase/Core', '~> 3.3'
+    # we need to use this indirection here because of some CocoaPods peculiarity with it not finding the headers otherwise
+    ss.subspec 'FirebaseAnalytics' do |sss|
+      sss.dependency 'Firebase/Analytics', '~> 3.3'
+      sss.xcconfig = { 'FRAMEWORK_SEARCH_PATHS' => '"$(PODS_ROOT)/FirebaseAnalytics/**" "$(PODS_ROOT)/FirebaseCore/**"' }
+    end
 
     ss.dependency 'GBAnalytics/Core'
   end

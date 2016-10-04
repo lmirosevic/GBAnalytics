@@ -10,7 +10,7 @@
 
 #import "GBAnalyticsCore.h"
 
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import "FBSDKCoreKit.h"
 
 static NSString * const kGBAnalyticsCredentialsFacebookAppID =                          @"kGBAnalyticsCredentialsFacebookAppID";
 

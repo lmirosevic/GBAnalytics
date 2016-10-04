@@ -10,7 +10,7 @@
 
 #import "GBAnalyticsCore.h"
 
-#import <Flurry-iOS-SDK/Flurry.h>
+#import "Flurry.h"
 
 static NSString * const kGBAnalyticsCredentialsFlurryAPIKey =                           @"kGBAnalyticsCredentialsFlurryAPIKey";
 

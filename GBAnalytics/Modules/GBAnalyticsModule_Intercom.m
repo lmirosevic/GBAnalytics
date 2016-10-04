@@ -10,7 +10,7 @@
 
 #import "GBAnalyticsCore.h"
 
-#import <Intercom/Intercom.h>
+#import "Intercom.h"
 
 static NSString * const kGBAnalyticsCredentialsIntercomAPIKey =             @"kGBAnalyticsCredentialsIntercomAPIKey";
 static NSString * const kGBAnalyticsCredentialsIntercomAppID =              @"kGBAnalyticsCredentialsIntercomAppID";

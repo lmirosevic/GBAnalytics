@@ -10,8 +10,8 @@
 
 #import "GBAnalyticsCore.h"
 
-#import <GoogleAnalytics/GAI.h>
-#import <GoogleAnalytics/GAIDictionaryBuilder.h>
+#import "GAI.h"
+#import "GAIDictionaryBuilder.h"
 
 static NSString * const kGBAnalyticsCredentialsGoogleAnalyticsTrackingIDs =             @"kGBAnalyticsCredentialsGoogleAnalyticsTrackingIDs";
 static NSString * const kGBAnalyticsGoogleAnalyticsActionlessEventActionString =        @"Plain";

@@ -10,7 +10,7 @@
 
 #import "GBAnalyticsCore.h"
 
-#import <Parse/Parse.h>
+#import "Parse.h"
 
 static NSString * const kGBAnalyticsCredentialsParseApplicationID =                     @"kGBAnalyticsCredentialsParseApplicationID";
 static NSString * const kGBAnalyticsCredentialsParseClientKey =                         @"kGBAnalyticsCredentialsParseClientKey";

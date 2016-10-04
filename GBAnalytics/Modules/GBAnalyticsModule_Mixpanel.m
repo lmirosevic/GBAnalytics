@@ -10,7 +10,7 @@
 
 #import "GBAnalyticsCore.h"
 
-#import <Mixpanel/Mixpanel.h>
+#import "Mixpanel.h"
 
 static NSString * const kGBAnalyticsCredentialsMixpanelToken =                          @"kGBAnalyticsCredentialsMixpanelToken";
 

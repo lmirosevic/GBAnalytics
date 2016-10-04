@@ -10,7 +10,7 @@
 
 #import "GBAnalyticsCore.h"
 
-#import <Tapstream/TSTapstream.h>
+#import "TSTapstream.h"
 
 static NSString * const kGBAnalyticsCredentialsTapstreamAccountName =                   @"kGBAnalyticsCredentialsTapstreamAccountName";
 static NSString * const kGBAnalyticsCredentialsTapstreamSDKSecret =                     @"kGBAnalyticsCredentialsTapstreamSDKSecret";

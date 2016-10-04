@@ -10,7 +10,7 @@
 
 #import "GBAnalyticsCore.h"
 
-#import <Localytics/Localytics.h>
+#import "Localytics.h"
 
 static NSString * const kGBAnalyticsCredentialsLocalyticsAppKey =                       @"kGBAnalyticsCredentialsLocalyticsAppKey";
 

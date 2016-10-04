@@ -10,7 +10,7 @@
 
 #import "GBAnalyticsCore.h"
 
-#import <Firebase/Firebase.h>
+#import "Firebase.h"
 
 static NSString * const kGBAnalyticsCredentialsFirebasePListFile = @"kGBAnalyticsCredentialsFirebasePListFile";
 
